@@ -1,5 +1,7 @@
 <template>
-  <div id="app"></div>
+  <v-app>
+    <v-main> </v-main>
+  </v-app>
 </template>
 
-<style></style>
+<script></script>
