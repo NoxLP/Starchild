@@ -15,6 +15,7 @@ The developing team consists on three students from [Reboot Academy](https://www
 - [Jonatan Santana González](https://github.com/jonatansg)
 - [Norberto Sáez Perdomo](https://github.com/NoxLP)
 - [Romina Elorrieta](https://github.com/RoElorrieta)
+
 Please, remember that, as of today (2021/02/26), the app is still a work in progress. Specifications below are subject to change.
 
 ## Installation
