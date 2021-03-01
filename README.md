@@ -1,29 +1,28 @@
 # Starchild
-Starchild is a responsive web app, which shows astronomic events in multiple ways, including information about moon phase, weather, and various ways of viewing and  filtering the events.
+Starchild is a responsive web app, which shows astronomic events in multiple ways, including information about moon phases, weather, and several ways of viewing and filtering the events.
 
-A REST API is exposed in the back using express, which manage the front end requests
-to retrieve the data from a non relational Mongo Atlas database, using mongoose to map the data.
-Multiple APIs are planned to be used to gather data.
+A REST API is exposed in the back-end using expressJS, which manages the front-end requests
+to retrieve the data from a non relational Mongo Atlas database, which uses mongoose to map the data.
+Multiple APIs are planned to be used for data gathering.
 
-The front is mainly vuetify, with axios to send requests to the back.
+The front-end is mainly done in Vuetify, with axios to send requests to the back-end.
 
-All is mixed up with javascript ES6 and html5, among other utilities that you can find on npm like bcrypt, cors, helmet, dotenv, jsonwebtoken and morgan.
+In its whole, it is a mélange of JavaScript ES6 and HTML5, among other npm utilities such as: bcrypt, cors, helmet, dotenv, jsonwebtoken and morgan.
 
-The app is currently work in progress and is planned to be deployed on Heroku.
+The app is currently a work in progress and it is planned to be deployed on Heroku.
 
-The app has been made by three students from [Reboot Academy](https://www.reboot.academy/): 
+The developing team consists on three students from [Reboot Academy](https://www.reboot.academy/): 
 - [Jonatan Santana González](https://github.com/jonatansg)
 - [Norberto Sáez Perdomo](https://github.com/NoxLP)
-- [Romina Elorrieta]()
-
-Remember that as today (2021/02/26) the app is work in progress, so all the specifications below are subject to change.
+- [Romina Elorrieta](https://github.com/RoElorrieta)
+Please, remember that, as of today (2021/02/26), the app is still a work in progress. Specifications below are subject to change.
 
 ## Installation
 Simple enough, fork the project and run npm install in your console.
 
 ## Database model (@ 26/02/2021)
-As said before, the database used is non relational MongoDB database.
-As the project is a work in progress, take account that maybe we'll use Firebase for push notifications.
+As previosly stated, the database used is non-relational MongoDB database.
+As the project is a work in progress, take into account that we may be using Firebase for push notifications.
 
 The model consists on 3 collections:
 
@@ -69,7 +68,7 @@ There are a DTO object too that are used along the app witch includes the follow
     date, title, category
 
 ## API endpoints (@ 26/02/2021)
-All the endpoints are preceeded by `/api` and require to be authenticated as user. Where possible, pagination ("Pag.") is used with limit and page. You know how it goes: limit are the items per page, page is the page to get from 0 to whatever.
+Every endpoint is preceeded by `/api`, and requires user authentication. Where possible, pagination ("Pag.") is used with limit and page. You know how it goes: limit are the items per page, page is the page to get from 0 to whatever.
 
 - ### Auth
 
@@ -107,4 +106,4 @@ All the endpoints are preceeded by `/api` and require to be authenticated as use
 
 # 
 
-That's all, enjoy.
+We are made of stardust.- Carl Sagan.
