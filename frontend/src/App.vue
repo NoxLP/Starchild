@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <v-main>
-      <Footer>
-        Esto es una prueba
-      </Footer>
-    </v-main>
+    <v-main> </v-main>
+    <v-footer>
+      <Footer> </Footer>
+    </v-footer>
   </v-app>
 </template>
 
