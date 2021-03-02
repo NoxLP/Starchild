@@ -9,7 +9,7 @@ The front-end is mainly done in Vuetify, with axios to send requests to the back
 
 In its whole, it is a mélange of JavaScript ES6 and HTML5, among other npm utilities such as: bcrypt, cors, helmet, dotenv, jsonwebtoken and morgan.
 
-The app is currently a work in progress and it is planned to be deployed on Heroku.
+The app is currently a work in progress and it is planned to be deployed on Netlify.
 
 The developing team consists on three students from [Reboot Academy](https://www.reboot.academy/): 
 - [Jonatan Santana González](https://github.com/jonatansg)
