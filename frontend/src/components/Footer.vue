@@ -1,6 +1,9 @@
 <template>
   <v-footer max-width="400" class="mx-auto" padless>
-    <v-container>
+    <v-container class="d-none d-md-flex">
+      Esto es el footer para los grandes
+    </v-container>
+    <v-container class="d-md-none">
       <v-row>
         <v-col cols="12">
           <v-btn icon>
