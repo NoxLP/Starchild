@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Header />
     <v-main> </v-main>
     <v-footer>
       <Footer> </Footer>
@@ -9,7 +10,12 @@
 
 <script>
 import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
+
 export default {
-  components: { Footer }
+  components: {
+    Footer,
+    Header
+  }
 }
 </script>
