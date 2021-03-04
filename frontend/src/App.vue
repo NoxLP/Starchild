@@ -1,10 +1,8 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <Header />
     <v-main> </v-main>
-    <v-footer>
-      <Footer> </Footer>
-    </v-footer>
+    <Footer> </Footer>
   </v-app>
 </template>
 
@@ -19,3 +17,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.app {
+  background-color: #180941 !important;
+}
+</style>
