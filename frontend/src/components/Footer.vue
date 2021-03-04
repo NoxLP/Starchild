@@ -7,7 +7,7 @@
       <v-row>
         <v-col cols="12">
           <v-btn icon>
-            <v-icon class="mx-3 black--text mdi-account"></v-icon>
+            <v-icon class="mx-3 black--text">mdi-account</v-icon>
           </v-btn>
           |
           <v-btn
@@ -22,7 +22,7 @@
           </v-btn>
           |
           <v-btn icon>
-            <v-icon class="mx-3 black--text mdi-power"></v-icon>
+            <v-icon class="mx-3 black--text">mdi-power</v-icon>
           </v-btn>
         </v-col>
       </v-row>
