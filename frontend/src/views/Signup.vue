@@ -2,14 +2,18 @@
   <div>
     <Card class="">
       <Input label="Nombre" />
-      <Input label="Apellidos" />
+      <Input label="Apellidos" :rules="rules.surname" type="text" />
       <Input label="Usuario" />
-      <Input label="Email" />
-      <Input label="Password" />
-      <Input label="Confirmar Password" />
+      <Input label="Email" :rules="rules.email" type="text" />
+      <Input label="Password" :rules="rules.password" type="password" />
+      <Input
+        label="Confirmar Password"
+        :rules="rules.confirmPass"
+        type="password"
+      />
       <Input label="Ubicación" />
-      <Select label="Ocupación" />
-      <Datepicker label="Fecha Nacimiento" />
+      <Select label="Ocupación" :rules="rules.job" type="text" />
+      <Datepicker label="Fecha Nacimiento" :rules="rules.date" type="text" />
       <Button text="Enviar" />
     </Card>
   </div>
@@ -23,6 +27,42 @@ import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
 
 export default {
+  data: () => {
+    return {
+      rules: {
+        surname: [],
+        email: [
+          value => !!value || 'Requerido.',
+          value =>
+            (value &&
+              /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                value
+              )) ||
+            'Dirección de email válida, mínimo 3 caracteres.'
+        ],
+        password: [
+          value => !!value || 'Requerido.',
+          value =>
+            (value &&
+              /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}/.test(
+                value
+              )) ||
+            'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
+        ],
+        confirmPass: [
+          value => !!value || 'Requerido.',
+          value =>
+            (value &&
+              /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}/.test(
+                value
+              )) ||
+            'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
+        ],
+        job: [],
+        date: []
+      }
+    }
+  },
   name: 'Signup',
   components: {
     Input,

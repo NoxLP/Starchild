@@ -32,8 +32,8 @@ export default {
     rules: {
       type: Array,
       default: () => [
-        value => !!value || 'Required.',
-        value => (value && value.length >= 3) || 'Min 3 characters'
+        value => !!value || 'Requerido.',
+        value => (value && value.length >= 3) || 'Mínimo 3 caracteres.'
       ]
     },
     label: String,
