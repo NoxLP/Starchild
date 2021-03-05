@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <Header />
     <v-main> <Login /> </v-main>
     <Footer />
@@ -19,3 +19,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.app {
+  background-color: #180941 !important;
+}
+</style>
