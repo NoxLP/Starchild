@@ -35,7 +35,6 @@ export default {
 
 <style scoped>
 .starchild-input {
-  border: solid grey 1px;
   background: rgba(255, 255, 255, 0.1);
 }
 </style>
