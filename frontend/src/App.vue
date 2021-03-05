@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <Input label="" innerLabel="Ejemplo" />
+      <Input :rules="testRules" label="" innerLabel="Ejemplo" />
     </v-main>
     <v-footer>
       <Footer> </Footer>
@@ -20,6 +20,14 @@ export default {
     Footer,
     Header,
     Input
+  },
+  data: () => {
+    return {
+      testRules: [
+        value => !!value || 'Required.',
+        value => (value && value.length >= 8) || 'Min 8 characters'
+      ]
+    }
   }
 }
 </script>

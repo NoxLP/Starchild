@@ -6,6 +6,7 @@
       </v-col>
       <v-col :cols="inputColumns" class="d-flex justify-end">
         <v-text-field
+          outlined
           class="starchild-input mx-2"
           :label="innerLabel"
           :rules="rules"
@@ -18,13 +19,14 @@
 
 <script>
 export default {
-  data: () => ({
-    rules: [
-      value => !!value || 'Required.',
-      value => (value && value.length >= 3) || 'Min 3 characters'
-    ]
-  }),
   props: {
+    rules: {
+      type: Array,
+      default: () => [
+        value => !!value || 'Required.',
+        value => (value && value.length >= 3) || 'Min 3 characters'
+      ]
+    },
     label: String,
     innerLabel: String,
     labelColumns: String,
