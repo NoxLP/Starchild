@@ -2,7 +2,9 @@
   <v-app>
     <Header />
     <v-main>
-      <Input />
+      <v-card>
+        <Button text="Login" />
+      </v-card>
     </v-main>
     <v-footer>
       <Footer> </Footer>
@@ -11,15 +13,15 @@
 </template>
 
 <script>
+import Button from './components/Button.vue'
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import Input from './components/Input.vue'
 
 export default {
   components: {
     Footer,
     Header,
-    Input
+    Button
   }
 }
 </script>
