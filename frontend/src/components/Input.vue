@@ -8,11 +8,13 @@
         <v-text-field
           outlined
           class="starchild-input mx-2"
+          v-model="value"
           :label="innerLabel"
           :rules="rules"
           :append-icon="pwdIcon"
           :type="show"
           @click:append="onShowIcon()"
+          @keyup="onInputKeyUp()"
           hide-details="auto"
         ></v-text-field>
       </v-col>
@@ -25,15 +27,16 @@ export default {
   data: () => {
     return {
       show: '',
-      pwdIcon: ''
+      pwdIcon: '',
+      value: ''
     }
   },
   props: {
     rules: {
       type: Array,
       default: () => [
-        value => !!value || 'Required.',
-        value => (value && value.length >= 3) || 'Min 3 characters'
+        value => !!value || 'Requerido.',
+        value => (value && value.length >= 3) || 'Mínimo 3 caracteres.'
       ]
     },
     label: String,
@@ -55,6 +58,9 @@ export default {
       } else {
         this.pwdIcon = ''
       }
+    },
+    onInputKeyUp: function() {
+      this.$root.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {
