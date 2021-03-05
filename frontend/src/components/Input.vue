@@ -6,6 +6,7 @@
       </v-col>
       <v-col :cols="inputColumns" class="d-flex justify-end">
         <v-text-field
+          outlined
           class="starchild-input mx-2"
           :label="innerLabel"
           :rules="rules"
