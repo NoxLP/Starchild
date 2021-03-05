@@ -1,27 +1,21 @@
 <template>
   <v-app class="app">
     <Header />
-    <v-main>
-      <v-card>
-        <Button text="Login" />
-      </v-card>
-    </v-main>
-    <v-footer>
-      <Footer> </Footer>
-    </v-footer>
+    <v-main> <Signup /> </v-main>
+    <Footer />
   </v-app>
 </template>
 
 <script>
-import Button from './components/Button.vue'
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
+import Signup from './views/Signup'
 
 export default {
   components: {
     Footer,
     Header,
-    Button
+    Signup
   }
 }
 </script>
