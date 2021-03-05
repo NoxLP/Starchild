@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main> </v-main>
+    <v-main> <Login /> </v-main>
     <Footer />
   </v-app>
 </template>
