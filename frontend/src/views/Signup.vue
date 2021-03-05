@@ -70,6 +70,9 @@ export default {
     Datepicker,
     Card,
     Button
+  },
+  mounted() {
+    this.$root.$on('inputKeyUp')
   }
 }
 </script>
