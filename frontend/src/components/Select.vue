@@ -5,13 +5,13 @@
         <p class="mb-0 p-0">{{ label }}</p>
       </v-col>
       <v-col :cols="inputColumns" class="d-flex justify-end">
-        <v-text-field
+        <v-select
           outlined
-          class="starchild-input mx-2"
+          class="starchild-select mx-2"
           :label="innerLabel"
-          :rules="rules"
+          :items="items"
           hide-details="auto"
-        ></v-text-field>
+        ></v-select>
       </v-col>
     </v-row>
   </v-container>
@@ -20,10 +20,7 @@
 <script>
 export default {
   data: () => ({
-    rules: [
-      value => !!value || 'Required.',
-      value => (value && value.length >= 3) || 'Min 3 characters'
-    ]
+    items: ['Estudiante', 'Aficionado', 'Astrónomo']
   }),
   props: {
     label: String,
@@ -35,7 +32,7 @@ export default {
 </script>
 
 <style scoped>
-.starchild-input {
+.starchild-select {
   background: rgba(255, 255, 255, 0.1);
 }
 </style>
