@@ -1,12 +1,8 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
-      <Input />
-    </v-main>
-    <v-footer>
-      <Footer> </Footer>
-    </v-footer>
+    <v-main> </v-main>
+    <Footer />
   </v-app>
 </template>
 
