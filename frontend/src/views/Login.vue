@@ -9,6 +9,7 @@
             inputColumns="10"
             label="Email"
             :rules="rules.email"
+            type="text"
           />
         </v-row>
         <v-row align="center" justify="center">
@@ -17,6 +18,7 @@
             inputColumns="10"
             label="Password"
             :rules="rules.password"
+            type="password"
           />
         </v-row>
         <v-row align="center" justify="center">
