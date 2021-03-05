@@ -1,9 +1,17 @@
 <template>
   <div>
-    <Card class="">
-      <Input label="Email" />
-      <Input label="Password" />
-      <Button text="Login" />
+    <Card class="login-card">
+      <v-container>
+        <v-row align="center" justify="center">
+          <Input labelColumns="auto" inputColumns="10" label="Email" />
+        </v-row>
+        <v-row align="center" justify="center">
+          <Input labelColumns="auto" inputColumns="10" label="Password" />
+        </v-row>
+        <v-row align="center" justify="center">
+          <Button text="Login" />
+        </v-row>
+      </v-container>
     </Card>
     <Button text="Registro" />
   </div>
@@ -24,4 +32,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.login-card {
+  margin: 10vw !important;
+}
+</style>

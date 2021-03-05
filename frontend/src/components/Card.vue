@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="400" class="mx-auto">
+  <v-card :maxWidth="maxWidth" class="mx-auto">
     <v-container>
       <v-row dense>
         <v-col cols="12">
@@ -14,7 +14,10 @@
 export default {
   data: () => ({
     items: []
-  })
+  }),
+  props: {
+    maxWidth: Number
+  }
 }
 </script>
 
