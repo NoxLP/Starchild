@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <Input />
+      <Input label="" innerLabel="Ejemplo" />
     </v-main>
     <v-footer>
       <Footer> </Footer>
