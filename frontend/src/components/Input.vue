@@ -10,6 +10,7 @@
           class="starchild-input mx-2"
           :label="innerLabel"
           :rules="rules"
+          :type="type"
           hide-details="auto"
         ></v-text-field>
       </v-col>
@@ -30,7 +31,8 @@ export default {
     label: String,
     innerLabel: String,
     labelColumns: String,
-    inputColumns: String
+    inputColumns: String,
+    type: String
   }
 }
 </script>
