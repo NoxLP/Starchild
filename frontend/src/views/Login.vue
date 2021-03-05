@@ -44,15 +44,23 @@ export default {
     return {
       rules: {
         email: [
-          value => !!value || 'Required.',
+          value => !!value || 'Requerido.',
           value =>
             (value &&
               /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
                 value
               )) ||
-            'Min 3 characters'
+            'Dirección de email válida, mínimo 3 caracteres.'
         ],
-        password: [value => !!value || 'Required.']
+        password: [
+          value => !!value || 'Requerido.',
+          value =>
+            (value &&
+              /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}/.test(
+                value
+              )) ||
+            'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
+        ]
       }
     }
   },
