@@ -5,15 +5,21 @@
       <Input label="Apellidos" :rules="rules.surname" type="text" />
       <Input label="Usuario" />
       <Input label="Email" :rules="rules.email" type="text" />
-      <Input label="Password" :rules="rules.password" type="password" />
+      <Input
+        label="Password"
+        :rules="rules.password"
+        type="password"
+        name="pass"
+      />
       <Input
         label="Confirmar Password"
-        :rules="rules.confirmPass"
+        :rules="confirmPasswordRule"
         type="password"
+        name="confirmPass"
       />
       <Input label="Ubicación" />
       <Select label="Ocupación" :rules="rules.job" type="text" />
-      <Datepicker label="Fecha Nacimiento" :rules="rules.date" type="text" />
+      <Datepicker label="Fecha de Nacimiento" :rules="rules.date" type="text" />
       <Button text="Enviar" />
     </Card>
   </div>
@@ -29,6 +35,8 @@ import Button from '../components/Button.vue'
 export default {
   data: () => {
     return {
+      pass: '',
+      confirmPassValue: '',
       rules: {
         surname: [],
         email: [
@@ -49,18 +57,17 @@ export default {
               )) ||
             'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
         ],
-        confirmPass: [
-          value => !!value || 'Requerido.',
-          value =>
-            (value &&
-              /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}/.test(
-                value
-              )) ||
-            'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
-        ],
         job: [],
         date: []
       }
+    }
+  },
+  computed: {
+    confirmPasswordRule() {
+      return [
+        () =>
+          this.pass === this.confirmPassValue || 'No coincide con el password.'
+      ]
     }
   },
   name: 'Signup',
@@ -72,7 +79,13 @@ export default {
     Button
   },
   mounted() {
-    this.$root.$on('inputKeyUp')
+    this.$root.$on('inputKeyUp', (name, value) => {
+      if (name === 'confirmPass') {
+        this.confirmPassValue = value
+      } else if (name === 'pass') {
+        this.pass = value
+      }
+    })
   }
 }
 </script>
