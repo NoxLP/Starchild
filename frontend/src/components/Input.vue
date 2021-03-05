@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <v-container>
-      <v-row align="center" justify="center" style="height: 100px">
-        <v-col cols="auto" v-show="label">
-          <p class="mb-0 p-0">{{ label }}</p>
-        </v-col>
-        <v-col cols="auto">
-          <v-text-field
-            class="starchild-input mx-2"
-            :label="innerLabel"
-            :rules="rules"
-            hide-details="auto"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+  <v-container fluid>
+    <v-row align="center" justify="end" style="height: 100px">
+      <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
+        <p class="mb-0 p-0">{{ label }}</p>
+      </v-col>
+      <v-col :cols="inputColumns" class="d-flex justify-end">
+        <v-text-field
+          class="starchild-input mx-2"
+          :label="innerLabel"
+          :rules="rules"
+          hide-details="auto"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -28,7 +26,9 @@ export default {
   }),
   props: {
     label: String,
-    innerLabel: String
+    innerLabel: String,
+    labelColumns: String,
+    inputColumns: String
   }
 }
 </script>
