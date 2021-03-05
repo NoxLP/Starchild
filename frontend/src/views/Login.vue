@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form" v-model="valid" lazy-validation>
     <Card class="login-card">
       <v-container>
         <v-row class="empty-row"></v-row>
@@ -10,6 +10,7 @@
             label="Email"
             :rules="rules.email"
             type="text"
+            required
           />
         </v-row>
         <v-row align="center" justify="center">
@@ -19,19 +20,33 @@
             label="Password"
             :rules="rules.password"
             type="password"
+            required
           />
         </v-row>
         <v-row align="center" justify="center">
-          <Button text="Login" class="mt-16" />
+          <Button
+            text="Login"
+            class="mt-16"
+            :disabled="!valid"
+            @click="validate"
+          />
         </v-row>
       </v-container>
     </Card>
     <v-container>
       <v-row justify="center">
-        <Button text="Registro" />
+        <router-link
+          type="button"
+          class="btn"
+          :to="{
+            name: signup
+          }"
+        >
+          <Button text="Registro" />
+        </router-link>
       </v-row>
     </v-container>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -40,11 +55,17 @@ import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
 
 export default {
+  name: 'Login',
+  components: {
+    Input,
+    Card,
+    Button
+  },
   data: () => {
     return {
+      valid: false,
       rules: {
         email: [
-          value => !!value || 'Requerido.',
           value =>
             (value &&
               /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
@@ -64,11 +85,10 @@ export default {
       }
     }
   },
-  name: 'Login',
-  components: {
-    Input,
-    Card,
-    Button
+  methods: {
+    validate() {
+      this.valid = this.$refs.form.validate()
+    }
   }
 }
 </script>
