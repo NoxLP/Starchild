@@ -2,9 +2,7 @@
   <v-app>
     <Header />
     <v-main> </v-main>
-    <v-footer>
-      <Footer> </Footer>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
