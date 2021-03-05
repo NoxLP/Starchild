@@ -10,6 +10,9 @@
           class="starchild-input mx-2"
           :label="innerLabel"
           :rules="rules"
+          :append-icon="pwdIcon"
+          :type="show"
+          @click:append="onShowIcon()"
           hide-details="auto"
         ></v-text-field>
       </v-col>
@@ -19,6 +22,12 @@
 
 <script>
 export default {
+  data: () => {
+    return {
+      show: '',
+      pwdIcon: ''
+    }
+  },
   props: {
     rules: {
       type: Array,
@@ -30,7 +39,28 @@ export default {
     label: String,
     innerLabel: String,
     labelColumns: String,
-    inputColumns: String
+    inputColumns: String,
+    type: String
+  },
+  methods: {
+    onShowIcon: function() {
+      if (this.type && this.type === 'password') {
+        if (this.show === 'text') {
+          this.show = 'password'
+          this.pwdIcon = 'mdi-eye'
+        } else {
+          this.show = 'text'
+          this.pwdIcon = 'mdi-eye-off'
+        }
+      } else {
+        this.pwdIcon = ''
+      }
+    }
+  },
+  mounted() {
+    console.log(this.type)
+    this.show = this.type
+    if (this.type === 'password') this.pwdIcon = 'mdi-eye'
   }
 }
 </script>
