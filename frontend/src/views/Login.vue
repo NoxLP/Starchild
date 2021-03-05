@@ -4,10 +4,20 @@
       <v-container>
         <v-row class="empty-row"></v-row>
         <v-row align="center" justify="center">
-          <Input labelColumns="auto" inputColumns="10" label="Email" />
+          <Input
+            labelColumns="auto"
+            inputColumns="10"
+            label="Email"
+            :rules="rules.email"
+          />
         </v-row>
         <v-row align="center" justify="center">
-          <Input labelColumns="auto" inputColumns="10" label="Password" />
+          <Input
+            labelColumns="auto"
+            inputColumns="10"
+            label="Password"
+            :rules="rules.password"
+          />
         </v-row>
         <v-row align="center" justify="center">
           <Button text="Login" class="mt-16" />
@@ -28,6 +38,22 @@ import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
 
 export default {
+  data: () => {
+    return {
+      rules: {
+        email: [
+          value => !!value || 'Required.',
+          value =>
+            (value &&
+              /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                value
+              )) ||
+            'Min 3 characters'
+        ],
+        password: [value => !!value || 'Required.']
+      }
+    }
+  },
   name: 'Login',
   components: {
     Input,
