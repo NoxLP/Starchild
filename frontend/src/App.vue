@@ -9,11 +9,13 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
+import Input from './components/Input.vue'
 
 export default {
   components: {
     Footer,
-    Header
+    Header,
+    Input
   }
 }
 </script>
