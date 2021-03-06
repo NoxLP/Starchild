@@ -37,6 +37,7 @@ import Select from '../components/Select.vue'
 import Datepicker from '../components/Datepicker.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
+import SignupService from '../services/SignupService.js'
 
 export default {
   data: function() {
@@ -78,8 +79,13 @@ export default {
     Button
   },
   methods: {
-    validate: function() {
+    validate() {
+      console.log('validate')
       this.valid = this.$refs.form.validate()
+
+      if (this.valid) {
+        SignupService.signup({})
+      }
     },
     onPasswordKeyUp: function(value) {
       console.log(value + ' onPasswordKeyUp')
