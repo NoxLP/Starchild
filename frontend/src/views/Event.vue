@@ -5,7 +5,7 @@
         <v-container>
             <v-row>
                 <v-col>
-                    <div><v-img :src="cat_icon"></v-img></div>
+                    <div><v-img :src="cat_icon" :width="icon_width"></v-img></div>
                     <div><v-img :src="moonphase"></v-img><v-img :src="weather_icon"></v-img></div>
                 </v-col>
             </v-row>
@@ -22,8 +22,9 @@ export default {
     return {
       img: '',
       title: '',
-      cat_icon: '',
-      moonphase: '',
+      icon_width: 30,
+      cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
+      moonphase: require(''),
       weather_icon: ''
     }
   },
