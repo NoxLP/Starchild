@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <Input :rules="testRules" label="" innerLabel="Ejemplo" />
+      <Input :rules="testRules" label="Ejemplo" />
     </v-main>
     <v-footer>
       <Footer> </Footer>
