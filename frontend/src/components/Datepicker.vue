@@ -18,7 +18,6 @@
               outlined
               class="starchild-input mx-2"
               :label="innerLabel"
-              :rules="rules"
               hide-details="auto"
               v-model="date"
               readonly
@@ -54,7 +53,7 @@ export default {
   },
   methods: {
     save(date) {
-      this.$refs.menu.save(date)
+      this.$refs.menu.save(date.toLocaleString('es-ES'))
     }
   },
   props: {

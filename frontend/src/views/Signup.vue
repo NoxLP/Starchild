@@ -11,11 +11,10 @@
         type="password"
         name="pass"
       />
-      <Input
+      <ConfirmPassword
         label="Confirmar Password"
-        :rules="confirmPasswordRule"
         type="password"
-        name="confirmPass"
+        :password="pass"
       />
       <Input label="Ubicación" />
       <Select label="Ocupación" :rules="rules.job" type="text" />
@@ -27,16 +26,16 @@
 
 <script>
 import Input from '../components/Input.vue'
+import ConfirmPassword from '../components/ConfirmPassword'
 import Select from '../components/Select.vue'
 import Datepicker from '../components/Datepicker'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
 
 export default {
-  data: () => {
+  data: function() {
     return {
       pass: '',
-      confirmPassValue: '',
       rules: {
         surname: [],
         email: [
@@ -55,24 +54,17 @@ export default {
               /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}/.test(
                 value
               )) ||
-            'Mínimo 3 caracteres, una letra minúscula, una mayúscula y un número.'
+            'Mínimo 8 caracteres, una letra minúscula, una mayúscula y un número.'
         ],
         job: [],
         date: []
       }
     }
   },
-  computed: {
-    confirmPasswordRule() {
-      return [
-        () =>
-          this.pass === this.confirmPassValue || 'No coincide con el password.'
-      ]
-    }
-  },
   name: 'Signup',
   components: {
     Input,
+    ConfirmPassword,
     Select,
     Datepicker,
     Card,
@@ -80,9 +72,7 @@ export default {
   },
   mounted() {
     this.$root.$on('inputKeyUp', (name, value) => {
-      if (name === 'confirmPass') {
-        this.confirmPassValue = value
-      } else if (name === 'pass') {
+      if (name === 'pass') {
         this.pass = value
       }
     })
