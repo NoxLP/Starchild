@@ -1,10 +1,14 @@
 <template>
   <div>
-    <v-app-bar class="d-md-none text-center" dense flat>
+    <v-app-bar class="d-md-none text-center" dense flat color="transparent">
       Aquí va el logo de movil
     </v-app-bar>
-    <v-app-bar color="d-none d-md-block align-center" dense>
-      Aqui va el logo
+    <v-app-bar dark dense color="transparent" height="100px">
+      <v-img
+        max-width="350px"
+        contain
+        src="../../public/assets/images/starchild.png"
+      ></v-img>
 
       <v-spacer></v-spacer>
 
@@ -36,4 +40,4 @@
 export default {}
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
