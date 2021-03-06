@@ -41,8 +41,14 @@ export default {
     },
     label: String,
     innerLabel: String,
-    labelColumns: String,
-    inputColumns: String,
+    labelColumns: {
+      type: String,
+      default: 'auto'
+    },
+    inputColumns: {
+      type: String,
+      default: '10'
+    },
     type: String
   },
   methods: {
@@ -60,7 +66,7 @@ export default {
       }
     },
     onInputKeyUp: function() {
-      this.$root.$emit('inputKeyUp', this.value)
+      this.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {
