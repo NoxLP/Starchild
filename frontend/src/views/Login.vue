@@ -26,15 +26,15 @@
     </Card>
     <v-container>
       <v-row justify="center">
-        <router-link
+        <!--<router-link
           type="button"
           class="btn"
           :to="{
             name: signup
           }"
-        >
-          <Button text="Registro" />
-        </router-link>
+        >-->
+        <Button text="Registro" />
+        <!--</router-link>-->
       </v-row>
     </v-container>
   </v-form>
@@ -44,6 +44,7 @@
 import Input from '../components/Input.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
+import LoginService from '../services/loginService.js'
 
 export default {
   name: 'Login',
@@ -54,6 +55,7 @@ export default {
   },
   data: () => {
     return {
+      pass: '',
       valid: false,
       rules: {
         email: [
@@ -78,7 +80,12 @@ export default {
   },
   methods: {
     validate() {
+      console.log('validate')
       this.valid = this.$refs.form.validate()
+      console.log('pass ', this.pass)
+      if (this.valid) {
+        LoginService.login({})
+      }
     }
   }
 }

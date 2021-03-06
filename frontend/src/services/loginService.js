@@ -1,12 +1,7 @@
-const axios = require('axios')
-
-const api = axios.create({
-  baseURL: process.env.BACK_URL,
-  withCredentials: false
-})
+const { api } = require('./backConnection.js')
 
 export default {
-  ///auth/users/login
+  //endpoint: /auth/users/login
   login: async function(data) {
     let loginData
     try {
