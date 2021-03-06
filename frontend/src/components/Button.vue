@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn class="starchild-button">
+    <v-btn class="starchild-button" :disabled="disabled">
       <p class="starchild-button-text">{{ text }}</p>
     </v-btn>
   </div>
@@ -9,7 +9,8 @@
 <script>
 export default {
   props: {
-    text: String
+    text: String,
+    disabled: Boolean
   }
 }
 </script>
