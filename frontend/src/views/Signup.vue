@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <Card class="">
+    <Card class="signup-card">
       <Input label="Nombre" required />
       <Input label="Apellidos" :rules="rules.surname" type="text" />
       <Input label="Usuario" required />
@@ -21,7 +21,11 @@
       <Input label="Ubicación" required />
       <Select label="Ocupación" :rules="rules.job" type="text" />
       <Datepicker label="Fecha de Nacimiento" :rules="rules.date" type="text" />
-      <Button text="Enviar" :disabled="!valid" @click="validate" />
+      <v-container class="mt-10 mb-10">
+        <v-row justify="center">
+          <Button text="Enviar" :disabled="!valid" @click="validate" />
+        </v-row>
+      </v-container>
     </Card>
   </v-form>
 </template>
@@ -85,4 +89,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.signup-card {
+  margin: 7vw 12vw 2vw 12vw !important;
+}
+</style>
