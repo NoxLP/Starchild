@@ -4,19 +4,10 @@
       <v-container>
         <v-row class="empty-row"></v-row>
         <v-row align="center" justify="center">
-          <Input
-            labelColumns="auto"
-            inputColumns="10"
-            label="Email"
-            :rules="rules.email"
-            type="text"
-            required
-          />
+          <Input label="Email" :rules="rules.email" type="text" required />
         </v-row>
         <v-row align="center" justify="center">
           <Input
-            labelColumns="auto"
-            inputColumns="10"
             label="Password"
             :rules="rules.password"
             type="password"
