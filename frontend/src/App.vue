@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <Header />
-    <v-main> </v-main>
+    <v-main> <Signup /> </v-main>
     <Footer />
   </v-app>
 </template>
@@ -9,13 +9,18 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import Input from './components/Input.vue'
+import Signup from './views/Signup'
 
 export default {
   components: {
     Footer,
     Header,
-    Input
+    Signup
   }
 }
 </script>
+<style scoped>
+.app {
+  background-color: #180941 !important;
+}
+</style>

@@ -14,7 +14,6 @@
           :append-icon="pwdIcon"
           :type="show"
           @click:append="onShowIcon()"
-          @keyup="onInputKeyUp()"
           hide-details="auto"
         ></v-text-field>
       </v-col>
@@ -24,21 +23,19 @@
 
 <script>
 export default {
-  data: () => {
+  data: function() {
     return {
       show: '',
       pwdIcon: '',
-      value: ''
+      value: '',
+      rules: [
+        (this.password && this.password === this.value) ||
+          'Las contraseñas no coinciden.'
+      ]
     }
   },
   props: {
-    rules: {
-      type: Array,
-      default: () => [
-        value => !!value || 'Requerido.',
-        value => (value && value.length >= 3) || 'Mínimo 3 caracteres.'
-      ]
-    },
+    password: String,
     label: String,
     innerLabel: String,
     labelColumns: String,
@@ -58,9 +55,6 @@ export default {
       } else {
         this.pwdIcon = ''
       }
-    },
-    onInputKeyUp: function() {
-      this.$root.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {
