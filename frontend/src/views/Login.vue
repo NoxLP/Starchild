@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" v-model="valid">
     <Card class="login-card">
       <v-container>
         <v-row class="empty-row"></v-row>
