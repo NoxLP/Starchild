@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="400" class="mx-auto">
+  <v-card :maxWidth="maxWidth" class="mx-auto starchild-card">
     <v-container>
       <v-row dense>
         <v-col cols="12">
@@ -12,10 +12,14 @@
 
 <script>
 export default {
-  data: () => ({ //<--- arrowfunction del MAL
+  data: () => ({
     items: []
-  })
+  }),
+  props: {
+    maxWidth: Number
+  }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
