@@ -1,27 +1,29 @@
 <template>
-  <div>
+  <v-form ref="form" v-model="valid">
     <Card class="">
-      <Input label="Nombre" />
+      <Input label="Nombre" required />
       <Input label="Apellidos" :rules="rules.surname" type="text" />
-      <Input label="Usuario" />
-      <Input label="Email" :rules="rules.email" type="text" />
+      <Input label="Usuario" required />
+      <Input label="Email" :rules="rules.email" type="text" required />
       <Input
         label="Password"
         :rules="rules.password"
         type="password"
         name="pass"
+        required
       />
       <ConfirmPassword
         label="Confirmar Password"
         type="password"
         :password="pass"
+        required
       />
-      <Input label="Ubicación" />
+      <Input label="Ubicación" required />
       <Select label="Ocupación" :rules="rules.job" type="text" />
       <Datepicker label="Fecha de Nacimiento" :rules="rules.date" type="text" />
-      <Button text="Enviar" />
+      <Button text="Enviar" :disabled="!valid" @click="validate" />
     </Card>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -36,6 +38,7 @@ export default {
   data: function() {
     return {
       pass: '',
+      valid: false,
       rules: {
         surname: [],
         email: [
@@ -69,6 +72,11 @@ export default {
     Datepicker,
     Card,
     Button
+  },
+  methods: {
+    validate() {
+      this.valid = this.$refs.form.validate()
+    }
   },
   mounted() {
     this.$root.$on('inputKeyUp', (name, value) => {
