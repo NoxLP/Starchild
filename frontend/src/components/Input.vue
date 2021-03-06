@@ -60,7 +60,7 @@ export default {
       }
     },
     onInputKeyUp: function() {
-      this.$root.$emit('inputKeyUp', this.value)
+      this.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {

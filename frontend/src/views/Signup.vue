@@ -9,7 +9,7 @@
         label="Password"
         :rules="rules.password"
         type="password"
-        name="pass"
+        @inputKeyUp="onPasswordKeyUp"
         required
       />
       <ConfirmPassword
@@ -28,9 +28,9 @@
 
 <script>
 import Input from '../components/Input.vue'
-import ConfirmPassword from '../components/ConfirmPassword'
+import ConfirmPassword from '../components/ConfirmPassword.vue'
 import Select from '../components/Select.vue'
-import Datepicker from '../components/Datepicker'
+import Datepicker from '../components/Datepicker.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
 
@@ -74,16 +74,13 @@ export default {
     Button
   },
   methods: {
-    validate() {
+    validate: function() {
       this.valid = this.$refs.form.validate()
+    },
+    onPasswordKeyUp: function(value) {
+      console.log(value + ' onPasswordKeyUp')
+      this.pass = value
     }
-  },
-  mounted() {
-    this.$root.$on('inputKeyUp', (name, value) => {
-      if (name === 'pass') {
-        this.pass = value
-      }
-    })
   }
 }
 </script>

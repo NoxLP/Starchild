@@ -8,7 +8,6 @@
         <v-text-field
           outlined
           class="starchild-input mx-2"
-          v-model="value"
           :label="innerLabel"
           :rules="rules"
           :append-icon="pwdIcon"
@@ -27,9 +26,9 @@ export default {
     return {
       show: '',
       pwdIcon: '',
-      value: '',
       rules: [
-        (this.password && this.password === this.value) ||
+        value =>
+          (this.password && this.password === value) ||
           'Las contraseñas no coinciden.'
       ]
     }
