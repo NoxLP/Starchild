@@ -43,11 +43,7 @@ export default {
     innerLabel: String,
     labelColumns: String,
     inputColumns: String,
-    type: String,
-    name: {
-      type: String,
-      default: ''
-    }
+    type: String
   },
   methods: {
     onShowIcon: function() {
@@ -64,7 +60,7 @@ export default {
       }
     },
     onInputKeyUp: function() {
-      this.$root.$emit('inputKeyUp', this.name, this.value)
+      this.$root.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {
