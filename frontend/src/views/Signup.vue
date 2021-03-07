@@ -26,7 +26,7 @@
       <ConfirmPassword
         label="Confirmar Password"
         type="password"
-        v-model="signData.confirmPassword"
+        v-model="confirmPassword"
         :password="signData.password"
         required
       />
@@ -45,7 +45,7 @@
       />
       <v-container class="mt-10 mb-10">
         <v-row justify="center">
-          <Button text="Enviar" :disabled="!valid" @click="validate" />
+          <Button text="Enviar" :disabled="!valid" @click.native="validate" />
         </v-row>
       </v-container>
     </Card>
@@ -70,11 +70,11 @@ export default {
         user: '',
         email: '',
         password: '',
-        confirmPassword: '',
         location: '',
         job: '',
         birthDate: ''
       },
+      confirmPassword: '',
       valid: false,
       rules: {
         surname: [],

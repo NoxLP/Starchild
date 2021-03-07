@@ -1,8 +1,8 @@
 const axios = require('axios')
 
 const api = axios.create({
-  baseURL: process.env.BACK_URL,
+  baseURL: 'http://localhost:8010/api',
   withCredentials: false
 })
 
-export default { api }
+export { api }
