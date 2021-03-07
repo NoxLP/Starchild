@@ -1,4 +1,4 @@
-const { api } = require('./backConnection.js')
+import { api } from './backConnection.js'
 
 export default {
   //endpoint: /auth/users/login
@@ -13,7 +13,7 @@ export default {
 
     if (loginData && loginData.token) {
       localStorage.setItem('token', loginData.token)
-      localStorage.setItem('name', loginData.name)
+      localStorage.setItem('user', loginData.user)
       localStorage.setItem('email', loginData.email)
 
       //TODO: go to home
