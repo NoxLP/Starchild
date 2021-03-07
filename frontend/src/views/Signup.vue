@@ -1,42 +1,47 @@
 <template>
   <v-form ref="form" v-model="valid">
     <Card class="signup-card">
-      <Input label="Nombre" v-model="name" required />
+      <Input label="Nombre" v-model="signData.name" required />
       <Input
         label="Apellidos"
         :rules="rules.surname"
         type="text"
-        v-model="surname"
+        v-model="signData.surname"
       />
-      <Input label="Usuario" required v-model="user" />
+      <Input label="Usuario" required v-model="signData.user" />
       <Input
         label="Email"
         :rules="rules.email"
         type="text"
-        v-model="email"
+        v-model="signData.email"
         required
       />
       <Input
         label="Password"
         :rules="rules.password"
         type="password"
-        v-model="password"
+        v-model="signData.password"
         required
       />
       <ConfirmPassword
         label="Confirmar Password"
         type="password"
-        v-model="confirmPassword"
-        :password="password"
+        v-model="signData.confirmPassword"
+        :password="signData.password"
         required
       />
-      <Input label="Ubicación" required v-model="location" />
-      <Select label="Ocupación" :rules="rules.job" type="text" v-model="job" />
+      <Input label="Ubicación" required v-model="signData.location" />
+      <Select
+        label="Ocupación"
+        :rules="rules.job"
+        type="text"
+        v-model="signData.job"
+      />
       <Datepicker
         label="Fecha de Nacimiento"
         :rules="rules.date"
         type="text"
-        v-model="birthDate"
+        v-model="signData.birthDate"
       />
       <v-container class="mt-10 mb-10">
         <v-row justify="center">
@@ -59,15 +64,17 @@ import SignupService from '../services/SignupService.js'
 export default {
   data: function() {
     return {
-      name: '',
-      surname: '',
-      user: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      location: '',
-      job: '',
-      birthDate: '',
+      signData: {
+        name: '',
+        surname: '',
+        user: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        location: '',
+        job: '',
+        birthDate: ''
+      },
       valid: false,
       rules: {
         surname: [],
@@ -109,10 +116,7 @@ export default {
       this.valid = this.$refs.form.validate()
 
       if (this.valid) {
-        SignupService.signup({
-          email: this.email,
-          password: this.password
-        })
+        SignupService.signup(this.signData)
       }
     }
   }
