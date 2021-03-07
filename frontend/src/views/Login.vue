@@ -103,7 +103,7 @@ export default {
 
 <style scoped>
 .login-card {
-  margin: 7vw 12vw 2vw 12vw !important;
+  margin: 7vw 15vw 2vw 15vw !important;
   height: 60vh !important;
 }
 .empty-row {

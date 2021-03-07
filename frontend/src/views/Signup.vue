@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <Card class="signup-card">
+    <Card class="signup-card md-pr-9">
       <Input label="Nombre" v-model="signData.name" required />
       <Input
         label="Apellidos"
@@ -125,6 +125,6 @@ export default {
 
 <style scoped>
 .signup-card {
-  margin: 7vw 12vw 2vw 12vw !important;
+  margin: 7vw 15vw 2vw 15vw !important;
 }
 </style>

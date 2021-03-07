@@ -1,10 +1,15 @@
 <template>
-  <v-container fluid>
-    <v-row align="center" justify="end" style="height: 100px">
-      <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
+  <v-container fluid class="xs-px-3 sm-px-7 md-px-0">
+    <v-row
+      align="center"
+      justify="end"
+      style="height: 100px"
+      class="flex-nowrap"
+    >
+      <v-col :cols="labelColumns" v-if="outerLabel" class="d-flex justify-end">
         <p class="mb-0 p-0">{{ outerLabel }}</p>
       </v-col>
-      <v-col :cols="inputColumns" class="d-flex justify-end">
+      <v-col :cols="inputColumns" md="10" lg="11" class="d-flex justify-end">
         <v-text-field
           outlined
           class="starchild-input mx-2"
@@ -70,11 +75,11 @@ export default {
     },
     labelColumns: {
       type: String,
-      default: 'auto'
+      default: '1'
     },
     inputColumns: {
       type: String,
-      default: '10'
+      default: '12'
     },
     type: String
   },
