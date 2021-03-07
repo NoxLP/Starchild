@@ -4,13 +4,20 @@
       <v-container>
         <v-row class="empty-row"></v-row>
         <v-row align="center" justify="center">
-          <Input label="Email" :rules="rules.email" type="text" required />
+          <Input
+            label="Email"
+            :rules="rules.email"
+            type="text"
+            v-model="email"
+            required
+          />
         </v-row>
         <v-row align="center" justify="center">
           <Input
             label="Password"
-            :rules="rules.password"
             type="password"
+            :rules="rules.password"
+            v-model="password"
             required
           />
         </v-row>
@@ -55,8 +62,9 @@ export default {
   },
   data: () => {
     return {
-      pass: '',
-      valid: false,
+      email: '',
+      password: '',
+      valid: true,
       rules: {
         email: [
           value =>
@@ -83,7 +91,10 @@ export default {
       this.valid = this.$refs.form.validate()
 
       if (this.valid) {
-        LoginService.login({})
+        LoginService.login({
+          email: this.email,
+          password: this.password
+        })
       }
     }
   }
