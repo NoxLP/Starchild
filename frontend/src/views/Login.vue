@@ -33,15 +33,15 @@
     </Card>
     <v-container>
       <v-row justify="center">
-        <!--<router-link
+        <router-link
           type="button"
           class="btn"
           :to="{
-            name: signup
+            name: 'signup'
           }"
-        >-->
-        <Button text="Registro" />
-        <!--</router-link>-->
+        >
+          <Button text="Registro" />
+        </router-link>
       </v-row>
     </v-container>
   </v-form>
@@ -51,10 +51,10 @@
 import Input from '../components/Input.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
-import LoginService from '../services/loginService.js'
+import LoginService from '../services/loginSignupService.js'
 
 export default {
-  name: 'Login',
+  name: 'login',
   components: {
     Input,
     Card,

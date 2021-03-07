@@ -1,7 +1,9 @@
 <template>
   <v-app class="app">
     <Header />
-    <v-main> <Login /> </v-main>
+    <v-main>
+      <router-view :key="$route.fullPath" />
+    </v-main>
     <Footer />
   </v-app>
 </template>
@@ -9,13 +11,11 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import Login from './views/Login'
 
 export default {
   components: {
     Footer,
-    Header,
-    Login
+    Header
   }
 }
 </script>

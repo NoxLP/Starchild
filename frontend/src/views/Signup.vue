@@ -59,9 +59,10 @@ import Select from '../components/Select.vue'
 import Datepicker from '../components/Datepicker.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
-import SignupService from '../services/SignupService.js'
+import SignupService from '../services/loginSignupService.js'
 
 export default {
+  name: 'signup',
   data: function() {
     return {
       signData: {
@@ -101,7 +102,6 @@ export default {
       }
     }
   },
-  name: 'Signup',
   components: {
     Input,
     ConfirmPassword,
