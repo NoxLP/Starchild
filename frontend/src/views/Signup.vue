@@ -9,13 +9,13 @@
         label="Password"
         :rules="rules.password"
         type="password"
-        @inputKeyUp="onPasswordKeyUp"
+        v-model="password"
         required
       />
       <ConfirmPassword
         label="Confirmar Password"
         type="password"
-        :password="pass"
+        :password="password"
         required
       />
       <Input label="Ubicación" required />
@@ -42,7 +42,7 @@ import SignupService from '../services/SignupService.js'
 export default {
   data: function() {
     return {
-      pass: '',
+      password: '',
       valid: false,
       rules: {
         surname: [],
@@ -86,10 +86,6 @@ export default {
       if (this.valid) {
         SignupService.signup({})
       }
-    },
-    onPasswordKeyUp: function(value) {
-      console.log(value + ' onPasswordKeyUp')
-      this.pass = value
     }
   }
 }
