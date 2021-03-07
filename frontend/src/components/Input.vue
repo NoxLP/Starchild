@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row align="center" justify="end" style="height: 100px">
       <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
-        <p class="mb-0 p-0">{{ label }}</p>
+        <p class="mb-0 p-0">{{ outerLabel }}</p>
       </v-col>
       <v-col :cols="inputColumns" class="d-flex justify-end">
         <v-text-field
@@ -31,7 +31,34 @@ export default {
       value: ''
     }
   },
+  computed: {
+    innerLabel() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return this.label
+        /*case 'md':
+        case 'lg':
+        case 'xl':*/
+        default:
+          return ''
+      }
+    },
+    outerLabel() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return ''
+        /*case 'md':
+        case 'lg':
+        case 'xl':*/
+        default:
+          return this.label
+      }
+    }
+  },
   props: {
+    label: String,
     rules: {
       type: Array,
       default: () => [
@@ -39,10 +66,14 @@ export default {
         value => (value && value.length >= 3) || 'Mínimo 3 caracteres.'
       ]
     },
-    label: String,
-    innerLabel: String,
-    labelColumns: String,
-    inputColumns: String,
+    labelColumns: {
+      type: String,
+      default: 'auto'
+    },
+    inputColumns: {
+      type: String,
+      default: '10'
+    },
     type: String
   },
   methods: {
@@ -60,7 +91,7 @@ export default {
       }
     },
     onInputKeyUp: function() {
-      this.$root.$emit('inputKeyUp', this.value)
+      this.$emit('inputKeyUp', this.value)
     }
   },
   mounted() {

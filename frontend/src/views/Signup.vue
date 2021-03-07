@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <Card class="">
+    <Card class="signup-card">
       <Input label="Nombre" required />
       <Input label="Apellidos" :rules="rules.surname" type="text" />
       <Input label="Usuario" required />
@@ -9,7 +9,7 @@
         label="Password"
         :rules="rules.password"
         type="password"
-        name="pass"
+        @inputKeyUp="onPasswordKeyUp"
         required
       />
       <ConfirmPassword
@@ -21,18 +21,23 @@
       <Input label="Ubicación" required />
       <Select label="Ocupación" :rules="rules.job" type="text" />
       <Datepicker label="Fecha de Nacimiento" :rules="rules.date" type="text" />
-      <Button text="Enviar" :disabled="!valid" @click="validate" />
+      <v-container class="mt-10 mb-10">
+        <v-row justify="center">
+          <Button text="Enviar" :disabled="!valid" @click="validate" />
+        </v-row>
+      </v-container>
     </Card>
   </v-form>
 </template>
 
 <script>
 import Input from '../components/Input.vue'
-import ConfirmPassword from '../components/ConfirmPassword'
+import ConfirmPassword from '../components/ConfirmPassword.vue'
 import Select from '../components/Select.vue'
-import Datepicker from '../components/Datepicker'
+import Datepicker from '../components/Datepicker.vue'
 import Card from '../components/Card.vue'
 import Button from '../components/Button.vue'
+import SignupService from '../services/SignupService.js'
 
 export default {
   data: function() {
@@ -75,17 +80,23 @@ export default {
   },
   methods: {
     validate() {
+      console.log('validate')
       this.valid = this.$refs.form.validate()
-    }
-  },
-  mounted() {
-    this.$root.$on('inputKeyUp', (name, value) => {
-      if (name === 'pass') {
-        this.pass = value
+
+      if (this.valid) {
+        SignupService.signup({})
       }
-    })
+    },
+    onPasswordKeyUp: function(value) {
+      console.log(value + ' onPasswordKeyUp')
+      this.pass = value
+    }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.signup-card {
+  margin: 7vw 12vw 2vw 12vw !important;
+}
+</style>
