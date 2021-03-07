@@ -19,7 +19,7 @@
             text="Login"
             class="mt-16"
             :disabled="!valid"
-            @click="validate"
+            @click.native="validate"
           />
         </v-row>
       </v-container>
@@ -80,9 +80,8 @@ export default {
   },
   methods: {
     validate() {
-      console.log('validate')
       this.valid = this.$refs.form.validate()
-      console.log('pass ', this.pass)
+
       if (this.valid) {
         LoginService.login({})
       }
