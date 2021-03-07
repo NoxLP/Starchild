@@ -8,13 +8,14 @@
         <v-text-field
           outlined
           class="starchild-input mx-2"
-          v-model="value"
           :label="innerLabel"
           :rules="rules"
           :append-icon="pwdIcon"
           :type="show"
+          :value="value"
+          v-model="content"
           @click:append="onShowIcon()"
-          @keyup="onInputKeyUp()"
+          @input="onInput"
           hide-details="auto"
         ></v-text-field>
       </v-col>
@@ -28,7 +29,7 @@ export default {
     return {
       show: '',
       pwdIcon: '',
-      value: ''
+      content: ''
     }
   },
   computed: {
@@ -58,6 +59,7 @@ export default {
     }
   },
   props: {
+    value: String,
     label: String,
     rules: {
       type: Array,
@@ -90,8 +92,8 @@ export default {
         this.pwdIcon = ''
       }
     },
-    onInputKeyUp: function() {
-      this.$emit('inputKeyUp', this.value)
+    onInput: function() {
+      this.$emit('input', this.content)
     }
   },
   mounted() {
