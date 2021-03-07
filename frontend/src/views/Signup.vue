@@ -1,9 +1,14 @@
 <template>
   <v-form ref="form" v-model="valid">
     <Card class="signup-card">
-      <Input label="Nombre" required />
-      <Input label="Apellidos" :rules="rules.surname" type="text" />
-      <Input label="Usuario" required />
+      <Input label="Nombre" v-model="name" required />
+      <Input
+        label="Apellidos"
+        :rules="rules.surname"
+        type="text"
+        v-model="surname"
+      />
+      <Input label="Usuario" required v-model="user" />
       <Input
         label="Email"
         :rules="rules.email"
@@ -21,10 +26,11 @@
       <ConfirmPassword
         label="Confirmar Password"
         type="password"
+        v-model="confirmPassword"
         :password="password"
         required
       />
-      <Input label="Ubicación" required />
+      <Input label="Ubicación" required v-model="location" />
       <Select label="Ocupación" :rules="rules.job" type="text" v-model="job" />
       <Datepicker
         label="Fecha de Nacimiento"
@@ -32,7 +38,6 @@
         type="text"
         v-model="birthDate"
       />
-      {{ job }}
       <v-container class="mt-10 mb-10">
         <v-row justify="center">
           <Button text="Enviar" :disabled="!valid" @click="validate" />
@@ -54,10 +59,15 @@ import SignupService from '../services/SignupService.js'
 export default {
   data: function() {
     return {
+      name: '',
+      surname: '',
+      user: '',
       email: '',
       password: '',
-      birthDate: '',
+      confirmPassword: '',
+      location: '',
       job: '',
+      birthDate: '',
       valid: false,
       rules: {
         surname: [],
