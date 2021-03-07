@@ -4,7 +4,13 @@
       <Input label="Nombre" required />
       <Input label="Apellidos" :rules="rules.surname" type="text" />
       <Input label="Usuario" required />
-      <Input label="Email" :rules="rules.email" type="text" required />
+      <Input
+        label="Email"
+        :rules="rules.email"
+        type="text"
+        v-model="email"
+        required
+      />
       <Input
         label="Password"
         :rules="rules.password"
@@ -19,8 +25,14 @@
         required
       />
       <Input label="Ubicación" required />
-      <Select label="Ocupación" :rules="rules.job" type="text" />
-      <Datepicker label="Fecha de Nacimiento" :rules="rules.date" type="text" />
+      <Select label="Ocupación" :rules="rules.job" type="text" v-model="job" />
+      <Datepicker
+        label="Fecha de Nacimiento"
+        :rules="rules.date"
+        type="text"
+        v-model="birthDate"
+      />
+      {{ job }}
       <v-container class="mt-10 mb-10">
         <v-row justify="center">
           <Button text="Enviar" :disabled="!valid" @click="validate" />
@@ -42,7 +54,10 @@ import SignupService from '../services/SignupService.js'
 export default {
   data: function() {
     return {
+      email: '',
       password: '',
+      birthDate: '',
+      job: '',
       valid: false,
       rules: {
         surname: [],
@@ -84,7 +99,10 @@ export default {
       this.valid = this.$refs.form.validate()
 
       if (this.valid) {
-        SignupService.signup({})
+        SignupService.signup({
+          email: this.email,
+          password: this.password
+        })
       }
     }
   }

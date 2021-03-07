@@ -23,6 +23,7 @@
               readonly
               v-bind="attrs"
               v-on="on"
+              :value="value"
             >
               <v-icon slot="append">mdi-calendar</v-icon>
             </v-text-field>
@@ -54,9 +55,11 @@ export default {
   methods: {
     save(date) {
       this.$refs.menu.save(date.toLocaleString('es-ES'))
+      this.$emit('input', this.date)
     }
   },
   props: {
+    value: String,
     label: String,
     labelColumns: {
       type: String,

@@ -10,6 +10,9 @@
           class="starchild-select mx-2"
           :label="innerLabel"
           :items="items"
+          :value="value"
+          v-model="content"
+          @input="onInput"
           hide-details="auto"
         ></v-select>
       </v-col>
@@ -20,9 +23,11 @@
 <script>
 export default {
   data: () => ({
-    items: ['Estudiante', 'Aficionado', 'Astrónomo']
+    items: ['Estudiante', 'Aficionado', 'Astrónomo'],
+    content: ''
   }),
   props: {
+    value: String,
     label: String,
     labelColumns: {
       type: String,
@@ -57,6 +62,11 @@ export default {
         default:
           return this.label
       }
+    }
+  },
+  methods: {
+    onInput: function() {
+      this.$emit('input', this.content)
     }
   }
 }
