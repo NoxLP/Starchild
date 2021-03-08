@@ -1,20 +1,23 @@
 <template>
-  <div class="mx-8">
+  <div class="">
     <v-carousel
       v-model="model"
-      class=""
       :continuous="true"
       cycle
       vertical
-      vertical-delimiters=""
-      @change="categoriesOnChange"
+      vertical-delimiters
+      hide-delimiter-background
+      delimiter-icon="mdi-star-four-points-outline"
+      @change="eventsOnChange"
     >
-      <v-carousel-item v-for="(item, idx) in categories" :key="idx">
-        <v-row class="fill-height" align="center" justify="center">
+      <v-carousel-item v-for="(item, idx) in events" :key="idx">
+        <v-row class="fill-height mt-5" align="center" justify="center">
           <v-img :src="item.img" class="slide-img">
-            <v-row class="fill-height" align="center" justify="center">
-              <img :src="item.icon" class="slide-icon" />
-              <h1 class="white--text mt-5">{{ item.text }}</h1>
+            <v-row class="" align="center" justify="start">
+              <h1 class="white--text mt-5 ml-10">{{ item.date }}</h1>
+            </v-row>
+            <v-row class="" align="center" justify="start">
+              <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
             </v-row>
           </v-img>
         </v-row>
@@ -31,66 +34,74 @@ export default {
   name: 'home',
   data: () => ({
     model: null,
-    categories: [
+    events: [
       {
         name: 'all',
-        text: 'Evento 1',
+        date: '25-26 Marzo',
+        text: 'Acuáridas',
         img: require('../../public/assets/images/categories/imgCatAll.jpg')
       },
       {
         name: 'eclipse_moon',
-        text: 'Evento 2',
+        date: '7 Abril',
+        text: 'Eclipse de Luna',
         img: require('../../public/assets/images/categories/imgCatEclipseMoon.png')
       },
       {
         name: 'eclipse_sun',
-        text: 'Evento 3',
+        date: '21 Mayo',
+        text: 'Eclipse de Sol',
         img: require('../../public/assets/images/categories/imgCatEclipseSun.png')
       },
       {
         name: 'planets',
-        text: 'Evento 4',
+        date: '4 Julio',
+        text: 'Conjunción de Júpiter y Marte',
         img: require('../../public/assets/images/categories/imgCatPlanets.png')
       },
       {
         name: 'meteor_shower',
-        text: 'Evento 5',
+        date: '21-22 Agosto',
+        text: 'Líridas',
         img: require('../../public/assets/images/categories/imgCatMeteorShower.png')
       },
       {
         name: 'comets',
-        text: 'Evento 6',
+        date: '30 Septiembre',
+        text: 'Cometa Ison',
         img: require('../../public/assets/images/categories/imgCatComets.png'),
         icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
       },
       {
         name: 'conjunction',
-        text: 'Evento 7',
+        date: '12 Noviembre',
+        text: 'Alineamiento Júpiter - Saturno',
         img: require('../../public/assets/images/categories/imgCatConjunction.png')
       }
     ],
     timeItems: [
       {
         title: '',
+        date: '',
         text: ''
       }
     ]
   }),
   methods: {
-    buildCategoryItems: number => {
+    eventItems: number => {
       const items = []
       for (let i = 0; i < 5; i++) {
         items.push({
-          title: `Category ${number + 1} item title ${i}`,
-          text: `Category ${number + 1} item text ${i}`,
-          date: '04/03/2021'
+          title: `Event ${number + 1} item title ${i}`,
+          date: `Event ${number + 1} item date ${i}`,
+          text: `Event ${number + 1} item text ${i}`
         })
       }
       return items
     },
-    categoriesOnChange: function(number) {
+    eventsOnChange: function(number) {
       console.log(number)
-      this.timeItems = this.buildCategoryItems(number)
+      this.timeItems = this.eventItems(number)
     }
   },
   components: {
@@ -100,8 +111,12 @@ export default {
 </script>
 
 <style scoped>
+.v-carousel__controls {
+  background: none !important;
+}
 .slide-img {
-  max-width: 50vw;
+  /* width: 50vw; */
+  height: 100%;
 }
 .slide-icon {
   max-width: 10vw;
