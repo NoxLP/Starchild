@@ -19,7 +19,12 @@
       </v-carousel-item>
     </v-carousel>
     <v-timeline align-top clipped dense>
-      <v-timeline-item v-for="(item, idx) in timeItems" :key="idx" small>
+      <v-timeline-item
+        v-for="(item, idx) in timeItems"
+        :key="idx"
+        small
+        :icon="item.icon"
+      >
         <template v-slot:opposite>
           <span
             :class="`headline font-weight-bold --text`"
@@ -41,7 +46,7 @@
 
 <script>
 /*
-timeItems: { title, date, img, highlight, category }
+timeItems: { title, date, img, highlight, categoryIcon }
 */
 import { CATEGORIES } from './helpers/categories.js'
 
@@ -62,8 +67,10 @@ export default {
       for (let i = 0; i < 5; i++) {
         items.push({
           title: `Category ${number + 1} item title ${i}`,
-          text: `Category ${number + 1} item text ${i}`,
-          date: '04/03/2021'
+          date: '04/03/2021',
+          img: '',
+          highlight: false,
+          categoryIcon: this.$vuetify.icons.catIcons.comets
         })
       }
       return items
