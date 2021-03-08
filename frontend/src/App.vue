@@ -4,9 +4,7 @@
     <v-main>
       <Timeslide />
     </v-main>
-    <v-footer>
-      <Footer> </Footer>
-    </v-footer>
+    <Footer> </Footer>
   </v-app>
 </template>
 
