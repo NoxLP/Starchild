@@ -20,14 +20,6 @@
     </v-carousel>
     <v-timeline align-top clipped dense>
       <v-timeline-item v-for="(item, idx) in timeItems" :key="idx" small>
-        <!--<v-card>
-          <v-card-title>
-            {{ item.title }}
-          </v-card-title>
-          <v-card-text>
-            {{ item.text }}
-          </v-card-text>
-        </v-card>-->
         <template v-slot:opposite>
           <span
             :class="`headline font-weight-bold --text`"
