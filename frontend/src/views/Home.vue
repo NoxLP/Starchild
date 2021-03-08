@@ -1,5 +1,16 @@
 <template>
-  <div></div>
+  <div>
+    <Timeslide />
+  </div>
 </template>
 
-<script></script>
+<script>
+import Timeslide from '../components/Timeslide.vue'
+
+export default {
+  name: 'home',
+  components: {
+    Timeslide
+  }
+}
+</script>
