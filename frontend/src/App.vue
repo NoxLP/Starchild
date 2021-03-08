@@ -1,10 +1,8 @@
 <template>
   <v-app class="app">
     <Header />
-    <v-main>
-      <Event />
-       </v-main>
-      <Footer></Footer>
+    <v-main><Event /></v-main>
+    <Footer> </Footer>
   </v-app>
 </template>
 

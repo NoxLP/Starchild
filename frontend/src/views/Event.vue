@@ -1,12 +1,14 @@
 <template>
   <div>
-    <Card><v-img :src="img"></v-img><p>{{ title }}</p></Card>
+    <Card><v-img :src="img"><p>{{ title }}</p></v-img></Card>
     <Card>
         <v-container>
             <v-row>
                 <v-col>
-                    <div><v-img :src="cat_icon" :width="icon_width"></v-img></div>
-                    <div><v-img :src="moonphase"></v-img><v-img :src="weather_icon"></v-img></div>
+                    <span><v-img :src="cat_icon" :width="icon_width"></v-img></span>
+                    <v-space>
+                    <span><v-img :src="moonphase" :width="icon_width"></v-img><v-img :src="weather_icon"></v-img></span>
+                    </v-space>
                 </v-col>
             </v-row>
         </v-container>
@@ -20,11 +22,11 @@ import Card from '../components/Card.vue'
 export default {
   data: function() {
     return {
-      img: '',
+      img: require('../../public/assets/images/perseids.png'),
       title: '',
       icon_width: 30,
-      cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
-      moonphase: require(''),
+      cat_icon: require('../../public/assets/images/moon/waxingcrescent.png'),
+      moonphase: require('../../public/assets/images/moon/fullmoon.png'),
       weather_icon: ''
     }
   },
@@ -32,4 +34,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="sass" scoped>
+
+</style>

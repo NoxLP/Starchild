@@ -1,8 +1,8 @@
 <template>
-  <v-card :maxWidth="maxWidth" class="mx-auto starchild-card">
-    <v-container>
+  <v-card max-width="400" class="pa-0 mx-auto">
+    <v-container class="pa-0 class_container" fluid>
       <v-row dense>
-        <v-col cols="12">
+        <v-col cols="12" class="pt-0">
           <slot></slot>
         </v-col>
       </v-row>
@@ -12,14 +12,13 @@
 
 <script>
 export default {
-  data: () => ({
-    items: []
-  }),
-  props: {
-    maxWidth: Number
-  }
 }
 </script>
 
 <style scoped>
+
+.class_container {
+  padding: 0 !important;
+}
+
 </style>
