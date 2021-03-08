@@ -19,7 +19,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .app {
   background-color: #180941 !important;

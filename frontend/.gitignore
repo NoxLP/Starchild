@@ -3,7 +3,6 @@ node_modules
 /dist
 desktop.ini
 
-
 # local env files
 .env.local
 .env.*.local
