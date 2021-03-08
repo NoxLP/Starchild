@@ -43,12 +43,12 @@
 /*
 timeItems: { title, date, img, highlight, category }
 */
-import Categories from './helpers/categories.js'
+import { CATEGORIES } from './helpers/categories.js'
 
 export default {
   data: () => ({
     model: null,
-    categories: Categories,
+    categories: CATEGORIES,
     timeItems: [
       {
         title: '',

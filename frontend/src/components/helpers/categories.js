@@ -37,4 +37,4 @@ const CATEGORIES = [
   }
 ]
 
-export default { CATEGORIES }
+export { CATEGORIES }
