@@ -9,6 +9,7 @@ export default {
     } catch (err) {
       console.log(err)
     }
+    return events
   },
   getTimelineDTOs: async function(category, limit, page) {
     let dtos
@@ -21,5 +22,6 @@ export default {
     } catch (err) {
       console.log(err)
     }
+    return dtos
   }
 }
