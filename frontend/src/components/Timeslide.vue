@@ -11,6 +11,7 @@
         <v-row class="fill-height" align="center" justify="center">
           <v-img :src="item.img" class="slide-img">
             <v-row class="fill-height" align="center" justify="center">
+              <img :src="item.icon" class="slide-icon" />
               <h1 class="white--text mt-5">{{ item.text }}</h1>
             </v-row>
           </v-img>
@@ -54,37 +55,38 @@ export default {
       {
         name: 'all',
         text: 'Todas',
-        img: require('@/assets/images/categories/imgCatAll.jpg')
+        img: require('../../public/assets/images/categories/imgCatAll.jpg')
       },
       {
         name: 'eclipse_moon',
         text: 'Eclipses lunares',
-        img: require('@/assets/images/categories/imgCatEclipseMoon.png')
+        img: require('../../public/assets/images/categories/imgCatEclipseMoon.png')
       },
       {
         name: 'eclipse_sun',
         text: 'Eclipses solares',
-        img: require('@/assets/images/categories/imgCatEclipseSun.png')
+        img: require('../../public/assets/images/categories/imgCatEclipseSun.png')
       },
       {
         name: 'planets',
         text: 'Planetas',
-        img: require('@/assets/images/categories/imgCatPlanets.png')
+        img: require('../../public/assets/images/categories/imgCatPlanets.png')
       },
       {
         name: 'meteor_shower',
         text: 'Lluvia de estrellas',
-        img: require('@/assets/images/categories/imgCatMeteorShower.png')
+        img: require('../../public/assets/images/categories/imgCatMeteorShower.png')
       },
       {
         name: 'comets',
         text: 'Cometas',
-        img: require('@/assets/images/categories/imgCatComets.png')
+        img: require('../../public/assets/images/categories/imgCatComets.png'),
+        icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
       },
       {
         name: 'conjunction',
         text: 'Alineación',
-        img: require('@/assets/images/categories/imgCatConjunction.png')
+        img: require('../../public/assets/images/categories/imgCatConjunction.png')
       }
     ],
     timeItems: [
@@ -120,5 +122,9 @@ export default {
 }
 .slide-img {
   max-width: 27vw;
+}
+.slide-icon {
+  max-width: 10vw;
+  color: #e7c296;
 }
 </style>
