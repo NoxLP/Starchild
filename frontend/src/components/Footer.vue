@@ -1,5 +1,5 @@
 <template>
-  <v-footer max-width="400" class="mx-auto" padless>
+  <v-footer dark max-width="400" class="mx-auto transparent" padless>
     <v-container class="d-none d-md-flex">
       Esto es el footer para los grandes
     </v-container>
