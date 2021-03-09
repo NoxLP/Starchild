@@ -27,7 +27,7 @@
         </v-carousel>
       </v-row>
       <v-row class="mt-16" justify="center">
-        <h1 class="white--text mt-16">Eventos por categoría</h1>
+        <h1 class="white--text mt-16">Eventos</h1>
       </v-row>
       <v-row justify="center" align="start" class="timeslide-row mt-md-5">
         <Timeslide />

@@ -27,23 +27,42 @@
     </v-row>
     <v-row class="justify-start justify-sm-center">
       <!--timeline-->
-      <v-timeline align-top clipped :dense="timeLineDense">
+      <v-timeline clipped :dense="timeLineDense">
         <v-timeline-item
           v-for="(item, idx) in timeLineItems"
           :key="idx"
           dark
           color="#180941"
+          class="ml-0 pl-0"
         >
           <template v-slot:icon>
             <v-avatar>
               <img :src="item.categoryIcon" />
             </v-avatar>
           </template>
-
-          <v-card>
-            <h2 class="headline font-weight-light mb-4 white--text">
-              {{ item.title }}
-            </h2>
+          <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
+            <span class="headline white--text">{{ item.date }}</span>
+          </template>
+          <v-card
+            :height="timelineCardHeight(item.highlight)"
+            style="width: 60vw;"
+          >
+            <v-img :src="item.img" v-if="$vuetify.breakpoint.smAndDown">
+              <h2 class="font-weight-light mb-4 white--text">
+                {{ item.date }}
+              </h2>
+              <span class="white--text" v-if="item.highlight"
+                >{{ item.title }} {{ item.highlight }}</span
+              >
+            </v-img>
+            <v-img :src="item.img" v-else-if="$vuetify.breakpoint.mdAndUp">
+              <h2
+                class="font-weight-light ml-4 mt-2 white--text"
+                v-if="item.highlight"
+              >
+                {{ item.title }} {{ item.highlight }}
+              </h2>
+            </v-img>
           </v-card>
         </v-timeline-item>
       </v-timeline>
@@ -92,6 +111,24 @@ export default {
     }
   },
   methods: {
+    timelineCardHeight: function(highlight) {
+      let height, diff
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          height = 100
+          diff = 80
+          break
+        case 'md':
+        case 'lg':
+        case 'xl':
+        default:
+          height = 150
+          diff = 150
+          break
+      }
+      return highlight ? height + diff : height
+    },
     buildCategoryItems: number => {
       const items = []
       for (let i = 0; i < 5; i++) {
@@ -99,7 +136,7 @@ export default {
           title: `Category ${number + 1} item title ${i}`,
           date: '04/03/2021',
           img: '',
-          highlight: false,
+          highlight: Math.random() > 0.5 ? true : false,
           categoryIcon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
         })
       }
@@ -130,7 +167,7 @@ export default {
   background: #e7c296;
 }
 .slide {
-  max-width: 60vw;
+  max-width: 100vw;
 }
 .slide-img {
   max-width: 80vw;
