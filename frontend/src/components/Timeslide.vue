@@ -24,9 +24,9 @@
       </v-carousel-item>
     </v-carousel>
     <!--timeline-->
-    <v-timeline align-top clipped dense>
+    <v-timeline align-top clipped :dense="timeLineDense">
       <v-timeline-item
-        v-for="(item, idx) in timeItems"
+        v-for="(item, idx) in timeLineItems"
         :key="idx"
         dark
         color="#180941"
@@ -36,11 +36,12 @@
             <img :src="item.categoryIcon" />
           </v-avatar>
         </template>
-        <Card>
+
+        <v-card>
           <h2 class="headline font-weight-light mb-4 white--text">
             {{ item.title }}
           </h2>
-        </Card>
+        </v-card>
       </v-timeline-item>
     </v-timeline>
   </div>
@@ -48,24 +49,43 @@
 
 <script>
 /*
-timeItems: { title, date, img, highlight, categoryIcon }
+timeLineItems: { title, date, img, highlight, categoryIcon }
 */
-import { CATEGORIES } from './helpers/categories.js'
-import Card from '../components/Card.vue'
+import { CATEGORIES } from '../helpers/categories.js'
+//import HomeService from '../services/homeService.js'
 
 export default {
   data: () => ({
     model: null,
     categories: CATEGORIES,
-    timeItems: [
-      {
-        title: '',
-        text: ''
-      }
-    ]
+    timeLineItems: []
   }),
-  components: {
-    Card
+  computed: {
+    timeLineDense() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return true
+        case 'md':
+        case 'lg':
+        case 'xl':
+        default:
+          return false
+      }
+    },
+    timeLineItemsLimit() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return 4
+        case 'md':
+          return 6
+        case 'lg':
+        case 'xl':
+        default:
+          return 10
+      }
+    }
   },
   methods: {
     buildCategoryItems: number => {
@@ -81,9 +101,20 @@ export default {
       }
       return items
     },
-    categoriesOnChange: function(number) {
+    categoriesOnChange: async function(number) {
       console.log(number)
-      this.timeItems = this.buildCategoryItems(number)
+      this.timeLineItems = this.buildCategoryItems(number)
+
+      /*
+      try {
+        this.timeLineItems = await HomeService.getTimelineDTOs(
+          CATEGORIES[number].name,
+          this.timeLineItemsLimit
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      */
     }
   }
 }
