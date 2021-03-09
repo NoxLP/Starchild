@@ -9,19 +9,21 @@
         hide-delimiters
         @change="categoriesOnChange"
       >
-        <v-carousel-item v-for="(item, idx) in categories" :key="idx">
-          <v-row align="center" justify="center">
-            <v-img :src="item.img" class="slide-img">
-              <v-container>
-                <v-row align="center" justify="center">
-                  <img :src="item.icon" class="slide-icon" />
-                </v-row>
-                <v-row align="center" justify="center">
-                  <h1 class="white--text mt-5">{{ item.text }}</h1>
-                </v-row>
-              </v-container>
-            </v-img>
-          </v-row>
+        <v-carousel-item
+          v-for="(item, i) in categories"
+          :key="i"
+          :src="item.img"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        >
+          <v-container>
+            <v-row align="center" justify="center">
+              <img :src="item.icon" class="slide-icon" />
+            </v-row>
+            <v-row align="center" justify="center">
+              <h1 class="white--text mt-5">{{ item.text }}</h1>
+            </v-row>
+          </v-container>
         </v-carousel-item>
       </v-carousel>
     </v-row>
@@ -169,9 +171,9 @@ export default {
 .slide {
   max-width: 100vw;
 }
-.slide-img {
+/*.slide-img {
   max-width: 80vw;
-}
+}*/
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
