@@ -32,7 +32,7 @@
           v-for="(item, idx) in timeLineItems"
           :key="idx"
           dark
-          color="#180941"
+          color="hsl(255, 63%, 8%)"
           class="ml-0 pl-0"
         >
           <template v-slot:icon>
