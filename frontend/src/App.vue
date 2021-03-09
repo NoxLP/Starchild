@@ -2,7 +2,8 @@
   <v-app class="app">
     <Header />
     <v-main>
-      <router-view :key="$route.fullPath" />
+      <!-- <router-view :key="$route.fullPath" /> -->
+      <Event />
     </v-main>
     <Footer />
   </v-app>
@@ -11,11 +12,13 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
+import Event from './views/Event.vue'
 
 export default {
   components: {
     Footer,
-    Header
+    Header,
+    Event
   }
 }
 </script>
