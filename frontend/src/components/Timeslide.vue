@@ -1,50 +1,54 @@
 <template>
-  <div class="mx-8">
+  <v-container class="mx-8" fluid fill-height>
     <!--categories carousel-->
-    <v-carousel
-      v-model="model"
-      class="pa-4 slide"
-      :continuous="false"
-      hide-delimiters
-      @change="categoriesOnChange"
-    >
-      <v-carousel-item v-for="(item, idx) in categories" :key="idx">
-        <v-row class="fill-height" align="center" justify="center">
-          <v-img :src="item.img" class="slide-img">
-            <v-container>
-              <v-row class="fill-height" align="center" justify="center">
-                <img :src="item.icon" class="slide-icon" />
-              </v-row>
-              <v-row class="fill-height" align="center" justify="center">
-                <h1 class="white--text mt-5">{{ item.text }}</h1>
-              </v-row>
-            </v-container>
-          </v-img>
-        </v-row>
-      </v-carousel-item>
-    </v-carousel>
-    <!--timeline-->
-    <v-timeline align-top clipped :dense="timeLineDense">
-      <v-timeline-item
-        v-for="(item, idx) in timeLineItems"
-        :key="idx"
-        dark
-        color="#180941"
+    <v-row align="start" class="justify-start justify-sm-center categories-row">
+      <v-carousel
+        v-model="model"
+        class="pa-4 slide"
+        :continuous="false"
+        hide-delimiters
+        @change="categoriesOnChange"
       >
-        <template v-slot:icon>
-          <v-avatar>
-            <img :src="item.categoryIcon" />
-          </v-avatar>
-        </template>
+        <v-carousel-item v-for="(item, idx) in categories" :key="idx">
+          <v-row class="fill-height" align="center" justify="center">
+            <v-img :src="item.img" class="slide-img">
+              <v-container>
+                <v-row class="fill-height" align="center" justify="center">
+                  <img :src="item.icon" class="slide-icon" />
+                </v-row>
+                <v-row class="fill-height" align="center" justify="center">
+                  <h1 class="white--text mt-5">{{ item.text }}</h1>
+                </v-row>
+              </v-container>
+            </v-img>
+          </v-row>
+        </v-carousel-item>
+      </v-carousel>
+    </v-row>
+    <v-row class="justify-start justify-sm-center">
+      <!--timeline-->
+      <v-timeline align-top clipped :dense="timeLineDense">
+        <v-timeline-item
+          v-for="(item, idx) in timeLineItems"
+          :key="idx"
+          dark
+          color="#180941"
+        >
+          <template v-slot:icon>
+            <v-avatar>
+              <img :src="item.categoryIcon" />
+            </v-avatar>
+          </template>
 
-        <v-card>
-          <h2 class="headline font-weight-light mb-4 white--text">
-            {{ item.title }}
-          </h2>
-        </v-card>
-      </v-timeline-item>
-    </v-timeline>
-  </div>
+          <v-card>
+            <h2 class="headline font-weight-light mb-4 white--text">
+              {{ item.title }}
+            </h2>
+          </v-card>
+        </v-timeline-item>
+      </v-timeline>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -64,8 +68,8 @@ export default {
     timeLineDense() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
-        case 'sm':
           return true
+        case 'sm':
         case 'md':
         case 'lg':
         case 'xl':
@@ -121,23 +125,15 @@ export default {
 </script>
 
 <style scoped>
+/*timeline divider color*/
 .theme--light.v-timeline:before {
   background: #e7c296;
 }
-.v-avatar {
-  border: 0 !important;
-  color: transparent !important;
-  background-color: transparent !important;
-}
-.theme--light.v-timeline .v-timeline-item__dot .v-timeline-item__inner-dot {
-  color: transparent !important;
-  background: red !important;
-}
 .slide {
-  max-width: 30vw;
+  max-width: 60vw;
 }
 .slide-img {
-  max-width: 27vw;
+  max-width: 60vw;
 }
 .slide-icon {
   max-width: 10vw;
