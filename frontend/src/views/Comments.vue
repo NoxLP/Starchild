@@ -9,13 +9,16 @@
         </v-col>
       </v-row>
     </Card>
-    <Card>
-      <template v-slot:title>
-        {{ user }}
+    <Card :borders="true">
+      <template v-slot:title class="card-title">
+        <h5>
+          {{ user }}
+        </h5>
         <v-spacer></v-spacer>
-        {{ date }}
+        <h5>
+          {{ date }}
+        </h5>
       </template>
-
       {{ text }}
 
       <template v-slot:actions>
@@ -52,5 +55,4 @@ export default {
   components: { Card }
 }
 </script>
-
 <style scoped></style>
