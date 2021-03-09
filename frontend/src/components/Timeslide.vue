@@ -10,13 +10,13 @@
         @change="categoriesOnChange"
       >
         <v-carousel-item v-for="(item, idx) in categories" :key="idx">
-          <v-row class="fill-height" align="center" justify="center">
+          <v-row align="center" justify="center">
             <v-img :src="item.img" class="slide-img">
               <v-container>
-                <v-row class="fill-height" align="center" justify="center">
+                <v-row align="center" justify="center">
                   <img :src="item.icon" class="slide-icon" />
                 </v-row>
-                <v-row class="fill-height" align="center" justify="center">
+                <v-row align="center" justify="center">
                   <h1 class="white--text mt-5">{{ item.text }}</h1>
                 </v-row>
               </v-container>
@@ -133,10 +133,16 @@ export default {
   max-width: 60vw;
 }
 .slide-img {
-  max-width: 60vw;
+  max-width: 80vw;
 }
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
+}
+
+@media (min-width: 959px) {
+  .slide-img {
+    max-width: 60vw;
+  }
 }
 </style>
