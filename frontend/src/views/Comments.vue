@@ -10,18 +10,29 @@
       </v-row>
     </Card>
     <Card>
-      <v-container>
-        <v-row>
-          <v-col>
-            {{ user }}
-            {{ date }}
-            {{ text }}
-            {{ responses }}
-            <v-icon>mdi-thumb-up-outline</v-icon>
-          </v-col>
-        </v-row>
-      </v-container>
+      <template v-slot:title>
+        {{ user }}
+        <v-spacer></v-spacer>
+        {{ date }}
+      </template>
+
+      {{ text }}
+
+      <template v-slot:actions>
+        {{ responses }}
+        <v-spacer></v-spacer>
+        <v-icon color="indigo">mdi-thumb-up-outline</v-icon>10
+      </template>
     </Card>
+    <template>
+      <div class="text-end mx-2 mt-2">
+        <v-btn fab dark color="indigo" elevation="10">
+          <v-icon dark>
+            mdi-pencil
+          </v-icon>
+        </v-btn>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -35,16 +46,11 @@ export default {
       user: 'ERMENEGILDO GÓMEZ',
       date: '22/01/2021',
       text: 'Pedazo de fotón que te has currado, man!! Te doy un like :D.',
-      responses: '',
-      icon_width: 30,
-      cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
-      moonphase: '',
-      weather_icon: '',
-      comments: 'Comentarios(14)'
+      responses: 'RESPUESTAS (12)'
     }
   },
   components: { Card }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
