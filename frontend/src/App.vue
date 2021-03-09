@@ -2,8 +2,8 @@
   <v-app class="app">
     <Header />
     <v-main>
-      <!-- <router-view :key="$route.fullPath" /> -->
-      <Event />
+      <router-view :key="$route.fullPath" />
+      <Comments />
     </v-main>
     <Footer />
   </v-app>
@@ -12,13 +12,13 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import Event from './views/Event.vue'
+import Comments from './views/Comments.vue'
 
 export default {
   components: {
     Footer,
     Header,
-    Event
+    Comments
   }
 }
 </script>
