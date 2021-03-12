@@ -70,7 +70,7 @@ export default {
         date: '30 Septiembre',
         text: 'Cometa Ison',
         img: require('../../public/assets/images/categories/imgCatComets.png'),
-        icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
+        icon: require('../../public/assets/images/astro_icons/SVG/8.svg')
       },
       {
         name: 'conjunction',

@@ -76,7 +76,7 @@ export default {
           date: '04/03/2021',
           img: '',
           highlight: false,
-          categoryIcon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
+          categoryIcon: require('@/../public/assets/images/astro_icons/SVG/8.svg')
         })
       }
       return items
