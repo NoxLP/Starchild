@@ -1,12 +1,20 @@
 <template>
   <v-card :maxWidth="maxWidth" class="mx-auto starchild-card">
-    <v-container>
-      <v-row dense>
-        <v-col cols="12">
-          <slot></slot>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-card-title>
+      <slot name="title"></slot>
+    </v-card-title>
+    <v-card-text>
+      <v-container>
+        <v-row dense>
+          <v-col cols="12">
+            <slot></slot>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <slot name="actions"></slot>
+    </v-card-actions>
   </v-card>
 </template>
 

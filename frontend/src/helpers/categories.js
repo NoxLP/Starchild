@@ -5,12 +5,12 @@ const CATEGORIES = [
     img: require('@/../public/assets/images/categories/imgCatAll.jpg')
   },
   {
-    name: 'eclipse_moon',
+    name: 'eclipseMoon',
     text: 'Eclipses lunares',
     img: require('@/../public/assets/images/categories/imgCatEclipseMoon.png')
   },
   {
-    name: 'eclipse_sun',
+    name: 'eclipseSun',
     text: 'Eclipses solares',
     img: require('@/../public/assets/images/categories/imgCatEclipseSun.png')
   },
@@ -20,7 +20,7 @@ const CATEGORIES = [
     img: require('@/../public/assets/images/categories/imgCatPlanets.png')
   },
   {
-    name: 'meteor_shower',
+    name: 'meteorShower',
     text: 'Lluvia de estrellas',
     img: require('@/../public/assets/images/categories/imgCatMeteorShower.png')
   },

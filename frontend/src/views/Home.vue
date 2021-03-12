@@ -1,29 +1,38 @@
 <template>
   <div class="">
-    <v-carousel
-      v-model="model"
-      :continuous="true"
-      cycle
-      vertical
-      vertical-delimiters
-      hide-delimiter-background
-      delimiter-icon="mdi-star-four-points-outline"
-      @change="eventsOnChange"
-    >
-      <v-carousel-item v-for="(item, idx) in events" :key="idx">
-        <v-row class="fill-height mt-5" align="center" justify="center">
-          <v-img :src="item.img" class="slide-img">
-            <v-row class="" align="center" justify="start">
-              <h1 class="white--text mt-5 ml-10">{{ item.date }}</h1>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-carousel
+          v-model="model"
+          :continuous="true"
+          cycle
+          vertical
+          vertical-delimiters
+          hide-delimiter-background
+          delimiter-icon="mdi-star-four-points-outline"
+          @change="eventsOnChange"
+        >
+          <v-carousel-item v-for="(item, idx) in events" :key="idx">
+            <v-row class="fill-height mt-5" align="center" justify="center">
+              <v-img :src="item.img" class="slide-img">
+                <v-row class="" align="center" justify="start">
+                  <h1 class="white--text mt-5 ml-10">{{ item.date }}</h1>
+                </v-row>
+                <v-row class="" align="center" justify="start">
+                  <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
+                </v-row>
+              </v-img>
             </v-row>
-            <v-row class="" align="center" justify="start">
-              <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
-            </v-row>
-          </v-img>
-        </v-row>
-      </v-carousel-item>
-    </v-carousel>
-    <Timeslide />
+          </v-carousel-item>
+        </v-carousel>
+      </v-row>
+      <v-row class="mt-16" justify="center">
+        <h1 class="white--text mt-16">Eventos</h1>
+      </v-row>
+      <v-row justify="center" align="start" class="timeslide-row mt-md-5">
+        <Timeslide />
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -114,6 +123,9 @@ export default {
 .v-carousel__controls {
   background: none !important;
 }
+/*.timeslide-row {
+  margin-top: 10vh;
+}*/
 .slide-img {
   /* width: 50vw; */
   height: 100%;

@@ -1,7 +1,7 @@
 import { api } from './backConnection.js'
 
 export default {
-  //endpoint /events/last
+  // /events/last
   getLastEvents: async function() {
     let events
     try {
@@ -11,12 +11,13 @@ export default {
     }
     return events
   },
-  getTimelineDTOs: async function(category, limit, page) {
+  // /events/timelinedtos/:categoryId
+  getTimelineDTOs: async function(category, limit) {
     let dtos
     try {
       dtos = (
         await api.get(`/events/timelinedtos/${category}`, {
-          params: { limit: limit, page: page }
+          params: { limit: limit }
         })
       ).data
     } catch (err) {
