@@ -24,7 +24,7 @@ export default {
     try {
       dtos = (
         await api.get(`/events/timelinedtos/${category}`, {
-          params: { limit: limit }
+          params: { limit: limit}
         })
       ).data
     } catch (err) {
