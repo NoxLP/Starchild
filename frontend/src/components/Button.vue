@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn class="starchild-button" :disabled="disabled">
+    <v-btn class="Glass" :disabled="disabled">
       <p class="starchild-button-text">{{ text }}</p>
     </v-btn>
   </div>
@@ -30,5 +30,12 @@ export default {
   font-size: 24px;
 
   color: #e7c296;
+}
+.Glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 10px;
 }
 </style>

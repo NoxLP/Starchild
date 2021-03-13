@@ -45,7 +45,8 @@
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
             <span class="headline white--text">{{ item.date }}</span>
           </template>
-          <v-card
+          <Card
+            class="Glass pa-0"
             :height="timelineCardHeight(item.highlight)"
             style="width: 60vw;"
           >
@@ -65,7 +66,7 @@
                 {{ item.title }}
               </h2>
             </v-img>
-          </v-card>
+          </Card>
         </v-timeline-item>
       </v-timeline>
     </v-row>
@@ -79,6 +80,7 @@ timeLineItems: { title, date, img, highlight, categoryIcon }
 import { CATEGORIES, CATEGORY_ICONS } from '../helpers/categories.js'
 import HomeService from '../services/homeService.js'
 import EventService from '../services/eventServices.js'
+import Card from '../components/Card.vue'
 
 export default {
   data: () => ({
@@ -86,6 +88,9 @@ export default {
     categories: CATEGORIES,
     timeLineItems: []
   }),
+  components: {
+    Card
+  },
   computed: {
     timeLineDense() {
       switch (this.$vuetify.breakpoint.name) {
@@ -203,6 +208,13 @@ export default {
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
+}
+.Glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 10px;
 }
 
 @media (min-width: 959px) {
