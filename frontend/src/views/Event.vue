@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import eventServices from '../services/eventServices.js'
 import Card from '../components/Card.vue'
 export default {
   data: function() {
@@ -48,7 +49,17 @@ export default {
       comments: 'Comentarios(14)'
     }
   },
-  components: { Card }
+  props: { eventId: String },
+  components: { Card },
+  mounted() {
+    eventServices.getEvent(this.eventId).then(event => {
+        this.title = event.title
+        this.text = event.description
+        this.comments = event.comments
+    })
+    eventServices.getEventImage(this.eventId)
+    eventServices.getEventMoonPhase(this.eventId)
+  }
 }
 </script>
 
