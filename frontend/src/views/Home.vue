@@ -38,56 +38,13 @@
 
 <script>
 import Timeslide from '../components/Timeslide.vue'
+import homeService from '../services/homeService.js'
 
 export default {
   name: 'home',
   data: () => ({
     model: null,
-    events: [
-      {
-        name: 'all',
-        date: '25-26 Marzo',
-        text: 'Acuáridas',
-        img: require('../../public/assets/images/categories/imgCatAll.jpg')
-      },
-      {
-        name: 'eclipse_moon',
-        date: '7 Abril',
-        text: 'Eclipse de Luna',
-        img: require('../../public/assets/images/categories/imgCatEclipseMoon.png')
-      },
-      {
-        name: 'eclipse_sun',
-        date: '21 Mayo',
-        text: 'Eclipse de Sol',
-        img: require('../../public/assets/images/categories/imgCatEclipseSun.png')
-      },
-      {
-        name: 'planets',
-        date: '4 Julio',
-        text: 'Conjunción de Júpiter y Marte',
-        img: require('../../public/assets/images/categories/imgCatPlanets.png')
-      },
-      {
-        name: 'meteor_shower',
-        date: '21-22 Agosto',
-        text: 'Líridas',
-        img: require('../../public/assets/images/categories/imgCatMeteorShower.png')
-      },
-      {
-        name: 'comets',
-        date: '30 Septiembre',
-        text: 'Cometa Ison',
-        img: require('../../public/assets/images/categories/imgCatComets.png'),
-        icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
-      },
-      {
-        name: 'conjunction',
-        date: '12 Noviembre',
-        text: 'Alineamiento Júpiter - Saturno',
-        img: require('../../public/assets/images/categories/imgCatConjunction.png')
-      }
-    ],
+    events: [],
     timeItems: [
       {
         title: '',
@@ -115,6 +72,16 @@ export default {
   },
   components: {
     Timeslide
+  },
+  mounted() {
+    homeService
+      .getLastEvents()
+      .then(res => {
+        this.events = res
+      })
+      .catch(err => {
+        console.log('Error fetching events', err)
+      })
   }
 }
 </script>
