@@ -14,7 +14,7 @@
         >
           <v-carousel-item v-for="(item, idx) in events" :key="idx">
             <v-row class="fill-height mt-5" align="center" justify="center">
-              <v-img :src="item.img" class="slide-img">
+              <v-img :src="item.img.urls.url_hd" class="slide-img">
                 <v-row class="" align="center" justify="start">
                   <h1 class="white--text mt-5 ml-10">{{ item.date }}</h1>
                 </v-row>
