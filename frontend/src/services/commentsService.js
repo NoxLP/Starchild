@@ -11,7 +11,8 @@ export default {
           params: {
             limit: limit,
             page: page
-          }
+          },
+          headers: { token: localStorage.getItem('token') }
         })
       ).data
     } catch (err) {
@@ -26,7 +27,11 @@ export default {
 
     let posted
     try {
-      posted = (await api.post('/comments', comment)).data
+      posted = (
+        await api.post('/comments', comment, {
+          headers: { token: localStorage.getItem('token') }
+        })
+      ).data
     } catch (err) {
       console.log('error posting comment: ', err)
     }
@@ -38,8 +43,11 @@ export default {
 
     let deleted
     try {
-      deleted = (await api.delete(`/comments/${commentId}/events/${eventId}`))
-        .data
+      deleted = (
+        await api.delete(`/comments/${commentId}/events/${eventId}`, {
+          headers: { token: localStorage.getItem('token') }
+        })
+      ).data
     } catch (err) {
       console.log('error deleting comment: ', err)
     }
@@ -52,9 +60,15 @@ export default {
     let edited
     try {
       edited = (
-        await api.put(`/comments/${commentId}/events/${eventId}`, {
-          text: text
-        })
+        await api.put(
+          `/comments/${commentId}/events/${eventId}`,
+          {
+            text: text
+          },
+          {
+            headers: { token: localStorage.getItem('token') }
+          }
+        )
       ).data
     } catch (err) {
       console.log('error editing comment: ', err)
@@ -68,16 +82,13 @@ export default {
     let edited
     try {
       edited = (
-        await api.post(
-          `/comments/reply`,
-          {
-            params: {
-              eventId: eventId,
-              parentId: parentId
-            }
+        await api.post(`/comments/reply`, comment, {
+          params: {
+            eventId: eventId,
+            parentId: parentId
           },
-          comment
-        )
+          headers: { token: localStorage.getItem('token') }
+        })
       ).data
     } catch (err) {
       console.log('error posting reply: ', err)
@@ -96,7 +107,8 @@ export default {
             eventId: eventId,
             parentId: parentId,
             index: index
-          }
+          },
+          headers: { token: localStorage.getItem('token') }
         })
       ).data
     } catch (err) {
@@ -105,23 +117,20 @@ export default {
 
     return edited
   },
-  editReplyFromComment: async function(eventId, parentId, index, text) {
+  editReplyFromComment: async function(eventId, parentId, index) {
     console.log('editReplyFromComment')
 
     let edited
     try {
       edited = (
-        await api.delete(
-          `/comments/reply`,
-          {
-            params: {
-              eventId: eventId,
-              parentId: parentId,
-              index: index
-            }
+        await api.delete(`/comments/reply`, {
+          params: {
+            eventId: eventId,
+            parentId: parentId,
+            index: index
           },
-          { text: text }
-        )
+          headers: { token: localStorage.getItem('token') }
+        })
       ).data
     } catch (err) {
       console.log('error editing reply: ', err)
