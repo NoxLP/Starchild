@@ -100,7 +100,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('token')) {
-      this.$route.push('home')
+      this.$router.push('home')
     }
   }
 }
