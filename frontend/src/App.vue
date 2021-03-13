@@ -11,13 +11,13 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import Event from './views/Event.vue'
+import Comments from './views/Comments.vue'
 
 export default {
   components: {
     Footer,
     Header,
-    Event
+    Comments
   }
 }
 </script>

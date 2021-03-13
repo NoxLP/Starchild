@@ -20,9 +20,9 @@ const routes = [
     component: Signup
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: '/comments',
+    name: 'comments',
+    component: Comments
   }
 ]
 

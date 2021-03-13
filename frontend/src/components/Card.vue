@@ -1,6 +1,6 @@
 <template>
   <v-card :maxWidth="maxWidth" class="mx-auto starchild-card">
-    <v-card-title>
+    <v-card-title :class="borders ? 'slot-border-bottom' : ''">
       <slot name="title"></slot>
     </v-card-title>
     <v-card-text>
@@ -12,7 +12,7 @@
         </v-row>
       </v-container>
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions :class="borders ? 'slot-border-top' : ''">
       <slot name="actions"></slot>
     </v-card-actions>
   </v-card>
@@ -24,7 +24,8 @@ export default {
     items: []
   }),
   props: {
-    maxWidth: Number
+    maxWidth: Number,
+    borders: Boolean
   }
 }
 </script>
@@ -41,5 +42,11 @@ export default {
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 20px;
+}
+.slot-border-bottom {
+  border-bottom: solid 1px #e7c296 !important;
+}
+.slot-border-top {
+  border-top: solid 1px #e7c296 !important;
 }
 </style>
