@@ -53,16 +53,16 @@
               <h2 class="font-weight-light mb-4 white--text">
                 {{ item.date }}
               </h2>
-              <span class="white--text" v-if="item.highlight"
-                >{{ item.title }} {{ item.highlight }}</span
-              >
+              <span class="white--text" v-if="item.highlight">{{
+                item.title
+              }}</span>
             </v-img>
             <v-img :src="item.img" v-else-if="$vuetify.breakpoint.mdAndUp">
               <h2
                 class="font-weight-light ml-4 mt-2 white--text"
                 v-if="item.highlight"
               >
-                {{ item.title }} {{ item.highlight }}
+                {{ item.title }}
               </h2>
             </v-img>
           </v-card>
@@ -76,8 +76,9 @@
 /*
 timeLineItems: { title, date, img, highlight, categoryIcon }
 */
-import { CATEGORIES } from '../helpers/categories.js'
-//import HomeService from '../services/homeService.js'
+import { CATEGORIES, CATEGORY_ICONS } from '../helpers/categories.js'
+import HomeService from '../services/homeService.js'
+import EventService from '../services/eventServices.js'
 
 export default {
   data: () => ({
@@ -131,7 +132,7 @@ export default {
       }
       return highlight ? height + diff : height
     },
-    buildCategoryItems: number => {
+    /*buildCategoryItems: number => {
       const items = []
       for (let i = 0; i < 5; i++) {
         items.push({
@@ -143,22 +144,47 @@ export default {
         })
       }
       return items
+    },*/
+    setItemValues: async function(dto, idx) {
+      console.log('timeline promise ', dto.title)
+      this.timeLineItems[idx]['categoryIcon'] = CATEGORY_ICONS[dto.category]
+      this.timeLineItems[idx]['highlight'] = Math.random() > 0.5 ? true : false
+
+      let images = await EventService.getEventImage(dto._id)
+      this.timeLineItems[idx]['img'] = images.urls.url_hd
     },
     categoriesOnChange: async function(number) {
-      console.log(number)
-      this.timeLineItems = this.buildCategoryItems(number)
-
-      /*
+      console.log('categoriesOnChange ', number)
+      this.timeLineItems = []
       try {
+        const categorySelected = CATEGORIES[number].name
+
         this.timeLineItems = await HomeService.getTimelineDTOs(
-          CATEGORIES[number].name,
-          this.timeLineItemsLimit
+          categorySelected,
+          5
         )
+        console.log('timeline items done: ', this.timeLineItems)
+
+        this.timeLineItems = await Promise.all(
+          this.timeLineItems.map(async dto => {
+            console.log('timeline promise ', dto.category)
+            dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+            dto['categoryIcon'] = CATEGORIES[number].icon
+            dto['highlight'] = Math.random() > 0.5 ? true : false
+
+            let images = await EventService.getEventImage(dto._id)
+            dto['img'] = images.urls.url_hd
+            return dto
+          })
+        )
+        console.log('- timeline items done 2: ', this.timeLineItems)
       } catch (err) {
-        console.log(err)
+        console.log('error on timeslide category change: ', err)
       }
-      */
     }
+  },
+  mounted() {
+    this.categoriesOnChange(0)
   }
 }
 </script>

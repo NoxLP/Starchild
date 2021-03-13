@@ -33,6 +33,7 @@ export default {
           headers: { token: localStorage.getItem('token') }
         })
       ).data
+      console.log('*DTOS: ', dtos)
     } catch (err) {
       console.log(err)
     }

@@ -61,6 +61,7 @@ export default {
           headers: { token: localStorage.getItem('token') }
         })
       ).data
+      console.log('image: ', image)
     } catch (err) {
       console.log(err)
     }

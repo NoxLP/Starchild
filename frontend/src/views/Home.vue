@@ -16,7 +16,9 @@
             <v-row class="fill-height mt-5" align="center" justify="center">
               <v-img :src="item.img.urls.url_hd" class="slide-img">
                 <v-row class="" align="center" justify="start">
-                  <h1 class="white--text mt-5 ml-10">{{ item.date }}</h1>
+                  <h1 class="white--text mt-5 ml-10">
+                    {{ new Date(item.date).toLocaleDateString() }}
+                  </h1>
                 </v-row>
                 <v-row class="" align="center" justify="start">
                   <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
@@ -45,13 +47,7 @@ export default {
   data: () => ({
     model: null,
     events: [],
-    timeItems: [
-      {
-        title: '',
-        date: '',
-        text: ''
-      }
-    ]
+    timeItems: []
   }),
   methods: {
     eventItems: number => {
@@ -66,7 +62,7 @@ export default {
       return items
     },
     eventsOnChange: function(number) {
-      console.log(number)
+      //console.log(number)
       this.timeItems = this.eventItems(number)
     }
   },

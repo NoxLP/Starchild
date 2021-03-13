@@ -116,7 +116,9 @@ export default {
       this.valid = this.$refs.form.validate()
 
       if (this.valid) {
-        SignupService.signup(this.signData)
+        SignupService.signup(this.signData).then(() => {
+          this.$router.push('home')
+        })
       }
     }
   }
