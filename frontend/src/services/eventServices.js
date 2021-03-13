@@ -29,7 +29,11 @@ export default {
   getEvent: async function(eventId) {
     let event
     try {
-      event = (await api.get(`/events/${eventId}`)).data
+      event = (
+        await api.get(`/events/${eventId}`, {
+          headers: { token: localStorage.getItem('token') }
+        })
+      ).data
     } catch (err) {
       console.log(err)
     }
@@ -39,7 +43,11 @@ export default {
   getEventMoonPhase: async function(eventId) {
     let event
     try {
-      event = (await api.get(`/events/${eventId}/moon`)).data
+      event = (
+        await api.get(`/events/${eventId}/moon`, {
+          headers: { token: localStorage.getItem('token') }
+        })
+      ).data
     } catch (err) {
       console.log(err)
     }
@@ -63,7 +71,8 @@ export default {
     try {
       weather = (
         await api.get(`/events/${eventId}/weather`, {
-          params: { lat: lat, lon: lon }
+          params: { lat: lat, lon: lon },
+          headers: { token: localStorage.getItem('token') }
         })
       ).data
     } catch (err) {
