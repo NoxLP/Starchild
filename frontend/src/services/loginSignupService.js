@@ -34,7 +34,7 @@ export default {
       localStorage.setItem('token', signupData.token)
       localStorage.setItem('user', signupData.user)
       localStorage.setItem('email', signupData.email)
-      api.defaults.headers.common['token'] = loginData.token
+      api.defaults.headers.common['token'] = signupData.token
 
       //TODO: go to home
     } //¿¿TODO??  ¿else error?

@@ -97,6 +97,11 @@ export default {
         })
       }
     }
+  },
+  mounted() {
+    if (localStorage.getItem('token')) {
+      this.$route.push('home')
+    }
   }
 }
 </script>
