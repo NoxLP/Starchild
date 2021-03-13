@@ -1,4 +1,5 @@
 import { api } from './backConnection.js'
+import eventServices from './eventServices.js'
 
 export default {
   // /events/last
@@ -6,6 +7,10 @@ export default {
     let events
     try {
       events = (await api.get('/events/last')).data
+      for (let i = 0; i < events.length; i++) {
+        let event = events[i]
+        event['img'] = await eventServices.getEventImage(event._id)
+      }
     } catch (err) {
       console.log(err)
     }
