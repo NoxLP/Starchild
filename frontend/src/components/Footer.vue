@@ -1,7 +1,7 @@
 <template>
   <v-footer dark max-width="400" class="mx-auto transparent" padless>
     <v-container class="d-none d-md-flex">
-      Esto es el footer para los grandes
+      © Starchild {{ new Date().getFullYear() }} — Todos los derechos reservados
     </v-container>
     <v-container class="d-md-none">
       <v-row>
