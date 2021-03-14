@@ -39,7 +39,7 @@ export default {
     maxWidth: Number,
     borders: Boolean,
     elevation: Number,
-    height: Number,
+    height: String,
     textClass: String
   },
   computed: {

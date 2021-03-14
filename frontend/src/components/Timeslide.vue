@@ -41,7 +41,6 @@
           dark
           color="hsl(255, 63%, 8%)"
           class="ml-0 pl-0"
-          @click.native="onClickOnTimelineItem(idx)"
         >
           <template v-slot:icon>
             <v-avatar>
@@ -65,6 +64,8 @@
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
+                  class="timeline-item-image"
+                  @click.native="onClickOnTimelineItem(idx)"
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -96,6 +97,7 @@
                   v-else-if="$vuetify.breakpoint.mdAndUp"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
+                  class="timeline-item-image"
                   ><template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
@@ -186,7 +188,7 @@ export default {
           diff = 150
           break
       }
-      return highlight ? height + diff : height
+      return `${highlight ? height + diff : height}`
     },
     /*setItemValues: async function(dto, idx) {
       console.log('timeline promise ', dto.title)
@@ -265,6 +267,9 @@ export default {
 }
 .carousel-shadow {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+}
+.timeline-item-image {
+  border-radius: 10px;
 }
 
 @media (min-width: 959px) {

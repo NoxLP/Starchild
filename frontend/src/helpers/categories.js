@@ -3,7 +3,7 @@ const CATEGORIES = [
     name: 'all',
     text: 'Todas',
     img: require('@/../public/assets/images/categories/imgCatAll.jpg'),
-    icon: require('@/../public/assets/images/categories/imgCatAll.jpg')
+    icon: require('@/../public/assets/images/catIconAll.svg')
   },
   {
     name: 'eclipsesMoon',
