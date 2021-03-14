@@ -4,7 +4,7 @@
     <v-row align="start" class="justify-start justify-sm-center categories-row">
       <v-carousel
         v-model="model"
-        class="pa-4 slide"
+        class="pa-0 slide carousel-shadow"
         :continuous="false"
         hide-delimiters
         @change="categoriesOnChange"
@@ -18,7 +18,7 @@
         >
           <v-container>
             <v-row align="center" justify="center">
-              <img :src="item.icon" class="slide-icon" />
+              <v-img :src="item.icon" class="slide-icon" height="50%" />
             </v-row>
             <v-row align="center" justify="center">
               <h1 class="white--text mt-5">{{ item.text }}</h1>
@@ -27,7 +27,7 @@
         </v-carousel-item>
       </v-carousel>
     </v-row>
-    <v-row class="justify-start justify-sm-center">
+    <v-row class="justify-start justify-sm-center mt-5">
       <!--timeline-->
       <v-timeline clipped :dense="timeLineDense">
         <v-timeline-item
@@ -46,26 +46,65 @@
             <span class="headline white--text">{{ item.date }}</span>
           </template>
           <Card
-            class="Glass pa-0"
+            class="pa-0"
             :height="timelineCardHeight(item.highlight)"
             style="width: 60vw;"
+            :elevation="10"
+            light
           >
-            <v-img :src="item.img" v-if="$vuetify.breakpoint.smAndDown">
-              <h2 class="font-weight-light mb-4 white--text">
-                {{ item.date }}
-              </h2>
-              <span class="white--text" v-if="item.highlight">{{
-                item.title
-              }}</span>
-            </v-img>
-            <v-img :src="item.img" v-else-if="$vuetify.breakpoint.mdAndUp">
-              <h2
-                class="font-weight-light ml-4 mt-2 white--text"
-                v-if="item.highlight"
-              >
-                {{ item.title }}
-              </h2>
-            </v-img>
+            <template v-slot:pre>
+              <v-container class="pt-2">
+                <v-img
+                  :src="item.img"
+                  v-if="$vuetify.breakpoint.smAndDown"
+                  :height="timelineCardHeight(item.highlight) - 17"
+                  :max-height="timelineCardHeight(item.highlight) - 17"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="accent"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                  <h2 class="font-weight-light mb-4 white--text">
+                    {{ item.date }}
+                  </h2>
+                  <span class="white--text" v-if="item.highlight">{{
+                    item.title
+                  }}</span>
+                </v-img>
+                <v-img
+                  :src="item.img"
+                  v-else-if="$vuetify.breakpoint.mdAndUp"
+                  :height="timelineCardHeight(item.highlight) - 17"
+                  :max-height="timelineCardHeight(item.highlight) - 17"
+                  ><template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="accent"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                  <h2
+                    class="font-weight-light ml-4 mt-2 white--text"
+                    v-if="item.highlight"
+                  >
+                    {{ item.title }}
+                  </h2>
+                </v-img>
+              </v-container>
+            </template>
           </Card>
         </v-timeline-item>
       </v-timeline>
@@ -178,7 +217,7 @@ export default {
             dto['highlight'] = Math.random() > 0.5 ? true : false
 
             let images = await EventService.getEventImage(dto._id)
-            dto['img'] = images.urls.url_hd
+            dto['img'] = images.urls.url_real
             return dto
           })
         )
@@ -189,7 +228,7 @@ export default {
     }
   },
   mounted() {
-    this.categoriesOnChange(0)
+    //this.categoriesOnChange(0)
   }
 }
 </script>
@@ -211,10 +250,13 @@ export default {
 }
 .Glass {
   background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
   backdrop-filter: blur(12.5px);
   -webkit-backdrop-filter: blur(12.5px);
   border-radius: 10px;
+}
+.carousel-shadow {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
 }
 
 @media (min-width: 959px) {
