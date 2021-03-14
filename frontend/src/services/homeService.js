@@ -14,14 +14,23 @@ export default {
         })
       ).data
       console.log(events)
-      for (let i = 0; i < events.length; i++) {
-        let event = events[i]
-        event['img'] = await eventServices.getEventImage(event._id)
-      }
     } catch (err) {
       console.log('ERROR EN LAST EVENTS', err)
     }
     return events
+  },
+  getLastEventsImages: async function(events) {
+    try {
+      for (let i = 0; i < events.length; i++) {
+        let event = events[i]
+        event['img'] = await eventServices.getEventImage(event._id)
+        console.log('EVENT IMAGE: ', event.img)
+      }
+      console.log('EVENTS IMAGES: ', events)
+      return events
+    } catch (err) {
+      console.log('ERROR EN LAST EVENTS images', err)
+    }
   },
   // /events/timelinedtos/:categoryId
   getTimelineDTOs: async function(category, limit) {
@@ -33,6 +42,7 @@ export default {
           headers: { token: localStorage.getItem('token') }
         })
       ).data
+      console.log('*DTOS: ', dtos)
     } catch (err) {
       console.log(err)
     }

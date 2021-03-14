@@ -34,6 +34,7 @@
     <v-container>
       <v-row justify="center">
         <router-link
+          style="text-decoration: none; color: inherit;"
           type="button"
           class="btn"
           :to="{
@@ -95,6 +96,16 @@ export default {
           email: this.email,
           password: this.password
         })
+          .then(logged => {
+            if (logged) this.$router.push('home')
+            else {
+              //TODO -> do something to show error to user
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            //TODO -> do something to show error to user
+          })
       }
     }
   },
