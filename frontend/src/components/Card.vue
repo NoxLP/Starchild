@@ -12,7 +12,7 @@
     >
       <slot name="title"></slot>
     </v-card-title>
-    <v-card-text>
+    <v-card-text :class="textClass">
       <v-container>
         <v-row fill-height dense>
           <v-col cols="12">
@@ -39,7 +39,8 @@ export default {
     maxWidth: Number,
     borders: Boolean,
     elevation: Number,
-    height: Number
+    height: Number,
+    textClass: String
   },
   computed: {
     hasTitleSlot() {
@@ -68,7 +69,7 @@ export default {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
   backdrop-filter: blur(12.5px) !important;
   -webkit-backdrop-filter: blur(12.5px) !important;
-  border-radius: 10px;
+  border-radius: 10px !important;
 
   padding: 0 !important;
 }

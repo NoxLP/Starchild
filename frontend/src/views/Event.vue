@@ -1,44 +1,102 @@
 <template>
   <div>
-    <Card>
-      <v-row>
+    <v-container fluid class="pa-5 pt-1 pa-sm-16">
+      <v-row class="mt-0 mt-sm-5 mx-sm-10">
         <v-col>
-          <v-img :src="img">
-            {{ title }}
+          <v-img max-height="17vh" :src="img" class="card">
+            <v-container fill-height>
+              <v-row align="center" justify="center">
+                <v-col>
+                  <h2
+                    v-if="$vuetify.breakpoint.smAndDown"
+                    class="text-center accent--text title-text"
+                  >
+                    {{ title }}
+                  </h2>
+                  <h1
+                    v-else
+                    class="text-center accent--text text-h2 title-text"
+                  >
+                    {{ title }}
+                  </h1>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-img>
         </v-col>
       </v-row>
-    </Card>
-    <Card>
-      <v-container>
-        <v-row>
-          <v-col>
-            <div>
-              {{ text }}
-              <v-img :src="cat_icon" :width="icon_width"></v-img>
-            </div>
-            <div>
-              <v-img :src="moonphase"></v-img>
-              <v-img :src="weather_icon"></v-img>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </Card>
-    <Card>
-      <v-icon>mdi-star</v-icon>
-      {{ comments }}
-    </Card>
+      <v-row class="mt-8 mx-sm-10">
+        <v-col>
+          <Card height="42vh">
+            <template v-slot:title>
+              <v-row class="flex-nowrap" height="6vh">
+                <v-col cols="2">
+                  <v-img
+                    color="accent"
+                    :src="cat_icon"
+                    :width="icon_width"
+                    max-height="5vh"
+                    height="5vh"
+                  ></v-img>
+                </v-col>
+                <v-col cols="4" offset="6">
+                  <v-img
+                    color="accent"
+                    :src="moonphase"
+                    max-height="5vh"
+                    height="5vh"
+                    contain
+                  ></v-img>
+                  <v-img
+                    color="accent"
+                    :src="weather_icon"
+                    max-height="5vh"
+                    height="5vh"
+                  ></v-img>
+                </v-col>
+              </v-row>
+            </template>
+            <span
+              class="description text-body-1 text-sm-h5"
+              color="white--text"
+              >{{ text }}</span
+            >
+          </Card>
+        </v-col>
+      </v-row>
+      <v-row class="mt-3" v-if="$vuetify.breakpoint.smAndDown">
+        <v-col>
+          <v-card height="5vh" class="card">
+            <v-card-text class="py-0" align="center">
+              <v-container>
+                <v-row align="center" justify="center" class="pa-0">
+                  <v-col cols="1">
+                    <v-icon color="accent">mdi-star</v-icon>
+                  </v-col>
+                  <v-col cols="5" cols-sm="4" offset="6" offset-sm="7">
+                    <a class="comments-anchor" href=""
+                      >Comentarios({{ comments ? comments.length : '0' }})</a
+                    >
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 import eventServices from '../services/eventServices.js'
 import Card from '../components/Card.vue'
+import { CATEGORIES } from '../helpers/categories'
+
 export default {
   data: function() {
     return {
-      img: require(this.image),
+      img: this.image ? this.image : '',
       title: '',
       text: '',
       icon_width: 30,
@@ -57,56 +115,42 @@ export default {
     eventServices.getEvent(this.eventId).then(event => {
       this.title = event.title
       this.text = event.description
+      console.log(this.text)
       this.comments = event.comments
-      switch (event.category) {
-        case 'eclipseMoon':
-          this.cat_icon = require('../../public/assets/images/12-astronomy-and-space icons/SVG/10.svg')
-          break
-        case 'eclipseSun':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/PNGs/MoonPhases-09_Eclipse1.png')
-          break
-        case 'planets':
-          this.cat_icon = require('../../public/assets/images/12-astronomy-and-space icons/SVG/7.svg')
-          break
-        case 'meteorShower':
-          this.cat_icon = require('../../public/assets/images/12-astronomy-and-space icons/SVG/3.svg')
-          break
-        case 'comets':
-          this.cat_icon = require('../../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
-          break
-        case 'conjunction':
-          this.cat_icon = require('../../public/assets/images/12-astronomy-and-space icons/SVG/2.svg')
-          break
-      }
+      this.cat_icon = CATEGORIES.find(x => x.name === event.category).icon
     })
-    // eventServices.getEventImage(this.eventId).then(image => {
-    //   this.img = image.urls.url_hd
-    // })
+
+    if (!this.image) {
+      eventServices.getEventImage(this.eventId).then(image => {
+        this.img = require(image.urls.url_hd)
+      })
+    }
+
     eventServices.getEventMoonPhase(this.eventId).then(moon => {
       switch (moon) {
         case 'New Moon':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-05_NewMoon.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-05_NewMoon.svg')
           break
         case 'Waxing Gibbous':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-08_WaxingGibbous.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-08_WaxingGibbous.svg')
           break
         case 'Waning Gibbous':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-02_WaningBiggous.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-02_WaningBiggous.svg')
           break
         case 'Waning Crescent':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-04_WaningCrescent.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-04_WaningCrescent.svg')
           break
         case 'Waxing Crescent':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-06_WaxingCrescent.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-06_WaxingCrescent.svg')
           break
         case '1st Quarter':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-07_FirstQuarter.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-07_FirstQuarter.svg')
           break
         case '3rd Quarter':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-03_ThirdQuarter.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-03_ThirdQuarter.svg')
           break
         case 'Full Moon':
-          this.cat_icon = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-01_FullMoon.svg')
+          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-01_FullMoon.svg')
           break
       }
     })
@@ -115,4 +159,33 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+  backdrop-filter: blur(12.5px) !important;
+  -webkit-backdrop-filter: blur(12.5px) !important;
+  border-radius: 10px;
+
+  padding: 0 !important;
+}
+.description {
+  white-space: pre-line;
+  font-family: Julius Sans One;
+  font-style: normal;
+  font-weight: normal;
+  color: white;
+  line-height: 4vh;
+}
+.comments-anchor {
+  font-family: Julius Sans One;
+  font-style: normal;
+  font-weight: normal;
+
+  color: white;
+}
+.title-text {
+  text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
+}
+</style>

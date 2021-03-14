@@ -226,12 +226,14 @@ export default {
       }
     },
     onClickOnTimelineItem: function(index) {
-      console.log('CLICK: ', index)
+      console.log('CLICK: ', this.timeLineItems[index])
       this.$router.push({
         name: 'event',
         params: {
           eventId: this.timeLineItems[index]._id,
-          image: this.timeLineItems[index].img.urls.url_real
+          image: this.timeLineItems[index].img
+            ? this.timeLineItems[index].img
+            : null
         }
       })
     }
