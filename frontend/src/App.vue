@@ -2,7 +2,6 @@
   <v-app class="app">
     <Header />
     <v-main>
-      <Event eventId="604b45faed0d1709ecb67cbb" />
       <router-view :key="$route.fullPath" />
     </v-main>
     <Footer />
@@ -11,14 +10,12 @@
 
 <script>
 import Footer from './components/Footer.vue'
-import Event from './views/Event.vue'
 import Header from './components/Header.vue'
 
 export default {
   components: {
     Footer,
-    Header,
-    Event
+    Header
   }
 }
 </script>
