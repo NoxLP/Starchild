@@ -5,7 +5,11 @@ export default {
   getLastEvents: async function() {
     let events
     try {
-      events = (await api.get('/events/last')).data
+      events = (
+        await api.get('/events/last', {
+          headers: { token: localStorage.getItem('token') }
+        })
+      ).data
     } catch (err) {
       console.log(err)
     }
@@ -17,7 +21,8 @@ export default {
     try {
       dtos = (
         await api.get(`/events/timelinedtos/${category}`, {
-          params: { limit: limit }
+          params: { limit: limit },
+          headers: { token: localStorage.getItem('token') }
         })
       ).data
     } catch (err) {
