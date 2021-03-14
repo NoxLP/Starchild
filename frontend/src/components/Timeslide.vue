@@ -18,7 +18,12 @@
         >
           <v-container>
             <v-row align="center" justify="center">
-              <v-img :src="item.icon" class="slide-icon" height="50%" />
+              <v-img
+                :src="item.icon"
+                class="slide-icon"
+                height="50%"
+                color="accent"
+              />
             </v-row>
             <v-row align="center" justify="center">
               <h1 class="white--text mt-5">{{ item.text }}</h1>
@@ -40,7 +45,7 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img :src="item.categoryIcon" />
+              <img :src="item.categoryIcon" color="accent" />
             </v-avatar>
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
@@ -60,7 +65,6 @@
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
-                  class="Glass"
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -74,9 +78,15 @@
                       ></v-progress-circular>
                     </v-row>
                   </template>
-                  <h2 class="font-weight-light mb-4 white--text">
+                  <h2
+                    v-if="item.highlight"
+                    class="font-weight-light mb-4 white--text"
+                  >
                     {{ item.date }}
                   </h2>
+                  <h3 v-else class="font-weight-light mb-4 white--text">
+                    {{ item.date }}
+                  </h3>
                   <span class="white--text" v-if="item.highlight">{{
                     item.title
                   }}</span>
@@ -230,7 +240,7 @@ export default {
 
 <style scoped>
 /*timeline divider color*/
-.theme--light.v-timeline:before {
+.theme--dark.v-timeline:before {
   background: #e7c296;
 }
 .slide {

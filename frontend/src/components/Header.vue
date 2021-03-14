@@ -1,9 +1,30 @@
 <template>
   <div>
-    <v-app-bar class="d-md-none text-center" dense flat color="transparent">
-      Aquí va el logo de movil
+    <v-app-bar
+      v-if="$vuetify.breakpoint.smAndDown"
+      class="text-center"
+      flat
+      color="transparent"
+      height="90vh"
+    >
+      <v-container fluid>
+        <v-row justify="center" align="center"></v-row>
+        <v-img
+          class="ml-5"
+          max-width="300px"
+          contain
+          src="../../public/assets/images/starchild.png"
+        ></v-img>
+      </v-container>
     </v-app-bar>
-    <v-app-bar dark dense flat color="transparent" height="100px">
+    <v-app-bar
+      v-if="$vuetify.breakpoint.mdAndUp"
+      dark
+      dense
+      flat
+      color="transparent"
+      height="100px"
+    >
       <v-img
         max-width="350px"
         contain

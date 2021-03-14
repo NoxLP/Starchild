@@ -3,6 +3,7 @@
     <v-container fluid>
       <v-row justify="center">
         <v-carousel
+          dark
           v-model="model"
           :continuous="true"
           cycle
@@ -10,23 +11,19 @@
           vertical-delimiters
           hide-delimiter-background
           delimiter-icon="mdi-star-four-points-outline"
-          @change="eventsOnChange"
         >
           <v-carousel-item v-for="(item, idx) in events" :key="idx">
             <v-row class="fill-height mt-5" align="center" justify="center">
-              <v-img :src="item.img.urls.url_hd" class="slide-img">
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="accent"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
+              <v-progress-circular
+                v-show="!item.img"
+                indeterminate
+                color="accent"
+              ></v-progress-circular>
+              <v-img
+                v-show="item.img"
+                :src="item.img ? item.img.urls.url_hd : ''"
+                class="slide-img"
+              >
                 <v-row class="" align="center" justify="start">
                   <h1 class="white--text mt-5 ml-10">
                     {{ new Date(item.date).toLocaleDateString() }}
@@ -58,34 +55,26 @@ export default {
   name: 'home',
   data: () => ({
     model: null,
-    events: [],
-    timeItems: []
+    events: []
   }),
-  methods: {
-    eventItems: number => {
-      const items = []
-      for (let i = 0; i < 5; i++) {
-        items.push({
-          title: `Event ${number + 1} item title ${i}`,
-          date: `Event ${number + 1} item date ${i}`,
-          text: `Event ${number + 1} item text ${i}`
-        })
-      }
-      return items
-    },
-    eventsOnChange: function(number) {
-      //console.log(number)
-      this.timeItems = this.eventItems(number)
-    }
-  },
   components: {
     Timeslide
   },
   mounted() {
     homeService
       .getLastEvents()
-      .then(res => {
-        this.events = res
+      .then(events => {
+        this.events = events
+
+        homeService
+          .getLastEventsImages(this.events)
+          .then(evsWithImages => {
+            this.events = evsWithImages
+            console.log('Done events images: ', this.events)
+          })
+          .catch(err => {
+            console.log('Error fetching events images', err)
+          })
       })
       .catch(err => {
         console.log('Error fetching events', err)
@@ -95,8 +84,18 @@ export default {
 </script>
 
 <style scoped>
+.Glass {
+  /*background: rgba(255, 255, 255, 0.25);*/
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 10px;
+}
 .v-carousel__controls {
   background: none !important;
+}
+.mdi-star-four-points-outline {
+  color: #e7c296 !important;
 }
 /*.timeslide-row {
   margin-top: 10vh;
