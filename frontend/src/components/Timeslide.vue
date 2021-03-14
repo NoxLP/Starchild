@@ -36,6 +36,7 @@
           dark
           color="hsl(255, 63%, 8%)"
           class="ml-0 pl-0"
+          @click.native="onClickOnTimelineItem(idx)"
         >
           <template v-slot:icon>
             <v-avatar>
@@ -46,7 +47,7 @@
             <span class="headline white--text">{{ item.date }}</span>
           </template>
           <Card
-            class="pa-0"
+            class="pa-0 timeline-item-card"
             :height="timelineCardHeight(item.highlight)"
             style="width: 60vw;"
             :elevation="10"
@@ -59,6 +60,7 @@
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
+                  class="Glass"
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -116,7 +118,7 @@
 /*
 timeLineItems: { title, date, img, highlight, categoryIcon }
 */
-import { CATEGORIES, CATEGORY_ICONS } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/categories.js'
 import HomeService from '../services/homeService.js'
 import EventService from '../services/eventServices.js'
 import Card from '../components/Card.vue'
@@ -176,27 +178,14 @@ export default {
       }
       return highlight ? height + diff : height
     },
-    /*buildCategoryItems: number => {
-      const items = []
-      for (let i = 0; i < 5; i++) {
-        items.push({
-          title: `Category ${number + 1} item title ${i}`,
-          date: '04/03/2021',
-          img: '',
-          highlight: Math.random() > 0.5 ? true : false,
-          categoryIcon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
-        })
-      }
-      return items
-    },*/
-    setItemValues: async function(dto, idx) {
+    /*setItemValues: async function(dto, idx) {
       console.log('timeline promise ', dto.title)
       this.timeLineItems[idx]['categoryIcon'] = CATEGORY_ICONS[dto.category]
       this.timeLineItems[idx]['highlight'] = Math.random() > 0.5 ? true : false
 
       let images = await EventService.getEventImage(dto._id)
       this.timeLineItems[idx]['img'] = images.urls.url_hd
-    },
+    },*/
     categoriesOnChange: async function(number) {
       console.log('categoriesOnChange ', number)
       this.timeLineItems = []
@@ -225,10 +214,16 @@ export default {
       } catch (err) {
         console.log('error on timeslide category change: ', err)
       }
+    },
+    onClickOnTimelineItem: function(index) {
+      console.log('CLICK: ', index)
+      this.$router.push({
+        name: 'event',
+        params: {
+          eventId: this.timeLineItems[index]._id
+        }
+      })
     }
-  },
-  mounted() {
-    //this.categoriesOnChange(0)
   }
 }
 </script>
@@ -262,6 +257,14 @@ export default {
 @media (min-width: 959px) {
   .slide-img {
     max-width: 60vw;
+  }
+  .timeline-item-card {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.7;
+  }
+  .timeline-item-card:hover {
+    opacity: 1 !important;
+    cursor: pointer;
   }
 }
 </style>

@@ -15,6 +15,18 @@
           <v-carousel-item v-for="(item, idx) in events" :key="idx">
             <v-row class="fill-height mt-5" align="center" justify="center">
               <v-img :src="item.img.urls.url_hd" class="slide-img">
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="accent"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
                 <v-row class="" align="center" justify="start">
                   <h1 class="white--text mt-5 ml-10">
                     {{ new Date(item.date).toLocaleDateString() }}
