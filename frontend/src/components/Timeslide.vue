@@ -66,7 +66,7 @@
             <template v-slot:pre>
               <v-container class="pt-2">
                 <v-img
-                  :src="item.img"
+                  :src="require(item.img)"
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
@@ -141,23 +141,18 @@ import EventService from '../services/eventServices.js'
 import Card from '../components/Card.vue'
 
 export default {
-  data: () => ({
-    model: null,
-    categories: CATEGORIES,
-    timelineBuffer: JSON.parse(sessionStorage.getItem('timelineBuffer')) || {
-      setCategoryItems: function(category, items) {
-        this[category] = items
-        sessionStorage.setItem('timelineBuffer', JSON.stringify(items))
-      }
+  data: function() {
+    return {
+      model: 0,
+      categories: CATEGORIES,
+      timeLineItems: [],
+      timelineBuffer: JSON.parse(sessionStorage.getItem('timelineBuffer')) || {}
     }
-  }),
+  },
   components: {
     Card
   },
   computed: {
-    timeLineItems() {
-      return this.timelineBuffer[this.model]
-    },
     timeLineDense() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
@@ -184,6 +179,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.categoriesOnChange()
+  },
   methods: {
     timelineCardHeight: function(highlight) {
       let height, diff
@@ -203,40 +201,53 @@ export default {
       }
       return `${highlight ? height + diff : height}`
     },
+    setCategoryItems: function(category, number, items) {
+      this.timelineBuffer[category] = items
+      if (number === this.model) {
+        console.log('ASSIGN TO ITEMS')
+        this.timeLineItems = this.timelineBuffer[category]
+      }
+      sessionStorage.setItem(
+        'timelineBuffer',
+        JSON.stringify(this.timelineBuffer)
+      )
+    },
     categoriesOnChange: async function() {
-      console.log('categoriesOnChange ', this.model)
+      console.log('categoriesOnChange ', this.model, this.timeLineItems)
       const limit = 5
-      const categoryCurrent = this.model
+      const categoryNumber = this.model
+      const currentCategory = CATEGORIES[this.model].name
 
-      if (!this.timelineBuffer[categoryCurrent])
-        this.timelineBuffer.setCategoryItems(categoryCurrent, [])
-
-      if (this.timelineBuffer[categoryCurrent].length < 5) {
-        console.log(
-          '*********** no session: ',
-          JSON.stringify(this.timelineBuffer)
-        )
+      if (
+        !this.timelineBuffer[currentCategory] ||
+        this.timelineBuffer[currentCategory].length < 5
+      ) {
+        console.log('*********** no session: ', this.timelineBuffer)
 
         try {
-          const categorySelected = CATEGORIES[categoryCurrent].name
+          const categorySelected = CATEGORIES[categoryNumber].name
 
-          this.timelineBuffer.setCategoryItems(
-            categoryCurrent,
-            await HomeService.getTimelineDTOs(categorySelected, limit)
+          const items = await HomeService.getTimelineDTOs(
+            categorySelected,
+            limit
           )
+          this.setCategoryItems(currentCategory, categoryNumber, items)
+
           console.log(
             'timeline items done: ',
-            this.timelineBuffer[categoryCurrent]
+            this.timelineBuffer[currentCategory],
+            this.timeLineItems
           )
 
-          this.timelineBuffer.setCategoryItems(
-            categoryCurrent,
+          this.setCategoryItems(
+            currentCategory,
+            categoryNumber,
             await Promise.all(
-              this.timelineBuffer[categoryCurrent].map(async dto => {
+              this.timelineBuffer[currentCategory].map(async dto => {
                 console.log('timeline promise ', dto.category)
 
                 dto.date = new Date(dto.date).toLocaleDateString('es-ES')
-                dto['categoryIcon'] = CATEGORIES[categoryCurrent].icon
+                dto['categoryIcon'] = CATEGORIES[categoryNumber].icon
                 dto['highlight'] = Math.random() > 0.5 ? true : false
 
                 let images = await EventService.getEventImage(dto._id)
@@ -251,35 +262,9 @@ export default {
           console.log('error on timeslide category change: ', err)
         }
       } else {
-        this.timeLineItems = this.timelineBuffer[categoryCurrent]
+        console.log('****** found session')
+        this.timeLineItems = this.timelineBuffer[currentCategory]
       }
-
-      /*this.timeLineItems = []
-      try {
-        const categorySelected = CATEGORIES[number].name
-
-        this.timeLineItems = await HomeService.getTimelineDTOs(
-          categorySelected,
-          5
-        )
-        console.log('timeline items done: ', this.timeLineItems)
-
-        this.timeLineItems = await Promise.all(
-          this.timeLineItems.map(async dto => {
-            console.log('timeline promise ', dto.category)
-            dto.date = new Date(dto.date).toLocaleDateString('es-ES')
-            dto['categoryIcon'] = CATEGORIES[number].icon
-            dto['highlight'] = Math.random() > 0.5 ? true : false
-
-            let images = await EventService.getEventImage(dto._id)
-            dto['img'] = images.urls.url_real
-            return dto
-          })
-        )
-        console.log('- timeline items done 2: ', this.timeLineItems)
-      } catch (err) {
-        console.log('error on timeslide category change: ', err)
-      */
     },
     onClickOnTimelineItem: function(index) {
       console.log('CLICK: ', this.timeLineItems[index])
