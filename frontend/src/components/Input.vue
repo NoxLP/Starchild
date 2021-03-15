@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="end" style="height: 100px">
+    <v-row align="center" justify="end" :style="inputHeight">
       <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
         <p class="mb-0 p-0">{{ outerLabel }}</p>
       </v-col>
@@ -29,7 +29,9 @@ export default {
     return {
       show: '',
       pwdIcon: '',
-      content: ''
+      content: '',
+      inputHeight:
+        this.height !== '' ? `height: ${this.height};` : 'height: 100px;'
     }
   },
   computed: {
@@ -76,7 +78,8 @@ export default {
       type: String,
       default: '10'
     },
-    type: String
+    type: String,
+    height: String
   },
   methods: {
     onShowIcon: function() {

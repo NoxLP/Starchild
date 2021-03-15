@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn class="Glass starchild-button-text" :disabled="disabled">
+    <v-btn :class="myClass" :disabled="disabled">
       {{ text }}
     </v-btn>
   </div>
@@ -8,9 +8,18 @@
 
 <script>
 export default {
+  data: function() {
+    return {
+      myClass: `Glass starchild-button-text ${this.textClass}`
+    }
+  },
   props: {
     text: String,
-    disabled: Boolean
+    disabled: Boolean,
+    textClass: {
+      type: String,
+      default: 'text-h5'
+    }
   }
 }
 </script>

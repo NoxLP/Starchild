@@ -47,37 +47,64 @@
             <template v-slot:actions>
               {{ comment.responses.length }}
               <v-spacer></v-spacer>
-              <v-icon color="indigo">mdi-thumb-up-outline</v-icon>10
+              <v-icon color="primary">mdi-thumb-up-outline</v-icon>10
             </template>
           </Card>
         </v-col>
       </v-row>
-
-      <!--<Card :borders="true">
-        <template v-slot:title class="card-title">
-          <h5>
-            {{ user }}
-          </h5>
-          <v-spacer></v-spacer>
-          <h5>
-            {{ date }}
-          </h5>
-        </template>
-        {{ text }}
-
-        <template v-slot:actions>
-          {{ responses }}
-          <v-spacer></v-spacer>
-          <v-icon color="indigo">mdi-thumb-up-outline</v-icon>10
-        </template>
-      </Card>-->
       <template>
         <div class="text-end mx-2 mt-2">
-          <v-btn fab dark color="indigo" elevation="10">
+          <v-btn
+            fab
+            dark
+            color="secondary"
+            elevation="10"
+            @click="expand = !expand"
+          >
             <v-icon dark>
               mdi-pencil
             </v-icon>
           </v-btn>
+          <v-expand-transition>
+            <Card v-show="expand">
+              <v-row>
+                <v-textarea
+                  label="Escribe aquí tu comentario..."
+                  height="30vh"
+                  outlined
+                  auto-grow
+                  class="starchild-input"
+                  hide-details="auto"
+                />
+              </v-row>
+              <v-row justify="end">
+                <v-btn
+                  class="mt-3 mr-3"
+                  height="12vw"
+                  width="12vw"
+                  fab
+                  dark
+                  color="error"
+                  elevation="10"
+                  @click.native="cancel"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-btn
+                  class="mt-3"
+                  height="12vw"
+                  width="12vw"
+                  fab
+                  dark
+                  color="blue"
+                  elevation="10"
+                  @click.native="confirm"
+                >
+                  <v-icon>mdi-send</v-icon>
+                </v-btn>
+              </v-row>
+            </Card>
+          </v-expand-transition>
         </div>
       </template>
     </v-container>
@@ -86,9 +113,11 @@
 
 <script>
 import Card from '../components/Card.vue'
+
 export default {
   data: function() {
     return {
+      expand: false,
       img: '',
       title: 'ORIONIDAS',
       user: 'ERMENEGILDO GÓMEZ',
@@ -98,7 +127,19 @@ export default {
     }
   },
   props: {
-    myEvent: Object,
+    myEvent: {
+      type: Object,
+      default() {
+        return {
+          img: '',
+          title: 'ORIONIDAS',
+          user: 'ERMENEGILDO GÓMEZ',
+          date: '22/01/2021',
+          text: 'Pedazo de fotón que te has currado, man!! Te doy un like :D.',
+          responses: 'RESPUESTAS (12)'
+        }
+      }
+    },
     image: String
   },
   components: { Card }
