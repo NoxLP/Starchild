@@ -66,7 +66,7 @@
             <template v-slot:pre>
               <v-container class="pt-2">
                 <v-img
-                  :src="require(item.img)"
+                  :src="item.img"
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
