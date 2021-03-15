@@ -56,6 +56,7 @@
             style="width: 60vw;"
             :elevation="10"
             light
+            @click.native="onClickOnTimelineItem(idx)"
           >
             <template v-slot:pre>
               <v-container class="pt-2">
@@ -65,7 +66,6 @@
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
                   class="timeline-item-image"
-                  @click.native="onClickOnTimelineItem(idx)"
                 >
                   <template v-slot:placeholder>
                     <v-row
