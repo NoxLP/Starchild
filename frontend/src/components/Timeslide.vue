@@ -56,11 +56,12 @@
             <span class="headline white--text">{{ item.date }}</span>
           </template>
           <Card
-            class="pa-0 timeline-item-card"
+            class="pa-0 timeline-item-card btn"
             :height="timelineCardHeight(item.highlight)"
             style="width: 60vw;"
             :elevation="10"
             light
+            @click.native="onClickOnTimelineItem(idx)"
           >
             <template v-slot:pre>
               <v-container class="pt-2">
@@ -70,7 +71,6 @@
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
                   class="image-radius"
-                  @click.native="onClickOnTimelineItem(idx)"
                 >
                   <template v-slot:placeholder>
                     <v-row
