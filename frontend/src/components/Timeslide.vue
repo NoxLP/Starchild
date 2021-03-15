@@ -2,35 +2,40 @@
   <v-container class="mx-8" fluid fill-height>
     <!--categories carousel-->
     <v-row align="start" class="justify-start justify-sm-center categories-row">
-      <v-carousel
-        v-model="model"
-        class="pa-0 slide carousel-shadow"
-        :continuous="false"
-        hide-delimiters
-        @change="categoriesOnChange"
-      >
-        <v-carousel-item
-          v-for="(item, i) in categories"
-          :key="i"
-          :src="item.img"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
+      <v-col cols="10">
+        <v-carousel
+          v-model="model"
+          class="pa-0 slide carousel-shadow image-radius"
+          :continuous="false"
+          hide-delimiters
+          @change="categoriesOnChange"
         >
-          <v-container>
-            <v-row align="center" justify="center">
-              <v-img
-                :src="item.icon"
-                class="slide-icon"
-                height="50%"
-                color="accent"
-              />
-            </v-row>
-            <v-row align="center" justify="center">
-              <h1 class="white--text mt-5">{{ item.text }}</h1>
-            </v-row>
-          </v-container>
-        </v-carousel-item>
-      </v-carousel>
+          <v-carousel-item
+            v-for="(item, i) in categories"
+            :key="i"
+            :src="item.img"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          >
+            <v-container fill-height>
+              <v-row align="center" justify="center" class="mt-10 mb-0">
+                <v-img
+                  :src="item.icon"
+                  class="slide-icon"
+                  max-height="100%"
+                  color="accent"
+                  contain
+                />
+              </v-row>
+              <v-row align="center" justify="center" class="mb-16 mt-0">
+                <h1 class="white--text mt-5 text-sm-h1 title-text">
+                  {{ item.text }}
+                </h1>
+              </v-row>
+            </v-container>
+          </v-carousel-item>
+        </v-carousel>
+      </v-col>
     </v-row>
     <v-row class="justify-start justify-sm-center mt-5">
       <!--timeline-->
@@ -64,7 +69,7 @@
                   v-if="$vuetify.breakpoint.smAndDown"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
-                  class="timeline-item-image"
+                  class="image-radius"
                   @click.native="onClickOnTimelineItem(idx)"
                 >
                   <template v-slot:placeholder>
@@ -97,7 +102,7 @@
                   v-else-if="$vuetify.breakpoint.mdAndUp"
                   :height="timelineCardHeight(item.highlight) - 17"
                   :max-height="timelineCardHeight(item.highlight) - 17"
-                  class="timeline-item-image"
+                  class="image-radius"
                   ><template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
@@ -255,7 +260,7 @@ export default {
   max-width: 80vw;
 }*/
 .slide-icon {
-  max-width: 10vw;
+  max-width: 15vw;
   color: #e7c296;
 }
 .Glass {
@@ -268,8 +273,11 @@ export default {
 .carousel-shadow {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
 }
-.timeline-item-image {
+.image-radius {
   border-radius: 10px;
+}
+.title-text {
+  text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
 }
 
 @media (min-width: 959px) {

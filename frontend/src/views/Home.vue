@@ -1,7 +1,7 @@
 <template>
-  <div class="">
+  <div>
     <v-container fluid>
-      <v-row justify="center">
+      <v-row justify="center" class="mb-16">
         <v-carousel
           dark
           v-model="model"
@@ -24,12 +24,12 @@
                 :src="item.img ? item.img.urls.url_hd : ''"
                 class="slide-img"
               >
-                <v-row class="" align="center" justify="start">
+                <v-row align="center" justify="start">
                   <h1 class="white--text mt-5 ml-10">
                     {{ new Date(item.date).toLocaleDateString() }}
                   </h1>
                 </v-row>
-                <v-row class="" align="center" justify="start">
+                <v-row align="center" justify="start">
                   <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
                 </v-row>
               </v-img>
@@ -38,9 +38,9 @@
         </v-carousel>
       </v-row>
       <v-row class="mt-16" justify="center">
-        <h1 class="white--text mt-16">Eventos</h1>
+        <h1 class="white--text mt-16 text-sm-h2">Eventos</h1>
       </v-row>
-      <v-row justify="center" align="start" class="timeslide-row mt-md-5">
+      <v-row justify="center" align="start" class="timeslide-row mt-md-10">
         <Timeslide />
       </v-row>
     </v-container>

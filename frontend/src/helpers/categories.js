@@ -1,7 +1,7 @@
 const CATEGORIES = [
   {
     name: 'all',
-    text: 'Todas',
+    text: 'Todos',
     img: require('@/../public/assets/images/categories/imgCatAll.jpg'),
     icon: require('@/../public/assets/images/catIconAll.svg')
   },
