@@ -11,8 +11,13 @@
           vertical-delimiters
           hide-delimiter-background
           delimiter-icon="mdi-star-four-points-outline"
+          class="last-events-carousel Glass mt-15"
         >
-          <v-carousel-item v-for="(item, idx) in events" :key="idx">
+          <v-carousel-item
+            v-for="(item, idx) in events"
+            :key="idx"
+            @click="onClickOnCarouselItem(idx)"
+          >
             <v-row class="fill-height mt-5" align="center" justify="center">
               <v-progress-circular
                 v-show="!item.img"
@@ -38,7 +43,7 @@
         </v-carousel>
       </v-row>
       <v-row class="mt-16" justify="center">
-        <h1 class="white--text mt-16 text-sm-h2">Eventos</h1>
+        <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
       </v-row>
       <v-row justify="center" align="start" class="timeslide-row mt-md-10">
         <Timeslide />
@@ -59,6 +64,20 @@ export default {
   }),
   components: {
     Timeslide
+  },
+  methods: {
+    onClickOnCarouselItem: function(index) {
+      console.log('CLICK: ', this.events[index])
+      this.$router.push({
+        name: 'event',
+        params: {
+          eventId: this.events[index]._id,
+          image: this.events[index].item.img.urls.url_hd
+            ? this.events[index].item.img.urls.url_hd
+            : null
+        }
+      })
+    }
   },
   mounted() {
     homeService
@@ -107,5 +126,11 @@ export default {
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
+}
+
+@media (min-width: 959px) {
+  .last-events-carousel {
+    margin: 0 5vw 0 5vw;
+  }
 }
 </style>
