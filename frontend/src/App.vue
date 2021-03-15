@@ -2,6 +2,7 @@
   <v-app class="app">
     <Header />
     <v-main>
+      <Reply />
       <router-view :key="$route.fullPath" />
     </v-main>
     <Footer />
@@ -11,11 +12,13 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
+import Reply from './views/Reply.vue'
 
 export default {
   components: {
     Footer,
-    Header
+    Header,
+    Reply
   }
 }
 </script>

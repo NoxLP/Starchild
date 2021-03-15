@@ -5,6 +5,7 @@ import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Event from '../views/Event.vue'
 import Comments from '../views/Comments.vue'
+import Reply from '../views/Reply.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,12 @@ const routes = [
     path: '/event',
     name: 'event',
     component: Event,
+    props: true
+  },
+  {
+    path: '/comments/reply',
+    name: 'reply',
+    component: Reply,
     props: true
   }
 ]
