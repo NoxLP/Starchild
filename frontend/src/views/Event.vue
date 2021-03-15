@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-container fluid class="pa-5 pt-1 pa-sm-16">
+      <!--TITULO-->
       <v-row class="mt-0 mt-sm-5 mx-sm-10">
         <v-col>
           <v-img max-height="17vh" :src="event.img || ''" class="card">
@@ -25,11 +26,13 @@
           </v-img>
         </v-col>
       </v-row>
+      <!--CUERPO-->
       <v-row class="mt-8 mx-sm-10">
         <v-col>
-          <Card height="42vh">
+          <Card :height="cardHeight">
+            <!--BARRA ICONOS-->
             <template v-slot:title>
-              <v-row class="flex-nowrap" height="6vh">
+              <v-row class="flex-nowrap ml-12" height="6vh">
                 <v-col cols="2">
                   <v-img
                     color="accent"
@@ -56,12 +59,45 @@
                 </v-col>
               </v-row>
             </template>
+            <!--TEXTO-->
             <div class="description text-body-1 text-sm-h5" color="white--text">
               {{ event.description }}
             </div>
+            <!--FOOTER FAV Y PENCIL-->
+            <template v-slot:actions v-if="$vuetify.breakpoint.mdAndUp">
+              <v-row justify="center">
+                <v-col cols="1">
+                  <v-btn
+                    fab
+                    dark
+                    color="transparent"
+                    elevation="10"
+                    @click="expand = !expand"
+                    class="mb-10"
+                  >
+                    <v-icon color="accent">mdi-star</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="1" offset="9">
+                  <v-btn
+                    fab
+                    dark
+                    color="transparent"
+                    elevation="10"
+                    @click="expand = !expand"
+                    class="mb-10"
+                  >
+                    <v-icon color="accent">
+                      mdi-pencil
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </template>
           </Card>
         </v-col>
       </v-row>
+      <!--TARJ INFERIOR MOVILES-->
       <v-row class="mt-3" v-if="$vuetify.breakpoint.smAndDown">
         <v-col>
           <v-card height="5vh" class="card">
@@ -92,6 +128,92 @@
           </v-card>
         </v-col>
       </v-row>
+      <!--CARTA ESCRIBIR COMENTARIO DESKTOP-->
+      <v-row class="mt-3 mx-10" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-col class="text-end mx-2 mt-2">
+          <v-expand-transition>
+            <Card v-show="expand">
+              <v-row>
+                <v-textarea
+                  label="Escribe aquí tu comentario..."
+                  height="30vh"
+                  outlined
+                  auto-grow
+                  class="starchild-input"
+                  hide-details="auto"
+                />
+              </v-row>
+              <v-row justify="end">
+                <v-btn
+                  class="mt-3 mr-9"
+                  height="4vw"
+                  width="4vw"
+                  fab
+                  dark
+                  color="error"
+                  elevation="10"
+                  @click.native="cancel"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-btn
+                  class="mt-3 mr-3"
+                  height="4vw"
+                  width="4vw"
+                  fab
+                  dark
+                  color="blue"
+                  elevation="10"
+                  @click.native="confirm"
+                >
+                  <v-icon>mdi-send</v-icon>
+                </v-btn>
+              </v-row>
+            </Card>
+          </v-expand-transition>
+        </v-col>
+      </v-row>
+      <!--COMENTARIOS EN DESKTOP-->
+      <v-row class="mt-3" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-col>
+          <Card
+            :height="cardHeight"
+            v-for="(comment, idx) in event.comments"
+            :key="idx"
+            :borders="true"
+          >
+            <template v-slot:title class="card-title">
+              <h5>
+                {{ comment.user }}
+              </h5>
+              <v-spacer></v-spacer>
+              <h5>
+                {{ comment.date }}
+              </h5>
+            </template>
+            {{ comment.text }}
+
+            <template v-slot:actions>
+              {{ comment.responses.length }}
+              <v-spacer></v-spacer>
+
+              <v-icon color="primary">mdi-thumb-up-outline</v-icon>
+              <v-btn
+                fab
+                dark
+                color="secondary"
+                elevation="10"
+                @click="expand = !expand"
+                class="mb-10"
+              >
+                <v-icon dark>
+                  mdi-pencil
+                </v-icon>
+              </v-btn>
+            </template>
+          </Card>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -104,11 +226,23 @@ import { CATEGORIES } from '../helpers/categories'
 export default {
   data: function() {
     return {
+      expand: false,
       event: {},
       icon_width: 30,
       cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
       moonphase: '',
       weather_icon: ''
+    }
+  },
+  computed: {
+    cardHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return '42vh'
+        default:
+          return '50vh'
+      }
     }
   },
   props: {
