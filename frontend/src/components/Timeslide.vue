@@ -1,7 +1,10 @@
 <template>
   <v-container class="mx-8" fluid fill-height>
     <!--categories carousel-->
-    <v-row align="start" class="justify-start justify-sm-center categories-row">
+    <v-row
+      align="start"
+      class="justify-center justify-sm-center categories-row"
+    >
       <v-col cols="10">
         <v-carousel
           v-model="model"
@@ -290,9 +293,9 @@ export default {
 .slide {
   max-width: 100vw;
 }
-/*.slide-img {
+.slide-img {
   max-width: 80vw;
-}*/
+}
 .slide-icon {
   max-width: 15vw;
   color: #e7c296;
