@@ -144,14 +144,20 @@ export default {
   data: () => ({
     model: null,
     categories: CATEGORIES,
-    timeLineItems: [],
-    lastCategory: 0,
-    currentCategory: 0
+    timelineBuffer: JSON.parse(sessionStorage.getItem('timelineBuffer')) || {
+      setCategoryItems: function(category, items) {
+        this[category] = items
+        sessionStorage.setItem('timelineBuffer', JSON.stringify(items))
+      }
+    }
   }),
   components: {
     Card
   },
   computed: {
+    timeLineItems() {
+      return this.timelineBuffer[this.model]
+    },
     timeLineDense() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
@@ -199,61 +205,53 @@ export default {
     },
     categoriesOnChange: async function() {
       console.log('categoriesOnChange ', this.model)
-      this.lastCategory = this.currentCategory
-      this.currentCategory = this.model
-
       const limit = 5
-      let timelineBuffer =
-        JSON.parse(sessionStorage.getItem('timelineBuffer')) || {}
-      if (
-        !timelineBuffer[this.model] ||
-        timelineBuffer[this.model].length < 5
-      ) {
-        console.log('*********** no session: ', JSON.stringify(timelineBuffer))
-        this.timeLineItems = []
+      const categoryCurrent = this.model
+
+      if (!this.timelineBuffer[categoryCurrent])
+        this.timelineBuffer.setCategoryItems(categoryCurrent, [])
+
+      if (this.timelineBuffer[categoryCurrent].length < 5) {
+        console.log(
+          '*********** no session: ',
+          JSON.stringify(this.timelineBuffer)
+        )
 
         try {
-          const categorySelected = CATEGORIES[this.model].name
+          const categorySelected = CATEGORIES[categoryCurrent].name
 
-          this.timeLineItems = await HomeService.getTimelineDTOs(
-            categorySelected,
-            limit
+          this.timelineBuffer.setCategoryItems(
+            categoryCurrent,
+            await HomeService.getTimelineDTOs(categorySelected, limit)
           )
-          console.log('timeline items done: ', this.timeLineItems)
-          timelineBuffer[this.model] = this.timeLineItems
-          sessionStorage.setItem(
-            'timelineBuffer',
-            JSON.stringify(timelineBuffer)
+          console.log(
+            'timeline items done: ',
+            this.timelineBuffer[categoryCurrent]
           )
 
-          await Promise.all(
-            this.timeLineItems.map(async function(dto, idx) {
-              console.log('timeline promise ', dto.category)
-              dto.date = new Date(dto.date).toLocaleDateString('es-ES')
-              dto['categoryIcon'] = CATEGORIES[this.model].icon
-              dto['highlight'] = Math.random() > 0.5 ? true : false
+          this.timelineBuffer.setCategoryItems(
+            categoryCurrent,
+            await Promise.all(
+              this.timelineBuffer[categoryCurrent].map(async dto => {
+                console.log('timeline promise ', dto.category)
 
-              EventService.getEventImage(dto._id).then(images => {
+                dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+                dto['categoryIcon'] = CATEGORIES[categoryCurrent].icon
+                dto['highlight'] = Math.random() > 0.5 ? true : false
+
+                let images = await EventService.getEventImage(dto._id)
                 dto['img'] = images.urls.url_real
+                return dto
               })
-
-              console.log('*********** ', this.currentCategory, this.model, dto)
-              if (this.currentCategory === this.model)
-                this.timeLineItems[idx] = dto
-
-              timelineBuffer[this.model][idx] = dto
-              sessionStorage.setItem(
-                'timelineBuffer',
-                JSON.stringify(timelineBuffer)
-              )
-            })
+            )
           )
+
           console.log('- timeline items done 2: ', this.timeLineItems)
         } catch (err) {
           console.log('error on timeslide category change: ', err)
         }
       } else {
-        this.timeLineItems = timelineBuffer[this.model]
+        this.timeLineItems = this.timelineBuffer[categoryCurrent]
       }
 
       /*this.timeLineItems = []
