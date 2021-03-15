@@ -144,7 +144,9 @@ export default {
   data: () => ({
     model: null,
     categories: CATEGORIES,
-    timeLineItems: []
+    timeLineItems: [],
+    lastCategory: 0,
+    currentCategory: 0
   }),
   components: {
     Card
@@ -195,17 +197,66 @@ export default {
       }
       return `${highlight ? height + diff : height}`
     },
-    /*setItemValues: async function(dto, idx) {
-      console.log('timeline promise ', dto.title)
-      this.timeLineItems[idx]['categoryIcon'] = CATEGORY_ICONS[dto.category]
-      this.timeLineItems[idx]['highlight'] = Math.random() > 0.5 ? true : false
+    categoriesOnChange: async function() {
+      console.log('categoriesOnChange ', this.model)
+      this.lastCategory = this.currentCategory
+      this.currentCategory = this.model
 
-      let images = await EventService.getEventImage(dto._id)
-      this.timeLineItems[idx]['img'] = images.urls.url_hd
-    },*/
-    categoriesOnChange: async function(number) {
-      console.log('categoriesOnChange ', number)
-      this.timeLineItems = []
+      const limit = 5
+      let timelineBuffer =
+        JSON.parse(sessionStorage.getItem('timelineBuffer')) || {}
+      if (
+        !timelineBuffer[this.model] ||
+        timelineBuffer[this.model].length < 5
+      ) {
+        console.log('*********** no session: ', JSON.stringify(timelineBuffer))
+        this.timeLineItems = []
+
+        try {
+          const categorySelected = CATEGORIES[this.model].name
+
+          this.timeLineItems = await HomeService.getTimelineDTOs(
+            categorySelected,
+            limit
+          )
+          console.log('timeline items done: ', this.timeLineItems)
+          timelineBuffer[this.model] = this.timeLineItems
+          sessionStorage.setItem(
+            'timelineBuffer',
+            JSON.stringify(timelineBuffer)
+          )
+
+          await Promise.all(
+            this.timeLineItems.map(async function(dto, idx) {
+              console.log('timeline promise ', dto.category)
+              dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+              dto['categoryIcon'] = CATEGORIES[this.model].icon
+              dto['highlight'] = Math.random() > 0.5 ? true : false
+
+              EventService.getEventImage(dto._id).then(images => {
+                dto['img'] = images.urls.url_real
+              })
+
+              console.log('*********** ', this.currentCategory, this.model, dto)
+              if (this.currentCategory === this.model)
+                this.timeLineItems[idx] = dto
+
+              timelineBuffer[this.model][idx] = dto
+              sessionStorage.setItem(
+                'timelineBuffer',
+                JSON.stringify(timelineBuffer)
+              )
+            })
+          )
+          console.log('- timeline items done 2: ', this.timeLineItems)
+        } catch (err) {
+          console.log('error on timeslide category change: ', err)
+        }
+      } else {
+        this.timeLineItems = timelineBuffer[this.model]
+      }
+
+      /*this.timeLineItems = []
       try {
         const categorySelected = CATEGORIES[number].name
 
@@ -230,7 +281,7 @@ export default {
         console.log('- timeline items done 2: ', this.timeLineItems)
       } catch (err) {
         console.log('error on timeslide category change: ', err)
-      }
+      */
     },
     onClickOnTimelineItem: function(index) {
       console.log('CLICK: ', this.timeLineItems[index])
