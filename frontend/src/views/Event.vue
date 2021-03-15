@@ -3,7 +3,7 @@
     <v-container fluid class="pa-5 pt-1 pa-sm-16">
       <v-row class="mt-0 mt-sm-5 mx-sm-10">
         <v-col>
-          <v-img max-height="17vh" :src="img" class="card">
+          <v-img max-height="17vh" :src="event.img || ''" class="card">
             <v-container fill-height>
               <v-row align="center" justify="center">
                 <v-col>
@@ -11,13 +11,13 @@
                     v-if="$vuetify.breakpoint.smAndDown"
                     class="text-center accent--text title-text"
                   >
-                    {{ title }}
+                    {{ event.title }}
                   </h2>
                   <h1
                     v-else
                     class="text-center accent--text text-h2 title-text"
                   >
-                    {{ title }}
+                    {{ event.title }}
                   </h1>
                 </v-col>
               </v-row>
@@ -56,11 +56,9 @@
                 </v-col>
               </v-row>
             </template>
-            <span
-              class="description text-body-1 text-sm-h5"
-              color="white--text"
-              >{{ text }}</span
-            >
+            <div class="description text-body-1 text-sm-h5" color="white--text">
+              {{ event.description }}
+            </div>
           </Card>
         </v-col>
       </v-row>
@@ -74,8 +72,18 @@
                     <v-icon color="accent">mdi-star</v-icon>
                   </v-col>
                   <v-col cols="5" cols-sm="4" offset="6" offset-sm="7">
-                    <a class="comments-anchor" href=""
-                      >Comentarios({{ comments ? comments.length : '0' }})</a
+                    <router-link
+                      :to="{
+                        name: 'comments',
+                        params: {
+                          myEvent: event
+                        }
+                      }"
+                      class="comments-anchor"
+                      href=""
+                      >Comentarios({{
+                        comments ? comments.length : '0'
+                      }})</router-link
                     >
                   </v-col>
                 </v-row>
@@ -96,14 +104,11 @@ import { CATEGORIES } from '../helpers/categories'
 export default {
   data: function() {
     return {
-      img: this.image ? this.image : '',
-      title: '',
-      text: '',
+      event: {},
       icon_width: 30,
       cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
       moonphase: '',
-      weather_icon: '',
-      comments: ''
+      weather_icon: ''
     }
   },
   props: {
@@ -113,16 +118,14 @@ export default {
   components: { Card },
   mounted() {
     eventServices.getEvent(this.eventId).then(event => {
-      this.title = event.title
-      this.text = event.description
-      console.log(this.text)
-      this.comments = event.comments
+      console.log(event)
+      this.event = event
       this.cat_icon = CATEGORIES.find(x => x.name === event.category).icon
     })
 
     if (!this.image) {
       eventServices.getEventImage(this.eventId).then(image => {
-        this.img = require(image.urls.url_hd)
+        this.event['img'] = require(image.urls.url_hd)
       })
     }
 
@@ -154,7 +157,6 @@ export default {
           break
       }
     })
-    console.log(this.title, this.text)
   }
 }
 </script>
@@ -177,6 +179,8 @@ export default {
   font-weight: normal;
   color: white;
   line-height: 4vh;
+  height: 24vh !important;
+  overflow-y: scroll;
 }
 .comments-anchor {
   font-family: Julius Sans One;

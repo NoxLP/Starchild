@@ -27,7 +27,8 @@ const routes = [
   {
     path: '/comments',
     name: 'comments',
-    component: Comments
+    component: Comments,
+    props: true
   },
   {
     path: '/event',
