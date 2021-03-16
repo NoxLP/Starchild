@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark max-width="400" class="mx-auto transparent" padless>
+  <v-footer dark max-width="500" class="mx-auto transparent" padless>
     <v-container class="d-none d-md-flex">
       © Starchild {{ new Date().getFullYear() }} — Todos los derechos reservados
     </v-container>
