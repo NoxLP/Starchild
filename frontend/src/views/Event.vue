@@ -88,7 +88,7 @@
                     class="mb-10"
                   >
                     <v-icon color="accent">
-                      mdi-pencil
+                      mdi-comment
                     </v-icon>
                   </v-btn>
                 </v-col>

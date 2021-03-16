@@ -62,7 +62,7 @@
             @click="expand = !expand"
           >
             <v-icon dark>
-              mdi-pencil
+              mdi-comment
             </v-icon>
           </v-btn>
           <v-expand-transition>
