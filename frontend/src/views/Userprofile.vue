@@ -2,6 +2,11 @@
   <div>
     <Card :borders="true">
       <template v-slot:title class="card-title">
+        <v-row>
+          <v-avatar color="grey">
+            <span class="white--text headline">PP</span>
+          </v-avatar>
+        </v-row>
         <h3>
           {{ user }}
         </h3>
