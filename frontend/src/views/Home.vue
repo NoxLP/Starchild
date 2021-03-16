@@ -12,13 +12,14 @@
           hide-delimiter-background
           delimiter-icon="mdi-star-four-points-outline"
           class="last-events-carousel Glass mt-15"
+          height="500"
         >
           <v-carousel-item
             v-for="(item, idx) in events"
             :key="idx"
             @click="onClickOnCarouselItem(idx)"
           >
-            <v-row class="fill-height mt-5" align="center" justify="center">
+            <v-row class="fill-height" align="center" justify="center">
               <v-progress-circular
                 v-show="!item.img"
                 indeterminate
@@ -119,10 +120,9 @@ export default {
 /*.timeslide-row {
   margin-top: 10vh;
 }*/
-.slide-img {
-  /* width: 50vw; */
+/*.slide-img {
   height: 100%;
-}
+}*/
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
