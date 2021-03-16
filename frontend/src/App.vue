@@ -1,6 +1,11 @@
 <template>
   <v-app class="app">
-    <Header v-if="showHeader" />
+    <Header
+      v-if="
+        $router.currentRoute.name !== 'login' &&
+          $router.currentRoute.name !== 'signup'
+      "
+    />
     <v-main>
       <router-view :key="$route.fullPath" />
     </v-main>
@@ -13,15 +18,6 @@ import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
 
 export default {
-  computed: {
-    showHeader() {
-      console.log('ROUTER: ', this.$router)
-      return (
-        this.$router.currentRoute.name !== 'login' &&
-        this.$router.currentRoute.name !== 'signup'
-      )
-    }
-  },
   components: {
     Footer,
     Header

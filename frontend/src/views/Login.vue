@@ -1,8 +1,17 @@
 <template>
   <v-form ref="form" v-model="valid">
+    <v-container>
+      <v-row justify="center" class="mt-12">
+        <v-img
+          class="ml-5"
+          max-width="50vw"
+          contain
+          src="../../public/assets/images/starchild.png"
+        ></v-img>
+      </v-row>
+    </v-container>
     <Card class="login-card">
       <v-container>
-        <v-row class="empty-row"></v-row>
         <v-row align="center" justify="center">
           <Input
             label="Email"
@@ -24,7 +33,7 @@
         <v-row align="center" justify="center">
           <Button
             text="Login"
-            class="mt-16"
+            class="mt-10"
             :disabled="!valid"
             @click.native="validate"
           />
@@ -32,7 +41,7 @@
       </v-container>
     </Card>
     <v-container>
-      <v-row justify="center">
+      <v-row justify="center" class="mt-6">
         <router-link
           style="text-decoration: none; color: inherit;"
           type="button"
@@ -73,7 +82,7 @@ export default {
               /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
                 value
               )) ||
-            'Dirección de email válida, mínimo 3 caracteres.'
+            'Dirección de email inválida.'
         ],
         password: [
           value => !!value || 'Requerido.',
@@ -119,8 +128,8 @@ export default {
 
 <style scoped>
 .login-card {
-  margin: 7vw 12vw 2vw 12vw !important;
-  height: 60vh !important;
+  margin: 6vw 12vw 2vw 12vw !important;
+  height: 36vh !important;
 }
 .empty-row {
   height: 20vh;

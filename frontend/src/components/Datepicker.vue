@@ -16,7 +16,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               outlined
-              class="starchild-input mx-2"
+              class="starchild-select mx-2"
               :label="innerLabel"
               hide-details="auto"
               v-model="date"

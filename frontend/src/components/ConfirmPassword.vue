@@ -8,7 +8,7 @@
         <v-text-field
           outlined
           class="starchild-input mx-2"
-          :label="innerLabel"
+          :label="label"
           :rules="rules"
           :append-icon="pwdIcon"
           :type="show"
