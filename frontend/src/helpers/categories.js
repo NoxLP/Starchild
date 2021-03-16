@@ -15,7 +15,7 @@ const CATEGORIES = [
     name: 'eclipsesSun',
     text: 'Eclipses solares',
     img: require('@/../public/assets/images/categories/imgCatEclipseSun.png'),
-    icon: require('@/../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/PNGs/MoonPhases-09_Eclipse1.png')
+    icon: require('@/../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-09_Eclipse.svg')
   },
   {
     name: 'planets',

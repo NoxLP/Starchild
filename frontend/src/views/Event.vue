@@ -72,7 +72,6 @@
                     dark
                     color="secondary"
                     elevation="10"
-                    @click="expand = !expand"
                     class="mb-10"
                   >
                     <v-icon color="accent">mdi-star</v-icon>
@@ -84,7 +83,7 @@
                     dark
                     color="secondary"
                     elevation="10"
-                    @click="expand = !expand"
+                    @click="expandEvent"
                     class="mb-10"
                   >
                     <v-icon color="accent">
@@ -128,43 +127,6 @@
           </v-card>
         </v-col>
       </v-row>
-      <!--CARTA ESCRIBIR COMENTARIO DESKTOP-->
-      <v-bottom-sheet v-model="expand" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-sheet class="bottom-background pa-10">
-          <v-row>
-            <v-textarea
-              label="Escribe aquí tu comentario..."
-              outlined
-              auto-grow
-              class="starchild-input"
-              hide-details="auto"
-              v-model="commentText"
-            />
-          </v-row>
-          <v-row justify="end">
-            <v-btn
-              class="mt-3 mr-9"
-              fab
-              dark
-              color="error"
-              elevation="10"
-              @click.native="cancel"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-btn
-              class="mt-3 mr-3"
-              fab
-              dark
-              color="blue"
-              elevation="10"
-              @click.native="validate"
-            >
-              <v-icon>mdi-send</v-icon>
-            </v-btn>
-          </v-row>
-        </v-sheet>
-      </v-bottom-sheet>
       <!--COMENTARIOS EN DESKTOP-->
       <v-row class="mt-3 mr-sm-10 ml-sm-15" v-if="$vuetify.breakpoint.mdAndUp">
         <v-col>
@@ -187,38 +149,78 @@
             <span class="text-left">{{ comment.text }}</span>
 
             <template v-slot:actions>
-              <span class="ml-5"
-                >Respuestas: {{ comment.responses.length }}</span
-              >
-
-              <v-spacer></v-spacer>
-
-              <v-btn
-                fab
-                dark
-                color="secondary"
-                elevation="10"
-                @click="like(idx)"
-                class="mr-7"
-              >
-                <v-icon color="accent">mdi-thumb-up-outline</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                color="secondary"
-                elevation="10"
-                @click="expand = !expand"
-                class="mr-5"
-              >
-                <v-icon color="accent">
-                  mdi-comment
-                </v-icon>
-              </v-btn>
+              <v-row justify="center" align="center">
+                <v-col>
+                  <span class="ml-5"
+                    >Respuestas: {{ comment.responses.length }}</span
+                  >
+                </v-col>
+                <v-col cols="2" offset="8" class="pr-8" align="end">
+                  <v-btn
+                    fab
+                    dark
+                    color="secondary"
+                    elevation="10"
+                    @click="like(idx)"
+                    class="mr-7"
+                  >
+                    <v-icon color="accent">mdi-thumb-up-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                    fab
+                    dark
+                    color="secondary"
+                    elevation="10"
+                    @click="expandComment(idx)"
+                  >
+                    <v-icon color="accent">
+                      mdi-comment
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
             </template>
           </Card>
         </v-col>
       </v-row>
+      <!--CARTA ESCRIBIR COMENTARIO DESKTOP-->
+      <v-bottom-sheet v-model="expand" class="pa-0 ma-0">
+        <v-container fluid class="bottom-sheet ma-0 pa-10">
+          <v-row>
+            <v-textarea
+              label="Escribe aquí tu comentario..."
+              outlined
+              auto-grow
+              class="bottom-sheet"
+              hide-details="auto"
+              v-model="commentText"
+              color="accent"
+            />
+          </v-row>
+          <v-row justify="end">
+            <v-btn
+              class="mt-3 mr-9"
+              fab
+              dark
+              color="accent"
+              elevation="10"
+              @click.native="cancel"
+            >
+              <v-icon color="secondary">mdi-close</v-icon>
+            </v-btn>
+            <v-btn
+              class="mt-3 mr-3"
+              fab
+              dark
+              color="secondary"
+              elevation="10"
+              @click.native="confirm"
+            >
+              <v-icon color="accent">mdi-send</v-icon>
+            </v-btn>
+          </v-row>
+        </v-container>
+      </v-bottom-sheet>
     </v-container>
   </div>
 </template>
@@ -238,9 +240,9 @@ export default {
       cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
       moonphase: '',
       weather_icon: '',
-      rules: [value => !!value || 'Requerido.'],
       valid: false,
-      commentText: ''
+      commentText: '',
+      commentReply: -1
     }
   },
   computed: {
@@ -260,14 +262,44 @@ export default {
   },
   components: { Card },
   methods: {
+    expandEvent() {
+      this.expand = !this.expand
+      this.commentReply = -1
+    },
+    expandComment(idx) {
+      this.expand = !this.expand
+      this.commentReply = idx
+    },
     confirm() {
       if (this.commentText !== '') {
-        commentsServices
-          .postCommentInEvent(this.commentText, this.event._id)
-          .then(comment => {
-            this.expand = false
-            this.event.comments.push(comment)
-          })
+        if (this.commentReply === -1) {
+          commentsServices
+            .postCommentInEvent(this.commentText, this.event._id)
+            .then(comment => {
+              this.expand = false
+              this.event.comments.push(comment)
+            })
+            .catch(err => {
+              console.log('Error posting comment to event: ', err)
+            })
+        } else {
+          commentsServices
+            .postReplyInComment(
+              this.event._id,
+              this.event.comments[this.commentReply]._id,
+              this.commentText
+            )
+            .then(reply => {
+              this.expand = false
+              if (!this.event.comments[this.commentReply].responses)
+                this.event.comments[this.commentReply].responses = []
+
+              this.event.comments[this.commentReply].responses.push(reply)
+            })
+            .catch(err => {
+              console.log('Error posting reply to comment: ', err)
+            })
+        }
       }
     },
     cancel() {
@@ -333,9 +365,10 @@ export default {
 
   padding: 0 !important;
 }
-.bottom-background {
-  background: rgba(255, 255, 255, 0.1) !important;
+.bottom-sheet {
+  background: rgba(50, 50, 50, 0.5) !important;
   backdrop-filter: blur(12.5px) !important;
+  -webkit-backdrop-filter: blur(12.5px) !important;
 }
 .description {
   white-space: pre-line;
@@ -355,11 +388,7 @@ export default {
   text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
 }
 .v-application .primary--text {
-  color: white !important;
-  /*caret-color: white !important;*/
-}
-.v-application .primary--text :focus {
-  color: white !important;
+  color: #e7c296 !important;
   /*caret-color: white !important;*/
 }
 </style>

@@ -86,19 +86,29 @@ export default {
 
     return edited
   },
-  postReplyInComment: async function(eventId, parentId, comment) {
+  postReplyInComment: async function(eventId, parentId, text) {
     console.log('postReplyInComment')
 
     let edited
     try {
       edited = (
-        await api.post(`/comments/reply`, comment, {
-          params: {
-            eventId: eventId,
-            parentId: parentId
+        await api.post(
+          `/comments/reply`,
+          {
+            userEmail: localStorage.getItem('email'),
+            user: localStorage.getItem('user'),
+            event: eventId,
+            text: text,
+            date: new Date(Date.now())
           },
-          headers: { token: localStorage.getItem('token') }
-        })
+          {
+            params: {
+              eventId: eventId,
+              parentId: parentId
+            },
+            headers: { token: localStorage.getItem('token') }
+          }
+        )
       ).data
     } catch (err) {
       console.log('error posting reply: ', err)
