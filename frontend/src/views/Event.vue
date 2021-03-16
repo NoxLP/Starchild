@@ -2,9 +2,9 @@
   <div>
     <v-container fluid class="pa-5 pt-1 pa-sm-16">
       <!--TITULO-->
-      <v-row class="mt-0 mt-sm-5 mx-sm-10">
+      <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
-          <v-img max-height="17vh" :src="event.img || ''" class="card">
+          <v-img max-height="20vh" :src="image || ''" class="card">
             <v-container fill-height>
               <v-row align="center" justify="center">
                 <v-col>
@@ -257,6 +257,7 @@ export default {
       this.cat_icon = CATEGORIES.find(x => x.name === event.category).icon
     })
 
+    console.log('MOUNTED: ', this.image)
     if (!this.image) {
       eventServices.getEventImage(this.eventId).then(image => {
         this.event['img'] = require(image.urls.url_hd)
@@ -295,6 +296,7 @@ export default {
 }
 </script>
 
+<style lang="sass" scoped></style>
 <style scoped>
 .card {
   border-radius: 20px;
@@ -325,5 +327,9 @@ export default {
 }
 .title-text {
   text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
+}
+.v-application .primary--text {
+  color: white !important;
+  caret-color: white !important;
 }
 </style>

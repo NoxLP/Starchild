@@ -31,7 +31,7 @@
                 class="slide-img"
               >
                 <v-row align="center" justify="start">
-                  <h1 class="white--text mt-5 ml-10">
+                  <h1 class="white--text mt-5 ml-10 title-text">
                     {{ new Date(item.date).toLocaleDateString() }}
                   </h1>
                 </v-row>
@@ -153,6 +153,9 @@ export default {
 .slide-icon {
   max-width: 10vw;
   color: #e7c296;
+}
+.title-text {
+  text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
 }
 
 @media (min-width: 959px) {

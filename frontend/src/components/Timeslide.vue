@@ -87,18 +87,20 @@
                       ></v-progress-circular>
                     </v-row>
                   </template>
+
                   <h2
                     v-if="item.highlight"
-                    class="font-weight-light mb-4 white--text"
+                    class="font-weight-light mb-4 white--text title-text"
                   >
                     {{ item.date }}
                   </h2>
-                  <h3 v-else class="font-weight-light mb-4 white--text">
+                  <h3
+                    v-else
+                    class="font-weight-light mb-4 white--text title-text"
+                  >
                     {{ item.date }}
                   </h3>
-                  <span class="white--text" v-if="item.highlight">{{
-                    item.title
-                  }}</span>
+                  <span class="white--text title-text">{{ item.title }}</span>
                 </v-img>
                 <v-img
                   :src="item.img"
@@ -119,8 +121,7 @@
                     </v-row>
                   </template>
                   <h2
-                    class="font-weight-light ml-4 mt-2 white--text"
-                    v-if="item.highlight"
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
                     {{ item.title }}
                   </h2>
