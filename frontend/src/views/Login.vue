@@ -41,9 +41,9 @@
       </v-container>
     </Card>
     <v-container>
-      <v-row justify="center" class="mt-6">
+      <v-row justify="center" class="mt-3">
         <router-link
-          style="text-decoration: none; color: inherit;"
+          style="text-decoration: none; color: inhrit;"
           type="button"
           class="btn"
           :to="{
@@ -129,7 +129,7 @@ export default {
 <style scoped>
 .login-card {
   margin: 6vw 12vw 2vw 12vw !important;
-  height: 36vh !important;
+  /* height: 36vh !important; */
 }
 .empty-row {
   height: 20vh;
