@@ -22,15 +22,25 @@ export default {
 
     return comments
   },
-  postCommentInEvent: async function(comment) {
+  postCommentInEvent: async function(text, eventId) {
     console.log('postCommentInEvent')
 
     let posted
     try {
       posted = (
-        await api.post('/comments', comment, {
-          headers: { token: localStorage.getItem('token') }
-        })
+        await api.post(
+          '/comments',
+          {
+            userEmail: localStorage.getItem('email'),
+            user: localStorage.getItem('user'),
+            event: eventId,
+            text: text,
+            date: new Date(Date.now())
+          },
+          {
+            headers: { token: localStorage.getItem('token') }
+          }
+        )
       ).data
     } catch (err) {
       console.log('error posting comment: ', err)

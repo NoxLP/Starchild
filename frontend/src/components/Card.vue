@@ -13,7 +13,7 @@
       <slot name="title"></slot>
     </v-card-title>
     <v-card-text :class="textClass">
-      <v-container>
+      <v-container :class="textClass">
         <v-row fill-height dense>
           <v-col cols="12">
             <slot></slot>
