@@ -1,16 +1,25 @@
 <template>
   <div>
-    <v-btn class="starchild-button" :disabled="disabled">
-      <p class="starchild-button-text">{{ text }}</p>
+    <v-btn :class="myClass" :disabled="disabled">
+      {{ text }}
     </v-btn>
   </div>
 </template>
 
 <script>
 export default {
+  data: function() {
+    return {
+      myClass: `Glass starchild-button-text ${this.textClass}`
+    }
+  },
   props: {
     text: String,
-    disabled: Boolean
+    disabled: Boolean,
+    textClass: {
+      type: String,
+      default: 'text-h5'
+    }
   }
 }
 </script>
@@ -30,5 +39,12 @@ export default {
   font-size: 24px;
 
   color: #e7c296;
+}
+.Glass {
+  background: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.8) !important;
+  backdrop-filter: blur(12.5px) !important;
+  -webkit-backdrop-filter: blur(12.5px) !important;
+  border-radius: 10px;
 }
 </style>

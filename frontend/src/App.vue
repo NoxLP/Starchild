@@ -1,6 +1,11 @@
 <template>
   <v-app class="app">
-    <Header />
+    <Header
+      v-if="
+        $router.currentRoute.name !== 'login' &&
+          $router.currentRoute.name !== 'signup'
+      "
+    />
     <v-main>
       <router-view :key="$route.fullPath" />
     </v-main>

@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const api = axios.create({
-  baseURL: process.env.BACK_URL,
+  baseURL: 'http://localhost:3000/api',
   withCredentials: false
 })
 

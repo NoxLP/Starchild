@@ -1,14 +1,12 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="end" style="height: 100px">
-      <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
-        <p class="mb-0 p-0">{{ outerLabel }}</p>
-      </v-col>
-      <v-col :cols="inputColumns" class="d-flex justify-end">
+    <v-row align="center" justify="end" :style="inputHeight">
+      <v-col class="d-flex justify-end">
         <v-text-field
           outlined
+          color="white"
           class="starchild-input mx-2"
-          :label="innerLabel"
+          :label="label"
           :rules="rules"
           :append-icon="pwdIcon"
           :type="show"
@@ -25,37 +23,15 @@
 
 <script>
 export default {
-  data: () => {
+  data: function() {
     return {
       show: '',
       pwdIcon: '',
-      content: ''
-    }
-  },
-  computed: {
-    innerLabel() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-        case 'sm':
-          return this.label
-        /*case 'md':
-        case 'lg':
-        case 'xl':*/
-        default:
-          return ''
-      }
-    },
-    outerLabel() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-        case 'sm':
-          return ''
-        /*case 'md':
-        case 'lg':
-        case 'xl':*/
-        default:
-          return this.label
-      }
+      content: '',
+      inputHeight:
+        this.height && this.height !== ''
+          ? `height: ${this.height};`
+          : 'height: 100px;'
     }
   },
   props: {
@@ -76,7 +52,8 @@ export default {
       type: String,
       default: '10'
     },
-    type: String
+    type: String,
+    height: String
   },
   methods: {
     onShowIcon: function() {

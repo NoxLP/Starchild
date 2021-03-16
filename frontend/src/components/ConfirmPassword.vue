@@ -1,14 +1,12 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="end" style="height: 100px">
-      <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
-        <p class="mb-0 p-0">{{ outerLabel }}</p>
-      </v-col>
-      <v-col :cols="inputColumns" class="d-flex justify-end">
+    <v-row align="center" justify="end" :style="inputHeight">
+      <v-col class="d-flex justify-end">
         <v-text-field
           outlined
+          color="white"
           class="starchild-input mx-2"
-          :label="innerLabel"
+          :label="label"
           :rules="rules"
           :append-icon="pwdIcon"
           :type="show"
@@ -26,6 +24,10 @@ export default {
     return {
       show: '',
       pwdIcon: '',
+      inputHeight:
+        this.height && this.height !== ''
+          ? `height: ${this.height};`
+          : 'height: 100px;',
       rules: [
         value =>
           (this.password && this.password === value) ||

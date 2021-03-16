@@ -1,10 +1,7 @@
 <template>
   <v-container fluid>
     <v-row align="center" justify="end" style="height: 100px">
-      <v-col :cols="labelColumns" v-show="label" class="d-flex justify-end">
-        <p class="mb-0 p-0">{{ outerLabel }}</p>
-      </v-col>
-      <v-col :cols="inputColumns" class="d-flex justify-end">
+      <v-col class="d-flex justify-end">
         <v-menu
           ref="menu"
           v-model="menu"
@@ -16,8 +13,9 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               outlined
-              class="starchild-input mx-2"
-              :label="innerLabel"
+              color="white"
+              class="starchild-select mx-2"
+              :label="label"
               hide-details="auto"
               v-model="date"
               readonly

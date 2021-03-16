@@ -1,5 +1,15 @@
 <template>
   <v-form ref="form" v-model="valid">
+    <v-container>
+      <v-row justify="center" class="mt-12">
+        <v-img
+          class="ml-5"
+          max-width="50vw"
+          contain
+          src="../../public/assets/images/starchild.png"
+        ></v-img>
+      </v-row>
+    </v-container>
     <Card class="signup-card">
       <Input label="Nombre" v-model="signData.name" required />
       <Input
@@ -43,7 +53,7 @@
         type="text"
         v-model="signData.birthDate"
       />
-      <v-container class="mt-10 mb-10">
+      <v-container class="mt-14 mb-5">
         <v-row justify="center">
           <Button text="Enviar" :disabled="!valid" @click.native="validate" />
         </v-row>
@@ -116,7 +126,9 @@ export default {
       this.valid = this.$refs.form.validate()
 
       if (this.valid) {
-        SignupService.signup(this.signData)
+        SignupService.signup(this.signData).then(() => {
+          this.$router.push('home')
+        })
       }
     }
   }
@@ -125,6 +137,6 @@ export default {
 
 <style scoped>
 .signup-card {
-  margin: 7vw 12vw 2vw 12vw !important;
+  margin: 6vw 12vw 2vw 12vw !important;
 }
 </style>

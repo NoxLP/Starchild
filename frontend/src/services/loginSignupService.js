@@ -15,9 +15,10 @@ export default {
       localStorage.setItem('token', loginData.token)
       localStorage.setItem('user', loginData.user)
       localStorage.setItem('email', loginData.email)
-
-      //TODO: go to home
-    } //¿¿TODO??  ¿else error?
+      api.defaults.headers.common['token'] = loginData.token
+      return true
+    }
+    return false
   },
   //endpoint: /auth/users/signup
   signup: async function(data) {
@@ -34,8 +35,9 @@ export default {
       localStorage.setItem('token', signupData.token)
       localStorage.setItem('user', signupData.user)
       localStorage.setItem('email', signupData.email)
-
-      //TODO: go to home
-    } //¿¿TODO??  ¿else error?
+      api.defaults.headers.common['token'] = signupData.token
+      return true
+    }
+    return false
   }
 }

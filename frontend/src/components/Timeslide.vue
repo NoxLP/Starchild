@@ -1,33 +1,46 @@
 <template>
   <v-container class="mx-8" fluid fill-height>
     <!--categories carousel-->
-    <v-row align="start" class="justify-start justify-sm-center categories-row">
-      <v-carousel
-        v-model="model"
-        class="pa-4 slide"
-        :continuous="false"
-        hide-delimiters
-        @change="categoriesOnChange"
-      >
-        <v-carousel-item
-          v-for="(item, i) in categories"
-          :key="i"
-          :src="item.img"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
+    <v-row
+      align="start"
+      class="justify-center justify-sm-center categories-row"
+    >
+      <v-col cols="10">
+        <v-carousel
+          v-model="model"
+          class="pa-0 slide carousel-shadow image-radius"
+          :continuous="false"
+          hide-delimiters
+          @change="categoriesOnChange"
         >
-          <v-container>
-            <v-row align="center" justify="center">
-              <img :src="item.icon" class="slide-icon" />
-            </v-row>
-            <v-row align="center" justify="center">
-              <h1 class="white--text mt-5">{{ item.text }}</h1>
-            </v-row>
-          </v-container>
-        </v-carousel-item>
-      </v-carousel>
+          <v-carousel-item
+            v-for="(item, i) in categories"
+            :key="i"
+            :src="item.img"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          >
+            <v-container fill-height>
+              <!--<v-row align="center" justify="center" class="mt-10 mb-0">
+                <v-img
+                  :src="item.icon"
+                  class="slide-icon"
+                  max-height="100%"
+                  color="accent"
+                  contain
+                />
+              </v-row>-->
+              <v-row align="center" justify="center" class="mb-16 mt-0">
+                <h1 class="white--text mt-5 text-sm-h1 title-text">
+                  {{ item.text }}
+                </h1>
+              </v-row>
+            </v-container>
+          </v-carousel-item>
+        </v-carousel>
+      </v-col>
     </v-row>
-    <v-row class="justify-start justify-sm-center">
+    <v-row class="justify-start justify-sm-center mt-5">
       <!--timeline-->
       <v-timeline clipped :dense="timeLineDense">
         <v-timeline-item
@@ -39,33 +52,83 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img :src="item.categoryIcon" />
+              <img :src="item.categoryIcon" color="accent" />
             </v-avatar>
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
             <span class="headline white--text">{{ item.date }}</span>
           </template>
-          <v-card
+          <Card
+            class="pa-0 timeline-item-card btn"
             :height="timelineCardHeight(item.highlight)"
             style="width: 60vw;"
+            :elevation="10"
+            light
+            @click.native="onClickOnTimelineItem(idx)"
           >
-            <v-img :src="item.img" v-if="$vuetify.breakpoint.smAndDown">
-              <h2 class="font-weight-light mb-4 white--text">
-                {{ item.date }}
-              </h2>
-              <span class="white--text" v-if="item.highlight"
-                >{{ item.title }} {{ item.highlight }}</span
-              >
-            </v-img>
-            <v-img :src="item.img" v-else-if="$vuetify.breakpoint.mdAndUp">
-              <h2
-                class="font-weight-light ml-4 mt-2 white--text"
-                v-if="item.highlight"
-              >
-                {{ item.title }} {{ item.highlight }}
-              </h2>
-            </v-img>
-          </v-card>
+            <template v-slot:pre>
+              <v-container class="pt-2">
+                <v-img
+                  :src="item.img"
+                  v-if="$vuetify.breakpoint.smAndDown"
+                  :height="timelineCardHeight(item.highlight) - 17"
+                  :max-height="timelineCardHeight(item.highlight) - 17"
+                  class="image-radius"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="accent"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+
+                  <h2
+                    v-if="item.highlight"
+                    class="font-weight-light mb-4 white--text title-text"
+                  >
+                    {{ item.date }}
+                  </h2>
+                  <h3
+                    v-else
+                    class="font-weight-light mb-4 white--text title-text"
+                  >
+                    {{ item.date }}
+                  </h3>
+                  <span class="white--text title-text">{{ item.title }}</span>
+                </v-img>
+                <v-img
+                  :src="item.img"
+                  v-else-if="$vuetify.breakpoint.mdAndUp"
+                  :height="timelineCardHeight(item.highlight) - 17"
+                  :max-height="timelineCardHeight(item.highlight) - 17"
+                  class="image-radius"
+                  ><template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="accent"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                  <h2
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
+                  >
+                    {{ item.title }}
+                  </h2>
+                </v-img>
+              </v-container>
+            </template>
+          </Card>
         </v-timeline-item>
       </v-timeline>
     </v-row>
@@ -77,14 +140,22 @@
 timeLineItems: { title, date, img, highlight, categoryIcon }
 */
 import { CATEGORIES } from '../helpers/categories.js'
-//import HomeService from '../services/homeService.js'
+import HomeService from '../services/homeService.js'
+import EventService from '../services/eventServices.js'
+import Card from '../components/Card.vue'
 
 export default {
-  data: () => ({
-    model: null,
-    categories: CATEGORIES,
-    timeLineItems: []
-  }),
+  data: function() {
+    return {
+      model: 0,
+      categories: CATEGORIES,
+      timeLineItems: [],
+      timelineBuffer: JSON.parse(sessionStorage.getItem('timelineBuffer')) || {}
+    }
+  },
+  components: {
+    Card
+  },
   computed: {
     timeLineDense() {
       switch (this.$vuetify.breakpoint.name) {
@@ -112,6 +183,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.categoriesOnChange()
+  },
   methods: {
     timelineCardHeight: function(highlight) {
       let height, diff
@@ -129,35 +203,84 @@ export default {
           diff = 150
           break
       }
-      return highlight ? height + diff : height
+      return `${highlight ? height + diff : height}`
     },
-    buildCategoryItems: number => {
-      const items = []
-      for (let i = 0; i < 5; i++) {
-        items.push({
-          title: `Category ${number + 1} item title ${i}`,
-          date: '04/03/2021',
-          img: '',
-          highlight: Math.random() > 0.5 ? true : false,
-          categoryIcon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
-        })
+    setCategoryItems: function(category, number, items) {
+      this.timelineBuffer[category] = items
+      if (number === this.model) {
+        console.log('ASSIGN TO ITEMS')
+        this.timeLineItems = this.timelineBuffer[category]
       }
-      return items
+      sessionStorage.setItem(
+        'timelineBuffer',
+        JSON.stringify(this.timelineBuffer)
+      )
     },
-    categoriesOnChange: async function(number) {
-      console.log(number)
-      this.timeLineItems = this.buildCategoryItems(number)
+    categoriesOnChange: async function() {
+      console.log('categoriesOnChange ', this.model, this.timeLineItems)
+      const limit = 5
+      const categoryNumber = this.model
+      const currentCategory = CATEGORIES[this.model].name
 
-      /*
-      try {
-        this.timeLineItems = await HomeService.getTimelineDTOs(
-          CATEGORIES[number].name,
-          this.timeLineItemsLimit
-        )
-      } catch (err) {
-        console.log(err)
+      if (
+        !this.timelineBuffer[currentCategory] ||
+        this.timelineBuffer[currentCategory].length < 5
+      ) {
+        console.log('*********** no session: ', this.timelineBuffer)
+
+        try {
+          const categorySelected = CATEGORIES[categoryNumber].name
+
+          const items = await HomeService.getTimelineDTOs(
+            categorySelected,
+            limit
+          )
+          this.setCategoryItems(currentCategory, categoryNumber, items)
+
+          console.log(
+            'timeline items done: ',
+            this.timelineBuffer[currentCategory],
+            this.timeLineItems
+          )
+
+          this.setCategoryItems(
+            currentCategory,
+            categoryNumber,
+            await Promise.all(
+              this.timelineBuffer[currentCategory].map(async dto => {
+                console.log('timeline promise ', dto.category)
+
+                dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+                dto['categoryIcon'] = CATEGORIES[categoryNumber].icon
+                dto['highlight'] = Math.random() > 0.5 ? true : false
+
+                let images = await EventService.getEventImage(dto._id)
+                dto['img'] = images.urls.url_real
+                return dto
+              })
+            )
+          )
+
+          console.log('- timeline items done 2: ', this.timeLineItems)
+        } catch (err) {
+          console.log('error on timeslide category change: ', err)
+        }
+      } else {
+        console.log('****** found session')
+        this.timeLineItems = this.timelineBuffer[currentCategory]
       }
-      */
+    },
+    onClickOnTimelineItem: function(index) {
+      console.log('CLICK: ', this.timeLineItems[index])
+      this.$router.push({
+        name: 'event',
+        params: {
+          eventId: this.timeLineItems[index]._id,
+          image: this.timeLineItems[index].img
+            ? this.timeLineItems[index].img
+            : null
+        }
+      })
     }
   }
 }
@@ -165,23 +288,47 @@ export default {
 
 <style scoped>
 /*timeline divider color*/
-.theme--light.v-timeline:before {
+.theme--dark.v-timeline:before {
   background: #e7c296;
 }
 .slide {
   max-width: 100vw;
 }
-/*.slide-img {
+.slide-img {
   max-width: 80vw;
-}*/
+}
 .slide-icon {
-  max-width: 10vw;
+  max-width: 15vw;
   color: #e7c296;
+}
+.Glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 10px;
+}
+.carousel-shadow {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+}
+.image-radius {
+  border-radius: 10px;
+}
+.title-text {
+  text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
 }
 
 @media (min-width: 959px) {
   .slide-img {
     max-width: 60vw;
+  }
+  .timeline-item-card {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.7;
+  }
+  .timeline-item-card:hover {
+    opacity: 1 !important;
+    cursor: pointer;
   }
 }
 </style>
