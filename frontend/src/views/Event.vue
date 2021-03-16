@@ -29,7 +29,7 @@
       <!--CUERPO-->
       <v-row class="mt-8 mx-sm-10">
         <v-col>
-          <Card :height="cardHeight">
+          <Card>
             <!--BARRA ICONOS-->
             <template v-slot:title>
               <v-row class="flex-nowrap ml-12" height="6vh">
@@ -207,7 +207,7 @@
                 class="mb-10"
               >
                 <v-icon dark>
-                  mdi-pencil
+                  mdi-comment
                 </v-icon>
               </v-btn>
             </template>
@@ -315,14 +315,11 @@ export default {
   font-weight: normal;
   color: white;
   line-height: 4vh;
-  height: 24vh !important;
-  overflow-y: scroll;
 }
 .comments-anchor {
   font-family: Julius Sans One;
   font-style: normal;
   font-weight: normal;
-
   color: white;
 }
 .title-text {
