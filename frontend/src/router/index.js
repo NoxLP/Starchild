@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
-import Login from '../views/Login.vue'
+import Userprofile from '../views/Userprofile.vue'
 
 Vue.use(VueRouter)
 
@@ -20,9 +20,9 @@ const routes = [
     component: Signup
   },
   {
-    path: '/comments',
-    name: 'comments',
-    component: Comments
+    path: '/userprofile',
+    name: 'userprofile',
+    component: Userprofile
   }
 ]
 
