@@ -33,13 +33,10 @@
 
       <v-spacer></v-spacer>
 
-      <!--<v-btn icon>
-        <v-icon dark color="accent" class="mx-3">mdi-telescope</v-icon>
-      </v-btn>-->
       <router-link
         style="text-decoration: none; color: inherit;"
         type="button"
-        class="btn"
+        class="btn mr-5"
         :to="{
           name: 'home'
         }"
@@ -49,16 +46,10 @@
         </v-btn>
       </router-link>
 
-      <!--<v-btn icon>
-        <v-icon dark color="accent" class="mx-3 black--text"
-          >mdi-calendar</v-icon
-        >
-      </v-btn>
-      |-->
-      <v-btn icon class="mx-5">
+      <!--<v-btn icon class="mx-5">
         <v-icon dark color="accent" class="black--text">mdi-account</v-icon>
-      </v-btn>
-
+      </v-btn>-->
+      |
       <v-btn icon @click="log" class="mx-5">
         <v-avatar
           class="ml-5 Glass starchild-text"
@@ -66,27 +57,32 @@
           >{{ userName.slice(0, 2) }}</v-avatar
         >
       </v-btn>
+
+      {{ user }}
       <!--************* OJO **************
         AQUI ABAJO VA BOTON COMPONENTE-->
-      <!--<Button class="ml-10" text="Logout" />-->
+      <Button v-if="!!user" class="ml-10" text="Logout" />
       <!--************* OJO **************-->
     </v-app-bar>
   </div>
 </template>
 
 <script>
-//import Button from '../components/Button.vue'
+import Button from '../components/Button.vue'
 
 export default {
   computed: {
     userName() {
       if (localStorage.getItem('user')) return localStorage.getItem('user')
       return ''
+    },
+    user() {
+      return localStorage.getItem('user')
     }
   },
-  /*components: {
+  components: {
     Button
-  }*/
+  },
   methods: {
     log: function() {
       localStorage.removeItem('token')
