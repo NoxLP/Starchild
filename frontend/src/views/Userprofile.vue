@@ -2,17 +2,28 @@
   <div>
     <Card :borders="true">
       <template v-slot:title class="card-title">
-        <h5>
+        <h3>
           {{ user }}
-        </h5>
+        </h3>
         <v-spacer></v-spacer>
-        <h5>
-          {{ mail }}
-          {{ job }}
-          {{ location }}
-        </h5>
+        <v-col>
+          <h5>
+            <v-row>
+              {{ mail }}
+            </v-row>
+            <v-row>
+              {{ job }}
+            </v-row>
+            <v-row>
+              {{ location }}
+            </v-row>
+          </h5>
+        </v-col>
       </template>
-      {{ text }}
+      <h4>
+        MIS EVENTOS:
+      </h4>
+      {{ events }}
     </Card>
   </div>
 </template>
@@ -24,11 +35,11 @@ export default {
     return {
       img: '',
       title: '',
-      user: 'ERMENEGILDO GÓMEZ',
+      user: 'PEPITO PEREZ',
       mail: 'user@mail.com',
-      job: 'estudiante',
-      location: 'Santa Cruz de Tenerife',
-      text: 'Pedazo de fotón que te has currado, man!! Te doy un like :D.'
+      job: 'aficionado',
+      location: 'Las Palmas de Gran Canaria',
+      events: 'Los eventos favoritos van aquí'
     }
   },
   components: { Card }
