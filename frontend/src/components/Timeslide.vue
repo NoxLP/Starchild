@@ -21,7 +21,7 @@
             transition="fade-transition"
           >
             <v-container fill-height>
-              <v-row align="center" justify="center" class="mt-10 mb-0">
+              <!--<v-row align="center" justify="center" class="mt-10 mb-0">
                 <v-img
                   :src="item.icon"
                   class="slide-icon"
@@ -29,7 +29,7 @@
                   color="accent"
                   contain
                 />
-              </v-row>
+              </v-row>-->
               <v-row align="center" justify="center" class="mb-16 mt-0">
                 <h1 class="white--text mt-5 text-sm-h1 title-text">
                   {{ item.text }}
