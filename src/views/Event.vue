@@ -4,7 +4,7 @@
       <!--TITULO-->
       <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
-          <v-img max-height="20vh" :src="image || ''" class="card">
+          <v-img max-height="20vh" :src="image" class="card">
             <v-container fill-height>
               <v-row align="center" justify="center">
                 <v-col>
@@ -128,60 +128,117 @@
         </v-col>
       </v-row>
       <!--COMENTARIOS EN DESKTOP-->
-      <v-row class="mt-3 mr-sm-10 ml-sm-15" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-col>
-          <Card
-            textClass="pa-3 pl-5 ma-0"
-            v-for="(comment, idx) in event.comments"
+      <v-row class="ma-0 mt-0 ml-15 mr-13" v-if="$vuetify.breakpoint.mdAndUp">
+        <!--CONTAINER CON UN COMENTARIO Y SUS RESPUESTAS-->
+        <v-container
+          fluid
+          class="pa-0 comment-container"
+          v-for="(comment, idx) in event.comments"
+          :key="idx"
+        >
+          <v-row class="pa-0 ma-0">
+            <v-col class="pa-0 ma-0">
+              <!--COMENTARIO-->
+              <Card textClass="pa-3 pl-5 ma-0" :borders="true">
+                <!--TITULO-->
+                <template v-slot:title class="card-title">
+                  <h5 class="ml-5">
+                    {{ comment.user }}
+                  </h5>
+                  <v-spacer></v-spacer>
+                  <h5 class="mr-5">
+                    {{ new Date(comment.date).toLocaleDateString() }}
+                  </h5>
+                </template>
+                <!--TEXTO-->
+                <span style="white-space: pre-line" class="text-left">{{
+                  comment.text
+                }}</span>
+                <!--BOTONES-->
+                <template v-slot:actions>
+                  <v-row justify="center" align="center">
+                    <v-col cols="2">
+                      <span class="ml-5"
+                        >Respuestas: {{ comment.responses.length }}</span
+                      >
+                    </v-col>
+                    <v-col cols="3" offset="7" class="pr-8" align="end">
+                      <v-btn
+                        fab
+                        dark
+                        color="secondary"
+                        elevation="10"
+                        @click="like(idx)"
+                        class="mr-2"
+                      >
+                        <v-icon color="accent">mdi-thumb-up-outline</v-icon>
+                      </v-btn>
+                      <span class="ml-0 mr-6"
+                        >Likes: {{ comment.likes.length }}</span
+                      >
+                      <v-btn
+                        fab
+                        dark
+                        color="secondary"
+                        elevation="10"
+                        @click="expandComment(idx)"
+                      >
+                        <v-icon color="accent">
+                          mdi-comment
+                        </v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </template>
+              </Card>
+            </v-col>
+          </v-row>
+          <!--REPLYS-->
+          <v-row
+            class="pa-0 pl-5 mt-7 ml-16 mr-0"
+            v-for="(reply, idx) in comment.responses"
             :key="idx"
-            :borders="true"
           >
-            <template v-slot:title class="card-title">
-              <h5 class="ml-5">
-                {{ comment.user }}
-              </h5>
-              <v-spacer></v-spacer>
-              <h5 class="mr-5">
-                {{ new Date(comment.date).toLocaleDateString() }}
-              </h5>
-            </template>
-
-            <span class="text-left">{{ comment.text }}</span>
-
-            <template v-slot:actions>
-              <v-row justify="center" align="center">
-                <v-col>
-                  <span class="ml-5"
-                    >Respuestas: {{ comment.responses.length }}</span
-                  >
-                </v-col>
-                <v-col cols="2" offset="8" class="pr-8" align="end">
-                  <v-btn
-                    fab
-                    dark
-                    color="secondary"
-                    elevation="10"
-                    @click="like(idx)"
-                    class="mr-7"
-                  >
-                    <v-icon color="accent">mdi-thumb-up-outline</v-icon>
-                  </v-btn>
-                  <v-btn
-                    fab
-                    dark
-                    color="secondary"
-                    elevation="10"
-                    @click="expandComment(idx)"
-                  >
-                    <v-icon color="accent">
-                      mdi-comment
-                    </v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </template>
-          </Card>
-        </v-col>
+            <v-col class="pa-0 ma-0 mr-0">
+              <Card textClass="pa-3 pl-5 ma-0" :borders="true">
+                <!--TITULO-->
+                <template v-slot:title class="card-title">
+                  <h5 class="ml-5">
+                    {{ reply.user }}
+                  </h5>
+                  <v-spacer></v-spacer>
+                  <h5 class="mr-5">
+                    {{ new Date(reply.date).toLocaleDateString() }}
+                  </h5>
+                </template>
+                <!--TEXTO-->
+                <span style="white-space: pre-line" class="text-left">{{
+                  reply.text
+                }}</span>
+                <!--BOTONES-->
+                <template v-slot:actions>
+                  <v-row justify="end" align="center">
+                    <v-col cols="2" offset="10" class="pr-0" align="end">
+                      <v-btn
+                        fab
+                        dark
+                        color="secondary"
+                        elevation="10"
+                        @click="like(idx)"
+                        class="mr-2"
+                      >
+                        <v-icon color="accent">mdi-thumb-up-outline</v-icon>
+                      </v-btn>
+                      <span class="ml-0 mr-6"
+                        >Likes: {{ comment.likes.length }}</span
+                      >
+                    </v-col>
+                  </v-row>
+                </template>
+              </Card>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-row>
       <!--CARTA ESCRIBIR COMENTARIO DESKTOP-->
       <v-bottom-sheet v-model="expand" class="pa-0 ma-0">
@@ -236,6 +293,7 @@ export default {
     return {
       expand: false,
       event: {},
+      image: '',
       icon_width: 30,
       cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
       moonphase: '',
@@ -257,8 +315,7 @@ export default {
     }
   },
   props: {
-    eventId: String,
-    image: String
+    eventId: String
   },
   components: { Card },
   methods: {
@@ -315,9 +372,20 @@ export default {
     })
 
     console.log('MOUNTED: ', this.image)
-    if (!this.image) {
+    let cache = JSON.parse(sessionStorage.getItem('timelineBuffer'))
+    let eventBuffer =
+      (
+        Object.values(cache).find(category => {
+          console.log('CAT: ', category)
+          return category.find(event => event._id === this.eventId)
+        }) || []
+      ).filter(event => event._id === this.eventId)[0] || null
+
+    if (eventBuffer && eventBuffer.img && eventBuffer.img !== '') {
+      this.image = eventBuffer.img
+    } else {
       eventServices.getEventImage(this.eventId).then(image => {
-        this.event['img'] = require(image.urls.url_hd)
+        this.image = image.urls.url_hd
       })
     }
 
@@ -386,6 +454,10 @@ export default {
 }
 .title-text {
   text-shadow: 0px 10px 10px hsla(236, 63%, 0%, 1);
+}
+.comment-container {
+  /*ma-0 ml-10 mt-16*/
+  margin: 10vh 0 0 1.5vw;
 }
 .v-application .primary--text {
   color: #e7c296 !important;

@@ -25,13 +25,13 @@ const routes = [
     component: Signup
   },
   {
-    path: '/comments',
+    path: '/comments/',
     name: 'comments',
     component: Comments,
     props: true
   },
   {
-    path: '/event',
+    path: '/event/:eventId',
     name: 'event',
     component: Event,
     props: true
