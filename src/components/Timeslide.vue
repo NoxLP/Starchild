@@ -275,10 +275,7 @@ export default {
       this.$router.push({
         name: 'event',
         params: {
-          eventId: this.timeLineItems[index]._id,
-          image: this.timeLineItems[index].img
-            ? this.timeLineItems[index].img
-            : null
+          eventId: this.timeLineItems[index]._id
         }
       })
     }
