@@ -18,7 +18,7 @@
         type="text"
         v-model="signData.surname"
       />
-      <Input label="Usuario" required v-model="signData.user" />
+      <Input label="Usuario" required v-model="signData.username" />
       <Input
         label="Email"
         :rules="rules.email"
