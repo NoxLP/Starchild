@@ -50,18 +50,27 @@
         <v-icon dark color="accent" class="black--text">mdi-account</v-icon>
       </v-btn>-->
       |
-      <v-btn icon @click="log" class="mx-5">
-        <v-avatar
-          class="ml-5 Glass starchild-text"
-          color="rgba(255, 255, 255, 0.25)"
-          >{{ userName.slice(0, 2) }}</v-avatar
-        >
-      </v-btn>
+      <router-link
+        style="text-decoration: none; color: inherit;"
+        type="button"
+        class="btn mr-5"
+        :to="{
+          name: 'userprofile'
+        }"
+      >
+        <v-btn icon class="mx-5">
+          <v-avatar
+            class="ml-5 Glass starchild-text"
+            color="rgba(255, 255, 255, 0.25)"
+            >{{ userName.slice(0, 2) }}</v-avatar
+          >
+        </v-btn>
+      </router-link>
 
       {{ user }}
       <!--************* OJO **************
         AQUI ABAJO VA BOTON COMPONENTE-->
-      <Button v-if="!!user" class="ml-10" text="Logout" />
+      <Button v-if="!!user" class="ml-10" text="Logout" @click="logout" />
       <!--************* OJO **************-->
     </v-app-bar>
   </div>
@@ -84,7 +93,7 @@ export default {
     Button
   },
   methods: {
-    log: function() {
+    logout: function() {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       localStorage.removeItem('email')

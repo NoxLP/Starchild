@@ -1,61 +1,68 @@
 <template>
   <div>
-    <Card :borders="true">
-      <template v-slot:title class="card-title">
-        <v-row>
-          <v-col>
-            <v-avatar
-              class="ml-5 Glass starchild-text"
-              color="rgba(255, 255, 255, 0.25)"
-              >{{ user.slice(0, 2) }}
-            </v-avatar>
-          </v-col>
-        </v-row>
-        <h3>
-          {{ user }}
-        </h3>
-        <v-spacer></v-spacer>
+    <v-container fluid class="pa-5 pt-1 pa-sm-16">
+      <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
-          <h5>
-            <v-row>
-              {{ mail }}
-            </v-row>
-            <v-row>
-              {{ job }}
-            </v-row>
-            <v-row>
-              {{ location }}
-            </v-row>
-          </h5>
+          <Card :borders="true">
+            <template v-slot:title class="card-title">
+              <v-row>
+                <v-col>
+                  <v-avatar
+                    class="ml-5 Glass starchild-text"
+                    color="rgba(255, 255, 255, 0.25)"
+                    >{{ user.username.slice(0, 2) || user.username }}
+                  </v-avatar>
+                </v-col>
+              </v-row>
+              <h3>
+                {{ user.name + ' ' + user.surname }}
+              </h3>
+              <v-spacer></v-spacer>
+              <v-col>
+                <h5>
+                  <v-row>
+                    {{ user.email }}
+                  </v-row>
+                  <v-row>
+                    {{ user.job }}
+                  </v-row>
+                  <v-row>
+                    {{ user.location }}
+                  </v-row>
+                </h5>
+              </v-col>
+            </template>
+            <v-card-subtitle>
+              <h4 class="accent">
+                MIS EVENTOS:
+              </h4>
+            </v-card-subtitle>
+            <v-card-text>
+              {{ user.favourites }}
+            </v-card-text>
+          </Card>
         </v-col>
-      </template>
-      <v-card-subtitle>
-        <h4>
-          MIS EVENTOS:
-        </h4>
-      </v-card-subtitle>
-      <v-card-text>
-        {{ events }}
-      </v-card-text>
-    </Card>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 import Card from '../components/Card.vue'
+import userServices from '../services/userService.js'
+
 export default {
   data: function() {
     return {
-      img: '',
-      title: '',
-      user: 'PEPITO PEREZ',
-      mail: 'user@mail.com',
-      job: 'aficionado',
-      location: 'Las Palmas de Gran Canaria',
-      events: 'Los eventos favoritos van aquí'
+      user: {}
     }
   },
-  components: { Card }
+  components: { Card },
+  mounted() {
+    userServices.getUser().then(user => {
+      this.user = user
+    })
+  }
 }
 </script>
 <style scoped>
