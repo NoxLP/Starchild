@@ -6,9 +6,13 @@ export default {
     let favourite
     try {
       favourite = (
-        await api.put(`/users/events/favourites/${eventId}`, {
-          headers: { token: localStorage.getItem('token') }
-        })
+        await api.put(
+          `/users/events/favourites/${eventId}`,
+          {},
+          {
+            headers: { token: localStorage.getItem('token') }
+          }
+        )
       ).data
     } catch (err) {
       console.log(err)

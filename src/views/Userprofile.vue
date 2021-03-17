@@ -103,7 +103,7 @@
 
 <script>
 import Card from '../components/Card.vue'
-import userServices from '../services/userService.js'
+import userServices from '../services/userServices.js'
 import eventsServices from '../services/eventServices.js'
 import { getEventFromBuffer } from '../helpers/itemsBuffers'
 import { CATEGORIES } from '../helpers/categories.js'
