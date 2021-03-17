@@ -12,7 +12,7 @@
                     width="15vh"
                     class="ml-5 Glass starchild-text"
                     color="rgba(255, 255, 255, 0.25)"
-                    >{{ user.username.slice(0, 2) || user.username }}
+                    >{{ user.username }}
                   </v-avatar>
                 </v-col>
                 <v-col cols="8" class="d-flex justify-start">
@@ -116,17 +116,29 @@ export default {
   },
   components: { Card },
   methods: {
-    getEventWithImage: async function(eventId) {
-      let event = getEventFromBuffer(eventId)
+    getEventWithImage: async function(favId) {
+      console.log('getEventWithImage: ', favId)
+      let event = getEventFromBuffer(favId)
+      console.log('Event from buffer: ', favId, event)
       if (!event) {
+        console.log('event from buffer null ', favId)
         let eventImage = await Promise.all([
-          await eventsServices.getEvent(eventId),
-          await eventsServices.getEventImage(eventId)
+          eventsServices.getEvent(favId),
+          eventsServices.getEventImage(favId)
         ])
 
+        console.log('done eventImage: ', favId, eventImage)
         event = eventImage[0]
         event['img'] = eventImage[1].urls.url_real
       }
+
+      console.log('EVENT: ', event)
+      if (Object.keys(event).includes('category')) {
+        event['categoryIcon'] = CATEGORIES.find(
+          x => x.name === event.category
+        ).icon
+      }
+
       return event
     },
     clickOnFavourite: function(idx) {
@@ -138,16 +150,12 @@ export default {
       })
     }
   },
-  async beforeMount() {
+  async mounted() {
     try {
       this.user = await userServices.getUser()
 
       this.user.favourites = await Promise.all(
-        this.user.favourites.map(async favId => {
-          let event = this.getEventFromBuffer(favId)
-          event['categoryIcon'] = CATEGORIES[event.category].icon
-          return event
-        })
+        this.user.favourites.map(async favId => this.getEventWithImage(favId))
       )
     } catch (err) {
       console.log(err)
