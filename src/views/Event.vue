@@ -287,6 +287,7 @@ import eventServices from '../services/eventServices.js'
 import commentsServices from '../services/commentsService.js'
 import Card from '../components/Card.vue'
 import { CATEGORIES } from '../helpers/categories'
+import { getEventFromBuffer } from '../helpers/itemsBuffers'
 
 export default {
   data: function() {
@@ -372,14 +373,7 @@ export default {
     })
 
     console.log('MOUNTED: ', this.image)
-    let cache = JSON.parse(sessionStorage.getItem('timelineBuffer'))
-    let eventBuffer =
-      (
-        Object.values(cache).find(category => {
-          console.log('CAT: ', category)
-          return category.find(event => event._id === this.eventId)
-        }) || []
-      ).filter(event => event._id === this.eventId)[0] || null
+    let eventBuffer = getEventFromBuffer(this.eventId)
 
     if (eventBuffer && eventBuffer.img && eventBuffer.img !== '') {
       this.image = eventBuffer.img

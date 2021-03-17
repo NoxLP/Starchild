@@ -5,41 +5,95 @@
         <v-col>
           <Card :borders="true">
             <template v-slot:title class="card-title">
-              <v-row>
-                <v-col>
+              <v-row align="center" class="py-2">
+                <v-col cols="1">
                   <v-avatar
+                    height="15vh"
+                    width="15vh"
                     class="ml-5 Glass starchild-text"
                     color="rgba(255, 255, 255, 0.25)"
                     >{{ user.username.slice(0, 2) || user.username }}
                   </v-avatar>
                 </v-col>
+                <v-col cols="8" class="d-flex justify-start">
+                  <h1 class=" ml-15">
+                    {{ user.name + ' ' + user.surname }}
+                  </h1>
+                </v-col>
+                <v-col cols="3">
+                  <h3>
+                    <v-row>
+                      {{ user.email }}
+                    </v-row>
+                    <v-row>
+                      {{ user.job }}
+                    </v-row>
+                    <v-row>
+                      {{ user.location }}
+                    </v-row>
+                  </h3>
+                </v-col>
               </v-row>
-              <h3>
-                {{ user.name + ' ' + user.surname }}
-              </h3>
-              <v-spacer></v-spacer>
-              <v-col>
-                <h5>
-                  <v-row>
-                    {{ user.email }}
-                  </v-row>
-                  <v-row>
-                    {{ user.job }}
-                  </v-row>
-                  <v-row>
-                    {{ user.location }}
-                  </v-row>
-                </h5>
-              </v-col>
             </template>
             <v-card-subtitle>
-              <h4 class="accent">
+              <h2 class="accent--text">
                 MIS EVENTOS:
-              </h4>
+              </h2>
             </v-card-subtitle>
-            <v-card-text>
-              {{ user.favourites }}
-            </v-card-text>
+            <!--FAVORITOS-->
+            <v-row
+              class="mt-0 mt-sm-2 mx-sm-10"
+              v-for="(fav, idx) in user.favourites"
+              :key="idx"
+            >
+              <v-col cols="1">
+                <v-btn
+                  fab
+                  dark
+                  color="secondary"
+                  elevation="10"
+                  height="5vh"
+                  width="5vh"
+                  class="ma-0"
+                >
+                  <v-img
+                    color="accent"
+                    :src="fav.categoryIcon"
+                    height="4vh"
+                    width="4vh"
+                    contain
+                  ></v-img>
+                  <!--:width="icon_width"-->
+                </v-btn>
+              </v-col>
+              <v-col cols="10">
+                <v-img
+                  max-height="20vh"
+                  :src="fav.img"
+                  class="favourite-card"
+                  @click="clickOnFavourite(idx)"
+                >
+                  <v-container fill-height>
+                    <v-row align="center" justify="center">
+                      <v-col>
+                        <h2
+                          v-if="$vuetify.breakpoint.smAndDown"
+                          class="text-center accent--text title-text"
+                        >
+                          {{ fav.title }}
+                        </h2>
+                        <h1
+                          v-else
+                          class="text-center accent--text text-h2 title-text"
+                        >
+                          {{ fav.title }}
+                        </h1>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-img>
+              </v-col>
+            </v-row>
           </Card>
         </v-col>
       </v-row>
@@ -50,6 +104,9 @@
 <script>
 import Card from '../components/Card.vue'
 import userServices from '../services/userService.js'
+import eventsServices from '../services/eventServices.js'
+import { getEventFromBuffer } from '../helpers/itemsBuffers'
+import { CATEGORIES } from '../helpers/categories.js'
 
 export default {
   data: function() {
@@ -58,15 +115,48 @@ export default {
     }
   },
   components: { Card },
-  mounted() {
-    userServices.getUser().then(user => {
-      this.user = user
-    })
+  methods: {
+    getEventWithImage: async function(eventId) {
+      let event = getEventFromBuffer(eventId)
+      if (!event) {
+        let eventImage = await Promise.all([
+          await eventsServices.getEvent(eventId),
+          await eventsServices.getEventImage(eventId)
+        ])
+
+        event = eventImage[0]
+        event['img'] = eventImage[1].urls.url_real
+      }
+      return event
+    },
+    clickOnFavourite: function(idx) {
+      this.$router.push({
+        name: 'event',
+        params: {
+          eventId: this.user.favourites[idx]._id
+        }
+      })
+    }
+  },
+  async beforeMount() {
+    try {
+      this.user = await userServices.getUser()
+
+      this.user.favourites = await Promise.all(
+        this.user.favourites.map(async favId => {
+          let event = this.getEventFromBuffer(favId)
+          event['categoryIcon'] = CATEGORIES[event.category].icon
+          return event
+        })
+      )
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 </script>
 <style scoped>
-starchild-text {
+.starchild-text {
   font-family: Julius Sans One;
   font-style: normal;
   font-weight: normal;
@@ -80,5 +170,21 @@ starchild-text {
   backdrop-filter: blur(12.5px) !important;
   -webkit-backdrop-filter: blur(12.5px) !important;
   /*border-radius: 10px;*/
+}
+.favourite-card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+  backdrop-filter: blur(12.5px) !important;
+  -webkit-backdrop-filter: blur(12.5px) !important;
+  border-radius: 10px;
+  padding: 0 !important;
+
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0.7;
+}
+.favourite-card:hover {
+  opacity: 1 !important;
+  cursor: pointer;
 }
 </style>
