@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
-import Userprofile from '../views/Userprofile.vue'
+import Login from '../views/Login.vue'
 import Event from '../views/Event.vue'
 import Comments from '../views/Comments.vue'
+import Userprofile from '../views/Userprofile.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +24,18 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: Signup
+  },
+  {
+    path: '/comments/',
+    name: 'comments',
+    component: Comments,
+    props: true
+  },
+  {
+    path: '/event/:eventId',
+    name: 'event',
+    component: Event,
+    props: true
   },
   {
     path: '/userprofile',
