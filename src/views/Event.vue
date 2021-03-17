@@ -72,6 +72,7 @@
                     dark
                     color="secondary"
                     elevation="10"
+                    @click="addFavourite"
                     class="mb-10"
                   >
                     <v-icon color="accent">mdi-star</v-icon>
@@ -287,6 +288,7 @@ import eventServices from '../services/eventServices.js'
 import commentsServices from '../services/commentsService.js'
 import Card from '../components/Card.vue'
 import { CATEGORIES } from '../helpers/categories'
+import userServices from '../services/userServices.js'
 
 export default {
   data: function() {
@@ -362,6 +364,14 @@ export default {
     cancel() {
       this.commentText = ''
       this.expand = false
+    },
+    addFavourite() {
+      userServices
+        .putAddFavourite(this.event._id)
+        .then()
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mounted() {
