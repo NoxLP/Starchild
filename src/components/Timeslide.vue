@@ -56,7 +56,9 @@
             </v-avatar>
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
-            <span class="headline white--text">{{ item.date }}</span>
+            <span class="headline white--text">{{
+              $moment(item.date).calendar()
+            }}</span>
           </template>
           <Card
             class="pa-0 timeline-item-card btn"
@@ -92,13 +94,13 @@
                     v-if="item.highlight"
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ item.date }}
+                    {{ $moment(item.date).calendar() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ item.date }}
+                    {{ $moment(item.date).calendar() }}
                   </h3>
                   <span class="white--text title-text">{{ item.title }}</span>
                 </v-img>
@@ -120,6 +122,18 @@
                       ></v-progress-circular>
                     </v-row>
                   </template>
+                  <h2
+                    v-if="item.highlight"
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
+                  >
+                    {{ $moment(item.date).fromNow() }}
+                  </h2>
+                  <h3
+                    v-else
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
+                  >
+                    {{ $moment(item.date).fromNow() }}
+                  </h3>
                   <h2
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
@@ -250,7 +264,7 @@ export default {
               this.timelineBuffer[currentCategory].map(async dto => {
                 console.log('timeline promise ', dto.category)
 
-                dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+                dto.date = new Date(dto.date)
                 dto['categoryIcon'] = CATEGORIES[categoryNumber].icon
                 dto['highlight'] = Math.random() > 0.5 ? true : false
 

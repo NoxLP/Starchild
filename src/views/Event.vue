@@ -148,7 +148,7 @@
                   </h5>
                   <v-spacer></v-spacer>
                   <h5 class="mr-5">
-                    {{ new Date(comment.date).toLocaleDateString() }}
+                    {{ $moment(new Date(comment.date)).calendar() }}
                   </h5>
                 </template>
                 <!--TEXTO-->
@@ -209,7 +209,7 @@
                   </h5>
                   <v-spacer></v-spacer>
                   <h5 class="mr-5">
-                    {{ new Date(reply.date).toLocaleDateString() }}
+                    {{ $moment(new Date(reply.date)).calendar() }}
                   </h5>
                 </template>
                 <!--TEXTO-->

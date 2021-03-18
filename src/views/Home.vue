@@ -30,13 +30,21 @@
                 :src="item.img ? item.img.urls.url_hd : ''"
                 class="slide-img"
               >
-                <v-row align="center" justify="start">
+                <v-row align="center" justify="start" class="mt-4">
                   <h1 class="white--text mt-5 ml-10 title-text">
-                    {{ new Date(item.date).toLocaleDateString() }}
+                    {{ $moment(new Date(item.date)).fromNow() }}
+                  </h1>
+                  <h1 class="white--text mt-5 ml-10 title-text">
+                    {{ item.title }}
                   </h1>
                 </v-row>
-                <v-row align="center" justify="start">
-                  <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
+                <v-row align="center" justify="start" height="20">
+                  <h3
+                    class="white--text mt-5 ml-10 d-block text-truncate"
+                    style="max-width: 40vw;"
+                  >
+                    {{ item.description }}
+                  </h3>
                 </v-row>
               </v-img>
             </v-row>
@@ -143,6 +151,9 @@ export default {
 }
 .mdi-star-four-points-outline {
   color: #e7c296 !important;
+}
+.carousel-item-desc-text {
+  text-overflow: ellipsis;
 }
 /*.timeslide-row {
   margin-top: 10vh;
