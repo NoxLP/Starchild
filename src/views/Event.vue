@@ -5,9 +5,25 @@
       <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
           <v-img max-height="20vh" :src="image" class="card">
-            <v-container fill-height>
-              <v-row align="center" justify="center">
-                <v-col>
+            <v-container fill-height class="ml-0">
+              <v-row align="center" justify="center" class="ml-0">
+                <v-col cols="2" class="ml-0">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-img
+                        color="accent"
+                        :src="event.cat ? event.cat.icon : ''"
+                        width="15vh"
+                        max-height="15vh"
+                        height="15vh"
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-img>
+                    </template>
+                    <span>{{ event.cat ? event.cat.text : '' }}</span>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="7" offset="2">
                   <h2
                     v-if="$vuetify.breakpoint.smAndDown"
                     class="text-center accent--text title-text"
@@ -16,7 +32,7 @@
                   </h2>
                   <h1
                     v-else
-                    class="text-center accent--text text-h2 title-text"
+                    class="text-center accent--text text-h1 title-text"
                   >
                     {{ event.title }}
                   </h1>
@@ -33,22 +49,6 @@
             <!--BARRA ICONOS-->
             <template v-slot:title>
               <v-row class="flex-nowrap ml-12" height="6vh" align="center">
-                <v-col cols="3">
-                  <v-tooltip top>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-img
-                        color="accent"
-                        :src="event.cat ? event.cat.icon : ''"
-                        width="6.5vh"
-                        max-height="6.5vh"
-                        height="6.5vh"
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-img>
-                    </template>
-                    <span>{{ event.cat ? event.cat.text : '' }}</span>
-                  </v-tooltip>
-                </v-col>
                 <v-col cols="5" offset="4" class="d-flex flex-row">
                   <v-container>
                     <v-row align="center" justify="center">
