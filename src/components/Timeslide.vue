@@ -20,7 +20,6 @@
             color="primary darken-1"
             v-for="(category, idx) in categories"
             :key="idx"
-            @click="as"
           >
             <v-img
               color="accent"
