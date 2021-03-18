@@ -12,7 +12,7 @@
           hide-delimiter-background
           delimiter-icon="mdi-star-four-points-outline"
           class="last-events-carousel Glass mt-15"
-          height="500"
+          :height="$vuetify.breakpoint.smAndDown ? '400' : '600'"
         >
           <v-carousel-item
             v-for="(item, idx) in events"
@@ -42,34 +42,6 @@
             </v-row>
           </v-carousel-item>
         </v-carousel>
-      </v-row>
-      <v-row class="mt-16" justify="end" dense no-gutters>
-        <v-col cols="6">
-          <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
-        </v-col>
-        <v-col cols="6" class="ma-0 pa-0">
-          <v-btn
-            fab
-            dark
-            color="secondary"
-            elevation="10"
-            @click="expand = !expand"
-            height="5vh"
-            width="5vh"
-            class="ma-0"
-            v-for="(category, idx) in categories"
-            :key="idx"
-          >
-            <v-img
-              color="accent"
-              :src="category.icon"
-              height="4vh"
-              width="4vh"
-              contain
-            ></v-img>
-            <!--:width="icon_width"-->
-          </v-btn>
-        </v-col>
       </v-row>
       <v-row justify="center" align="start" class="timeslide-row mt-md-10">
         <Timeslide />
