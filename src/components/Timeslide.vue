@@ -186,7 +186,7 @@
 /*
 timeLineItems: { title, date, img, highlight, categoryIcon }
 */
-import { CATEGORIES } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/constObjects.js'
 import HomeService from '../services/homeService.js'
 import EventService from '../services/eventServices.js'
 import Card from '../components/Card.vue'

@@ -127,7 +127,7 @@ import Card from '../components/Card.vue'
 import userServices from '../services/userServices.js'
 import eventsServices from '../services/eventServices.js'
 import { getEventFromBuffer } from '../helpers/itemsBuffers'
-import { CATEGORIES } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/constObjects.js'
 
 export default {
   data: function() {

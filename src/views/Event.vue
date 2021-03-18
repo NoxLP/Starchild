@@ -32,30 +32,73 @@
           <Card>
             <!--BARRA ICONOS-->
             <template v-slot:title>
-              <v-row class="flex-nowrap ml-12" height="6vh">
-                <v-col cols="2">
-                  <v-img
-                    color="accent"
-                    :src="cat_icon"
-                    :width="icon_width"
-                    max-height="5vh"
-                    height="5vh"
-                  ></v-img>
+              <v-row class="flex-nowrap ml-12" height="6vh" align="center">
+                <v-col cols="3">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-img
+                        color="accent"
+                        :src="event.cat ? event.cat.icon : ''"
+                        width="6.5vh"
+                        max-height="6.5vh"
+                        height="6.5vh"
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-img>
+                    </template>
+                    <span>{{ event.cat ? event.cat.text : '' }}</span>
+                  </v-tooltip>
                 </v-col>
-                <v-col cols="4" offset="6">
-                  <v-img
-                    color="accent"
-                    :src="moonphase"
-                    max-height="5vh"
-                    height="5vh"
-                    contain
-                  ></v-img>
-                  <v-img
-                    color="accent"
-                    :src="weather_icon"
-                    max-height="5vh"
-                    height="5vh"
-                  ></v-img>
+                <v-col cols="5" offset="4" class="d-flex flex-row">
+                  <v-container>
+                    <v-row align="center" justify="center">
+                      <v-col
+                        cols="1"
+                        class="d-flex flex-row"
+                        v-for="(moonValue, idx) in moonphasesValues"
+                        :key="idx"
+                      >
+                        <v-tooltip top>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-img
+                              color="accent"
+                              :class="
+                                moonphasesKeys[idx] === moonphase
+                                  ? ''
+                                  : 'moonphase'
+                              "
+                              :src="moonValue.icon"
+                              :max-height="
+                                moonphasesKeys[idx] === moonphase
+                                  ? '3.5vh'
+                                  : '2.5vh'
+                              "
+                              :height="
+                                moonphasesKeys[idx] === moonphase
+                                  ? '3.5vh'
+                                  : '2.5vh'
+                              "
+                              :width="
+                                moonphasesKeys[idx] === moonphase
+                                  ? '3.5vh'
+                                  : '2.5vh'
+                              "
+                              contain
+                              v-bind="attrs"
+                              v-on="on"
+                            ></v-img>
+                          </template>
+                          <span>{{ moonValue.translated }}</span>
+                        </v-tooltip>
+                        <v-img
+                          color="accent"
+                          :src="weather_icon"
+                          max-height="5vh"
+                          height="5vh"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </v-col>
               </v-row>
             </template>
@@ -287,7 +330,7 @@
 import eventServices from '../services/eventServices.js'
 import commentsServices from '../services/commentsService.js'
 import Card from '../components/Card.vue'
-import { CATEGORIES } from '../helpers/categories'
+import { CATEGORIES, MOONPHASES } from '../helpers/constObjects'
 import { getEventFromBuffer } from '../helpers/itemsBuffers'
 import userServices from '../services/userServices.js'
 
@@ -300,6 +343,8 @@ export default {
       icon_width: 30,
       cat_icon: require('../../public/assets/images/12-astronomy-and-space icons/SVG/4.svg'),
       moonphase: '',
+      moonphasesValues: Object.values(MOONPHASES),
+      moonphasesKeys: Object.keys(MOONPHASES),
       weather_icon: '',
       valid: false,
       commentText: '',
@@ -379,7 +424,8 @@ export default {
     eventServices.getEvent(this.eventId).then(event => {
       console.log(event)
       this.event = event
-      this.cat_icon = CATEGORIES.find(x => x.name === event.category).icon
+      this.event['cat'] = CATEGORIES.find(x => x.name === event.category)
+      console.log('EVENT DOS: ', event)
     })
 
     console.log('MOUNTED: ', this.image)
@@ -394,32 +440,7 @@ export default {
     }
 
     eventServices.getEventMoonPhase(this.eventId).then(moon => {
-      switch (moon) {
-        case 'New Moon':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-05_NewMoon.svg')
-          break
-        case 'Waxing Gibbous':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-08_WaxingGibbous.svg')
-          break
-        case 'Waning Gibbous':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-02_WaningBiggous.svg')
-          break
-        case 'Waning Crescent':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-04_WaningCrescent.svg')
-          break
-        case 'Waxing Crescent':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-06_WaxingCrescent.svg')
-          break
-        case '1st Quarter':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-07_FirstQuarter.svg')
-          break
-        case '3rd Quarter':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-03_ThirdQuarter.svg')
-          break
-        case 'Full Moon':
-          this.moonphase = require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-01_FullMoon.svg')
-          break
-      }
+      this.moonphase = moon
     })
   }
 }
@@ -466,5 +487,8 @@ export default {
 .v-application .primary--text {
   color: #e7c296 !important;
   /*caret-color: white !important;*/
+}
+.moonphase {
+  filter: opacity(0.25) grayscale(1) !important;
 }
 </style>

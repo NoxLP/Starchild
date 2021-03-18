@@ -61,7 +61,7 @@
 <script>
 import Timeslide from '../components/Timeslide.vue'
 import homeService from '../services/homeService.js'
-import { CATEGORIES } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/constObjects.js'
 
 export default {
   name: 'home',
