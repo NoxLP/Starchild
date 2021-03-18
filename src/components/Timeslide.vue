@@ -10,27 +10,23 @@
         <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
       </v-col>
       <v-col cols="4" class="ma-0 mr-5 pa-0 pr-16" align="end">
-        <v-btn
-          fab
-          dark
-          color="primary darken-1"
-          elevation="10"
-          height="5vh"
-          width="5vh"
-          class="ma-0 mr-1"
-          v-for="(category, idx) in categories"
-          :key="idx"
-          @click="as"
-        >
-          <v-img
-            color="accent"
-            :src="category.icon"
-            height="4vh"
-            width="4vh"
-            contain
-          ></v-img>
-          <!--:width="icon_width"-->
-        </v-btn>
+        <v-btn-toggle mandatory rounded v-model="model">
+          <v-btn
+            color="primary darken-1"
+            v-for="(category, idx) in categories"
+            :key="idx"
+            @click="as"
+          >
+            <v-img
+              color="accent"
+              :src="category.icon"
+              height="4vh"
+              width="4vh"
+              contain
+            ></v-img>
+            <!--:width="icon_width"-->
+          </v-btn>
+        </v-btn-toggle>
       </v-col>
     </v-row>
     <!--categories carousel-->
@@ -323,6 +319,7 @@ export default {
 }
 .slide {
   max-width: 100vw;
+  border-radius: 50px !important;
 }
 .slide-img {
   max-width: 80vw;
