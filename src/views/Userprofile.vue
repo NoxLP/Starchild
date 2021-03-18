@@ -36,13 +36,20 @@
               </v-row>
             </template>
             <v-card-subtitle>
-              <h2 class="accent--text">
-                MIS EVENTOS:
-              </h2>
+              <v-row align="center" class="mt-10 mb-5 pr-16">
+                <h1 class="accent--text">
+                  MIS EVENTOS:
+                </h1>
+                <v-spacer></v-spacer>
+                <h2 class="accent--text mr-16">
+                  ({{ user.favourites.length }})
+                </h2>
+              </v-row>
             </v-card-subtitle>
             <!--FAVORITOS-->
             <v-row
               class="mt-0 mt-sm-2 mx-sm-10"
+              align="center"
               v-for="(fav, idx) in user.favourites"
               :key="idx"
             >
@@ -189,7 +196,7 @@ export default {
   padding: 0 !important;
 
   transition: opacity 0.4s ease-in-out;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 .favourite-card:hover {
   opacity: 1 !important;
