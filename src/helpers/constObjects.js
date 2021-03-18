@@ -43,4 +43,39 @@ const CATEGORIES = [
   }
 ]
 
-export { CATEGORIES }
+const MOONPHASES = {
+  'New Moon': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-05_NewMoon.svg'),
+    translated: 'Luna nueva'
+  },
+  'Waxing Crescent': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-06_WaxingCrescent.svg'),
+    translated: 'Media luna creciente'
+  },
+  '1st Quarter': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-07_FirstQuarter.svg'),
+    translated: 'Luna creciente'
+  },
+  'Waxing Gibbous': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-08_WaxingGibbous.svg'),
+    translated: 'Gibosa creciente'
+  },
+  'Full Moon': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-01_FullMoon.svg'),
+    translated: 'Luna llena'
+  },
+  'Waning Gibbous': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-02_WaningBiggous.svg'),
+    translated: 'Gibosa menguante'
+  },
+  '3rd Quarter': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-03_ThirdQuarter.svg'),
+    translated: 'Luna menguante'
+  },
+  'Waning Crescent': {
+    icon: require('../../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-04_WaningCrescent.svg'),
+    translated: 'Media luna menguante'
+  }
+}
+
+export { CATEGORIES, MOONPHASES }

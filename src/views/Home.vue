@@ -12,7 +12,7 @@
           hide-delimiter-background
           delimiter-icon="mdi-star-four-points-outline"
           class="last-events-carousel Glass mt-15"
-          height="500"
+          :height="$vuetify.breakpoint.smAndDown ? '400' : '600'"
         >
           <v-carousel-item
             v-for="(item, idx) in events"
@@ -30,46 +30,26 @@
                 :src="item.img ? item.img.urls.url_hd : ''"
                 class="slide-img"
               >
-                <v-row align="center" justify="start">
+                <v-row align="center" justify="start" class="mt-4">
                   <h1 class="white--text mt-5 ml-10 title-text">
-                    {{ new Date(item.date).toLocaleDateString() }}
+                    {{ $moment(new Date(item.date)).fromNow() }}
+                  </h1>
+                  <h1 class="white--text mt-5 ml-10 title-text">
+                    {{ item.title }}
                   </h1>
                 </v-row>
-                <v-row align="center" justify="start">
-                  <h3 class="white--text mt-5 ml-10">{{ item.text }}</h3>
+                <v-row align="center" justify="start" height="20">
+                  <h3
+                    class="white--text mt-5 ml-10 d-block text-truncate"
+                    style="max-width: 40vw;"
+                  >
+                    {{ item.description }}
+                  </h3>
                 </v-row>
               </v-img>
             </v-row>
           </v-carousel-item>
         </v-carousel>
-      </v-row>
-      <v-row class="mt-16" justify="end" dense no-gutters>
-        <v-col cols="6">
-          <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
-        </v-col>
-        <v-col cols="6" class="ma-0 pa-0">
-          <v-btn
-            fab
-            dark
-            color="secondary"
-            elevation="10"
-            @click="expand = !expand"
-            height="5vh"
-            width="5vh"
-            class="ma-0"
-            v-for="(category, idx) in categories"
-            :key="idx"
-          >
-            <v-img
-              color="accent"
-              :src="category.icon"
-              height="4vh"
-              width="4vh"
-              contain
-            ></v-img>
-            <!--:width="icon_width"-->
-          </v-btn>
-        </v-col>
       </v-row>
       <v-row justify="center" align="start" class="timeslide-row mt-md-10">
         <Timeslide />
@@ -81,7 +61,7 @@
 <script>
 import Timeslide from '../components/Timeslide.vue'
 import homeService from '../services/homeService.js'
-import { CATEGORIES } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/constObjects.js'
 
 export default {
   name: 'home',
@@ -143,6 +123,9 @@ export default {
 }
 .mdi-star-four-points-outline {
   color: #e7c296 !important;
+}
+.carousel-item-desc-text {
+  text-overflow: ellipsis;
 }
 /*.timeslide-row {
   margin-top: 10vh;

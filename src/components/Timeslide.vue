@@ -1,5 +1,38 @@
 <template>
   <v-container class="mx-8" fluid fill-height>
+    <v-row v-if="$vuetify.breakpoint.smAndDown" justify="center">
+      <v-col>
+        <h1 class="white--text text-sm-h3 text-center">Eventos</h1>
+      </v-col>
+    </v-row>
+    <v-row v-else class="mt-0 mx-5 pr-16 mb-8" justify="end" align="end">
+      <v-col cols="12" md="7" class="ma-0 pa-0 mr-16 pr-11" align="end">
+        <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
+      </v-col>
+      <v-col cols="4" class="ma-0 mr-5 pa-0 pr-16" align="end">
+        <v-btn-toggle
+          mandatory
+          rounded
+          v-model="model"
+          :change="categoriesOnChange(model)"
+        >
+          <v-btn
+            color="primary darken-1"
+            v-for="(category, idx) in categories"
+            :key="idx"
+          >
+            <v-img
+              color="accent"
+              :src="category.icon"
+              height="4vh"
+              width="4vh"
+              contain
+            ></v-img>
+            <!--:width="icon_width"-->
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
+    </v-row>
     <!--categories carousel-->
     <v-row
       align="start"
@@ -56,7 +89,9 @@
             </v-avatar>
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
-            <span class="headline white--text">{{ item.date }}</span>
+            <span class="headline white--text">{{
+              $moment(item.date, 'DDMMYYYY').calendar()
+            }}</span>
           </template>
           <Card
             class="pa-0 timeline-item-card btn"
@@ -92,13 +127,13 @@
                     v-if="item.highlight"
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ item.date }}
+                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ item.date }}
+                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
                   </h3>
                   <span class="white--text title-text">{{ item.title }}</span>
                 </v-img>
@@ -121,6 +156,18 @@
                     </v-row>
                   </template>
                   <h2
+                    v-if="item.highlight"
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
+                  >
+                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
+                  </h2>
+                  <h3
+                    v-else
+                    class="font-weight-light ml-4 mt-2 white--text title-text"
+                  >
+                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
+                  </h3>
+                  <h2
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
                     {{ item.title }}
@@ -139,7 +186,7 @@
 /*
 timeLineItems: { title, date, img, highlight, categoryIcon }
 */
-import { CATEGORIES } from '../helpers/categories.js'
+import { CATEGORIES } from '../helpers/constObjects.js'
 import HomeService from '../services/homeService.js'
 import EventService from '../services/eventServices.js'
 import Card from '../components/Card.vue'
@@ -250,7 +297,7 @@ export default {
               this.timelineBuffer[currentCategory].map(async dto => {
                 console.log('timeline promise ', dto.category)
 
-                dto.date = new Date(dto.date).toLocaleDateString('es-ES')
+                dto.date = new Date(dto.date)
                 dto['categoryIcon'] = CATEGORIES[categoryNumber].icon
                 dto['highlight'] = Math.random() > 0.5 ? true : false
 
@@ -290,6 +337,7 @@ export default {
 }
 .slide {
   max-width: 100vw;
+  border-radius: 50px !important;
 }
 .slide-img {
   max-width: 80vw;
