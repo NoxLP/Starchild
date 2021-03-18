@@ -337,6 +337,14 @@ export default {
   z-index: 1000 !important;
   background-color: rgba(0, 0, 0, 0.7) !important;
 }
+/*.sticky {
+  position: -webkit-sticky;
+  position: fixed;
+  top: 100px;
+  left: 94.5vw;
+  z-index: 10000 !important;
+}
+*/
 .slide {
   max-width: 100vw;
   border-radius: 50px !important;
