@@ -1,61 +1,65 @@
 <template>
   <v-container class="mx-8" fluid fill-height>
-    <v-row v-if="$vuetify.breakpoint.smAndDown" justify="center">
-      <v-col>
-        <h1 class="white--text text-sm-h3 text-center">Eventos</h1>
-      </v-col>
-    </v-row>
-    <v-row v-else class="mt-0 mx-5 pr-16 mb-8" justify="end" align="end">
-      <v-col cols="12" md="7" class="ma-0 pa-0 mr-16 pr-11" align="end">
-        <h1 class="white--text mt-16 text-sm-h3">Eventos</h1>
-      </v-col>
-      <v-col cols="4" class="ma-0 mr-5 pa-0 pr-16" align="end">
-        <v-btn-toggle
-          mandatory
-          rounded
-          v-model="model"
-          :change="categoriesOnChange(model)"
+    <v-card class="ma-0 pa-0" width="100%" color="transparent">
+      <v-app-bar flat class="events-bar">
+        <v-row v-if="$vuetify.breakpoint.smAndDown" justify="center">
+          <v-col>
+            <h1 class="white--text text-sm-h3 text-center">Eventos</h1>
+          </v-col>
+        </v-row>
+        <v-row v-else class="mt-9 mx-5 pr-16 mb-8" justify="end" align="center">
+          <v-col cols="12" md="7" class="ma-0 pa-0 mr-16 pr-11" align="end">
+            <h1 class="white--text text-sm-h3">Eventos</h1>
+          </v-col>
+          <v-col cols="4" class="ma-0 mr-5 pa-0 pr-16" align="end">
+            <v-btn-toggle
+              mandatory
+              rounded
+              v-model="model"
+              :change="categoriesOnChange(model)"
+            >
+              <v-btn
+                color="primary darken-1"
+                v-for="(category, idx) in categories"
+                :key="idx"
+                @click="as"
+              >
+                <v-img
+                  color="accent"
+                  :src="category.icon"
+                  height="4vh"
+                  width="4vh"
+                  contain
+                ></v-img>
+                <!--:width="icon_width"-->
+              </v-btn>
+            </v-btn-toggle>
+          </v-col>
+        </v-row>
+      </v-app-bar>
+      <!--categories carousel-->
+      <v-container id="scrolling-techniques" class="mt-5">
+        <v-row
+          align="start"
+          class="justify-center justify-sm-center categories-row"
         >
-          <v-btn
-            color="primary darken-1"
-            v-for="(category, idx) in categories"
-            :key="idx"
-            @click="as"
-          >
-            <v-img
-              color="accent"
-              :src="category.icon"
-              height="4vh"
-              width="4vh"
-              contain
-            ></v-img>
-            <!--:width="icon_width"-->
-          </v-btn>
-        </v-btn-toggle>
-      </v-col>
-    </v-row>
-    <!--categories carousel-->
-    <v-row
-      align="start"
-      class="justify-center justify-sm-center categories-row"
-    >
-      <v-col cols="10">
-        <v-carousel
-          v-model="model"
-          class="pa-0 slide carousel-shadow image-radius"
-          :continuous="false"
-          hide-delimiters
-          @change="categoriesOnChange"
-        >
-          <v-carousel-item
-            v-for="(item, i) in categories"
-            :key="i"
-            :src="item.img"
-            reverse-transition="fade-transition"
-            transition="fade-transition"
-          >
-            <v-container fill-height>
-              <!--<v-row align="center" justify="center" class="mt-10 mb-0">
+          <v-col cols="10">
+            <v-carousel
+              v-model="model"
+              class="pa-0 slide carousel-shadow image-radius"
+              :continuous="false"
+              hide-delimiters
+              @change="categoriesOnChange"
+            >
+              <v-carousel-item
+                v-for="(item, i) in categories"
+                :key="i"
+                :src="item.img"
+                reverse-transition="fade-transition"
+                transition="fade-transition"
+              >
+                <v-container fill-height>
+                  <!--<v-row align="center" justify="center" class="mt-10 mb-0">
                 <v-img
                   :src="item.icon"
                   class="slide-icon"
@@ -64,108 +68,112 @@
                   contain
                 />
               </v-row>-->
-              <v-row align="center" justify="center" class="mb-16 mt-0">
-                <h1 class="white--text mt-5 text-sm-h1 title-text">
-                  {{ item.text }}
-                </h1>
-              </v-row>
-            </v-container>
-          </v-carousel-item>
-        </v-carousel>
-      </v-col>
-    </v-row>
-    <v-row class="justify-start justify-sm-center mt-5">
-      <!--timeline-->
-      <v-timeline clipped :dense="timeLineDense">
-        <v-timeline-item
-          v-for="(item, idx) in timeLineItems"
-          :key="idx"
-          dark
-          color="hsl(255, 63%, 8%)"
-          class="ml-0 pl-0"
-        >
-          <template v-slot:icon>
-            <v-avatar>
-              <img :src="item.categoryIcon" color="accent" />
-            </v-avatar>
-          </template>
-          <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
-            <span class="headline white--text">{{ item.date }}</span>
-          </template>
-          <Card
-            class="pa-0 timeline-item-card btn"
-            :height="timelineCardHeight(item.highlight)"
-            style="width: 60vw;"
-            :elevation="10"
-            light
-            @click.native="onClickOnTimelineItem(idx)"
-          >
-            <template v-slot:pre>
-              <v-container class="pt-2">
-                <v-img
-                  :src="item.img"
-                  v-if="$vuetify.breakpoint.smAndDown"
-                  :height="timelineCardHeight(item.highlight) - 17"
-                  :max-height="timelineCardHeight(item.highlight) - 17"
-                  class="image-radius"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
+                  <v-row align="center" justify="center" class="mb-16 mt-0">
+                    <h1 class="white--text mt-5 text-sm-h1 title-text">
+                      {{ item.text }}
+                    </h1>
+                  </v-row>
+                </v-container>
+              </v-carousel-item>
+            </v-carousel>
+          </v-col>
+        </v-row>
+        <v-row class="justify-start justify-sm-center mt-5">
+          <!--timeline-->
+          <v-timeline clipped :dense="timeLineDense">
+            <v-timeline-item
+              v-for="(item, idx) in timeLineItems"
+              :key="idx"
+              dark
+              color="hsl(255, 63%, 8%)"
+              class="ml-0 pl-0"
+            >
+              <template v-slot:icon>
+                <v-avatar>
+                  <img :src="item.categoryIcon" color="accent" />
+                </v-avatar>
+              </template>
+              <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
+                <span class="headline white--text">{{ item.date }}</span>
+              </template>
+              <Card
+                class="pa-0 timeline-item-card btn"
+                :height="timelineCardHeight(item.highlight)"
+                style="width: 60vw;"
+                :elevation="10"
+                light
+                @click.native="onClickOnTimelineItem(idx)"
+              >
+                <template v-slot:pre>
+                  <v-container class="pt-2">
+                    <v-img
+                      :src="item.img"
+                      v-if="$vuetify.breakpoint.smAndDown"
+                      :height="timelineCardHeight(item.highlight) - 17"
+                      :max-height="timelineCardHeight(item.highlight) - 17"
+                      class="image-radius"
                     >
-                      <v-progress-circular
-                        indeterminate
-                        color="accent"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="accent"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
 
-                  <h2
-                    v-if="item.highlight"
-                    class="font-weight-light mb-4 white--text title-text"
-                  >
-                    {{ item.date }}
-                  </h2>
-                  <h3
-                    v-else
-                    class="font-weight-light mb-4 white--text title-text"
-                  >
-                    {{ item.date }}
-                  </h3>
-                  <span class="white--text title-text">{{ item.title }}</span>
-                </v-img>
-                <v-img
-                  :src="item.img"
-                  v-else-if="$vuetify.breakpoint.mdAndUp"
-                  :height="timelineCardHeight(item.highlight) - 17"
-                  :max-height="timelineCardHeight(item.highlight) - 17"
-                  class="image-radius"
-                  ><template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="accent"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                  <h2
-                    class="font-weight-light ml-4 mt-2 white--text title-text"
-                  >
-                    {{ item.title }}
-                  </h2>
-                </v-img>
-              </v-container>
-            </template>
-          </Card>
-        </v-timeline-item>
-      </v-timeline>
-    </v-row>
+                      <h2
+                        v-if="item.highlight"
+                        class="font-weight-light mb-4 white--text title-text"
+                      >
+                        {{ item.date }}
+                      </h2>
+                      <h3
+                        v-else
+                        class="font-weight-light mb-4 white--text title-text"
+                      >
+                        {{ item.date }}
+                      </h3>
+                      <span class="white--text title-text">{{
+                        item.title
+                      }}</span>
+                    </v-img>
+                    <v-img
+                      :src="item.img"
+                      v-else-if="$vuetify.breakpoint.mdAndUp"
+                      :height="timelineCardHeight(item.highlight) - 17"
+                      :max-height="timelineCardHeight(item.highlight) - 17"
+                      class="image-radius"
+                      ><template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="accent"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                      <h2
+                        class="font-weight-light ml-4 mt-2 white--text title-text"
+                      >
+                        {{ item.title }}
+                      </h2>
+                    </v-img>
+                  </v-container>
+                </template>
+              </Card>
+            </v-timeline-item>
+          </v-timeline>
+        </v-row>
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 
@@ -321,6 +329,13 @@ export default {
 /*timeline divider color*/
 .theme--dark.v-timeline:before {
   background: #e7c296;
+}
+.events-bar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000 !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
 }
 .slide {
   max-width: 100vw;
