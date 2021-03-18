@@ -38,12 +38,14 @@
             <v-card-subtitle>
               <v-row align="center" class="mt-10 mb-5 pr-16">
                 <h1 class="accent--text">
-                  MIS EVENTOS:
+                  MIS EVENTOS
                 </h1>
-                <v-spacer></v-spacer>
-                <h2 class="accent--text mr-16">
-                  ({{ user.favourites.length }})
-                </h2>
+                <h4 class="accent--text mb-5 ml-1">
+                  ( {{ user.favourites ? user.favourites.length : 0 }} )
+                </h4>
+                <h1 class="accent--text ml-1">
+                  :
+                </h1>
               </v-row>
             </v-card-subtitle>
             <!--FAVORITOS-->
@@ -80,6 +82,18 @@
                   class="favourite-card"
                   @click="clickOnFavourite(idx)"
                 >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0 ml-15"
+                      align="center"
+                      justify="start"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="accent"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
                   <v-container fill-height>
                     <v-row align="center" justify="center">
                       <v-col>
@@ -123,6 +137,30 @@ export default {
   },
   components: { Card },
   methods: {
+    getEvent: async function(favId) {
+      console.log('getEvent: ', favId)
+      let event = getEventFromBuffer(favId)
+      console.log('Event from buffer: ', favId, event)
+      if (!event) {
+        console.log('event from buffer null ', favId)
+        event = await eventsServices.getEvent(favId)
+      }
+
+      if (Object.keys(event).includes('category')) {
+        event['categoryIcon'] = CATEGORIES.find(
+          x => x.name === event.category
+        ).icon
+      }
+
+      return event
+    },
+    setEventImage: async function(event) {
+      if (!Object.keys(event).includes('img')) {
+        event['img'] = (
+          await eventsServices.getEventImage(event._id)
+        ).urls.url_real
+      }
+    },
     getEventWithImage: async function(favId) {
       console.log('getEventWithImage: ', favId)
       let event = getEventFromBuffer(favId)
@@ -162,8 +200,16 @@ export default {
       this.user = await userServices.getUser()
 
       this.user.favourites = await Promise.all(
-        this.user.favourites.map(async favId => this.getEventWithImage(favId))
+        this.user.favourites.map(favId => this.getEvent(favId))
       )
+
+      await Promise.all(
+        this.user.favourites.map(fav => this.setEventImage(fav))
+      )
+
+      /*this.user.favourites = await Promise.all(
+        this.user.favourites.map(async favId => this.getEventWithImage(favId))
+      )*/
     } catch (err) {
       console.log(err)
     }
