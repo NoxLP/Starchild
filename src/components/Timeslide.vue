@@ -57,7 +57,7 @@
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
             <span class="headline white--text">{{
-              $moment(item.date).calendar()
+              $moment(item.date, 'DDMMYYYY').calendar()
             }}</span>
           </template>
           <Card
@@ -94,13 +94,13 @@
                     v-if="item.highlight"
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ $moment(item.date).calendar() }}
+                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ $moment(item.date).calendar() }}
+                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
                   </h3>
                   <span class="white--text title-text">{{ item.title }}</span>
                 </v-img>
@@ -126,13 +126,13 @@
                     v-if="item.highlight"
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
-                    {{ $moment(item.date).fromNow() }}
+                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
-                    {{ $moment(item.date).fromNow() }}
+                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
                   </h3>
                   <h2
                     class="font-weight-light ml-4 mt-2 white--text title-text"
