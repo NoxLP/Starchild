@@ -56,24 +56,36 @@
               :key="idx"
             >
               <v-col cols="1">
-                <v-btn
-                  fab
-                  dark
-                  color="secondary"
-                  elevation="10"
-                  height="5vh"
-                  width="5vh"
-                  class="ma-0"
+                <router-link
+                  style="text-decoration: none; color: inherit;"
+                  type="button"
+                  class="btn mr-5"
+                  :to="{
+                    name: 'home',
+                    params: {
+                      category: fav.category
+                    }
+                  }"
                 >
-                  <v-img
-                    color="accent"
-                    :src="fav.categoryIcon"
-                    height="4vh"
-                    width="4vh"
-                    contain
-                  ></v-img>
-                  <!--:width="icon_width"-->
-                </v-btn>
+                  <v-btn
+                    fab
+                    dark
+                    color="rgba(10, 10, 10, 0.35)"
+                    elevation="10"
+                    height="5vh"
+                    width="5vh"
+                    class="ma-0"
+                  >
+                    <v-img
+                      color="accent"
+                      :src="fav.categoryIcon"
+                      height="4vh"
+                      width="4vh"
+                      contain
+                    ></v-img>
+                    <!--:width="icon_width"-->
+                  </v-btn>
+                </router-link>
               </v-col>
               <v-col cols="10">
                 <v-img

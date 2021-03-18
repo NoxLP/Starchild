@@ -2,43 +2,43 @@ const CATEGORIES = [
   {
     name: 'all',
     text: 'Todos',
-    img: require('@/../public/assets/images/categories/imgCatAll.jpg'),
+    img: require('@/../public/assets/images/categories/imgCatAll.jpeg'),
     icon: require('@/../public/assets/images/catIconAll.svg')
   },
   {
     name: 'eclipsesMoon',
     text: 'Eclipses lunares',
-    img: require('@/../public/assets/images/categories/imgCatEclipseMoon.png'),
+    img: require('@/../public/assets/images/categories/imgCatEclipseMoon.jpeg'),
     icon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/10.svg')
   },
   {
     name: 'eclipsesSun',
     text: 'Eclipses solares',
-    img: require('@/../public/assets/images/categories/imgCatEclipseSun.png'),
+    img: require('@/../public/assets/images/categories/imgCatEclipseSun.jpg'),
     icon: require('@/../public/assets/images/MoonPhasesIconPack_MarkieAnnCreative/SVGs/MoonPhases-09_Eclipse.svg')
   },
   {
     name: 'planets',
     text: 'Planetas',
-    img: require('@/../public/assets/images/categories/imgCatPlanets.png'),
+    img: require('@/../public/assets/images/categories/imgCatPlanets.jpg'),
     icon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/7.svg')
   },
   {
     name: 'meteorShowers',
     text: 'Lluvia de estrellas',
-    img: require('@/../public/assets/images/categories/imgCatMeteorShower.png'),
+    img: require('@/../public/assets/images/categories/imgCatMeteorShower.jpg'),
     icon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/3.svg')
   },
   {
     name: 'comets',
     text: 'Cometas',
-    img: require('@/../public/assets/images/categories/imgCatComets.png'),
+    img: require('@/../public/assets/images/categories/imgCatComets.jpg'),
     icon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/8.svg')
   },
   {
     name: 'conjunctions',
     text: 'Alineación',
-    img: require('@/../public/assets/images/categories/imgCatConjunction.png'),
+    img: require('@/../public/assets/images/categories/imgCatConjunction.jpg'),
     icon: require('@/../public/assets/images/12-astronomy-and-space icons/SVG/2.svg')
   }
 ]

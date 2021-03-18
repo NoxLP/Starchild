@@ -52,7 +52,7 @@
         </v-carousel>
       </v-row>
       <v-row justify="center" align="start" class="timeslide-row mt-md-10">
-        <Timeslide />
+        <Timeslide :category="category" />
       </v-row>
     </v-container>
   </div>
@@ -73,6 +73,9 @@ export default {
   components: {
     Timeslide
   },
+  props: {
+    category: String
+  },
   methods: {
     onClickOnCarouselItem: function(index) {
       console.log('CLICK: ', this.events[index])
@@ -80,8 +83,8 @@ export default {
         name: 'event',
         params: {
           eventId: this.events[index]._id,
-          image: this.events[index].item.img.urls.url_hd
-            ? this.events[index].item.img.urls.url_hd
+          image: this.events[index].img.urls.url_hd
+            ? this.events[index].img.urls.url_hd
             : null
         }
       })

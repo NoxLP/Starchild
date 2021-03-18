@@ -38,7 +38,7 @@
       align="start"
       class="justify-center justify-sm-center categories-row"
     >
-      <v-col cols="10">
+      <v-col cols="10" align="center">
         <v-carousel
           v-model="model"
           class="pa-0 slide carousel-shadow image-radius"
@@ -90,7 +90,7 @@
           </template>
           <template v-slot:opposite v-if="$vuetify.breakpoint.mdAndUp">
             <span class="headline white--text">{{
-              $moment(item.date, 'DDMMYYYY').calendar()
+              $moment(new Date(item.date)).calendar()
             }}</span>
           </template>
           <Card
@@ -127,13 +127,13 @@
                     v-if="item.highlight"
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
+                    {{ $moment(new Date(item.date)).calendar() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light mb-4 white--text title-text"
                   >
-                    {{ $moment(item.date, 'DDMMYYYY').calendar() }}
+                    {{ $moment(new Date(item.date)).calendar() }}
                   </h3>
                   <span class="white--text title-text">{{ item.title }}</span>
                 </v-img>
@@ -159,13 +159,13 @@
                     v-if="item.highlight"
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
-                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
+                    {{ $moment(new Date(item.date)).fromNow() }}
                   </h2>
                   <h3
                     v-else
                     class="font-weight-light ml-4 mt-2 white--text title-text"
                   >
-                    {{ $moment(item.date, 'DDMMYYYY').fromNow() }}
+                    {{ $moment(new Date(item.date)).fromNow() }}
                   </h3>
                   <h2
                     class="font-weight-light ml-4 mt-2 white--text title-text"
@@ -200,6 +200,9 @@ export default {
       timelineBuffer: JSON.parse(sessionStorage.getItem('timelineBuffer')) || {}
     }
   },
+  props: {
+    category: String
+  },
   components: {
     Card
   },
@@ -231,6 +234,9 @@ export default {
     }
   },
   mounted() {
+    if (this.category) {
+      this.model = CATEGORIES.findIndex(x => x.name === this.category)
+    }
     this.categoriesOnChange()
   },
   methods: {
@@ -336,7 +342,7 @@ export default {
   background: #e7c296;
 }
 .slide {
-  max-width: 100vw;
+  max-width: 50vw !important;
   border-radius: 50px !important;
 }
 .slide-img {
