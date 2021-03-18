@@ -4,26 +4,36 @@
       <!--TITULO-->
       <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
-          <v-img max-height="20vh" :src="image" class="card">
-            <v-container fill-height class="ml-0">
-              <v-row align="center" justify="center" class="ml-0">
-                <v-col cols="2" class="ml-0">
-                  <v-tooltip top>
-                    <template v-slot:activator="{ on, attrs }">
+          <v-img max-height="20vh" :src="image" class="card pa-0">
+            <v-container fill-height class="ma-0 pa-0" fluid>
+              <v-row align="center" justify="center" class="ma-0 pa-0">
+                <!--CATEGORY ICON-->
+                <v-col
+                  cols="2"
+                  offset="1"
+                  class="ma-0 ml-3 pa-0"
+                  align="center"
+                >
+                  <v-card class="ma-0 pa-0 pb-5 cat-icon-card">
+                    <v-row class="ma-0 pa-0">
                       <v-img
                         color="accent"
                         :src="event.cat ? event.cat.icon : ''"
-                        width="15vh"
-                        max-height="15vh"
-                        height="15vh"
-                        v-bind="attrs"
-                        v-on="on"
+                        width="10vh"
+                        max-height="10vh"
+                        height="10vh"
+                        contain
                       ></v-img>
-                    </template>
-                    <span>{{ event.cat ? event.cat.text : '' }}</span>
-                  </v-tooltip>
+                    </v-row>
+                    <v-row class="ma-0 pa-0" justify="center">
+                      <span
+                        >Categoría: {{ event.cat ? event.cat.text : '' }}</span
+                      >
+                    </v-row>
+                  </v-card>
                 </v-col>
-                <v-col cols="7" offset="2">
+                <!--TITLE-->
+                <v-col cols="8" align="center" class="ma-0 pa-0">
                   <h2
                     v-if="$vuetify.breakpoint.smAndDown"
                     class="text-center accent--text title-text"
@@ -32,11 +42,12 @@
                   </h2>
                   <h1
                     v-else
-                    class="text-center accent--text text-h1 title-text"
+                    class="text-center accent--text text-h2 title-text"
                   >
                     {{ event.title }}
                   </h1>
                 </v-col>
+                <v-spacer></v-spacer>
               </v-row>
             </v-container>
           </v-img>
@@ -457,6 +468,10 @@ export default {
   border-radius: 10px;
 
   padding: 0 !important;
+}
+.cat-icon-card {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 50px;
 }
 .bottom-sheet {
   background: rgba(50, 50, 50, 0.5) !important;
