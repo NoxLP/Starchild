@@ -10,6 +10,19 @@
       <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
           <v-img max-height="20vh" :src="image" class="card pa-0">
+            <template v-slot:placeholder class="mr-16">
+              <v-row
+                class="fill-height ma-0 mr-16"
+                align="center"
+                justify="end"
+              >
+                <v-progress-circular
+                  class="mr-16"
+                  indeterminate
+                  color="accent"
+                ></v-progress-circular>
+              </v-row>
+            </template>
             <v-container fill-height class="ma-0 pa-0" fluid>
               <v-row align="center" justify="center" class="ma-0 pa-0">
                 <!--CATEGORY ICON-->
@@ -135,7 +148,18 @@
                   >
                     <v-icon color="accent">mdi-star-outline</v-icon>
                   </v-btn>
-                  <v-icon v-else color="accent">mdi-star</v-icon>
+                  <v-tooltip top v-else>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-avatar
+                        class="mt-2 fav-icon-avatar"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-icon color="accent">mdi-star</v-icon>
+                      </v-avatar>
+                    </template>
+                    <span>Favorito</span>
+                  </v-tooltip>
                 </v-col>
                 <v-col cols="1" offset="9">
                   <v-btn
@@ -491,6 +515,9 @@ html {
 .cat-icon-card {
   background: rgba(0, 0, 0, 0.5) !important;
   border-radius: 10px;
+}
+.fav-icon-avatar {
+  background: rgba(0, 0, 0, 0.5) !important;
 }
 .bottom-sheet {
   background: rgba(50, 50, 50, 0.5) !important;
