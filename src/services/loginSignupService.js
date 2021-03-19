@@ -12,9 +12,11 @@ export default {
     }
 
     if (loginData && loginData.token) {
+      console.log('LOGIN DATA:', loginData)
       localStorage.setItem('token', loginData.token)
       localStorage.setItem('user', loginData.user)
       localStorage.setItem('email', loginData.email)
+      localStorage.setItem('favourites', JSON.stringify(loginData.favourites))
       api.defaults.headers.common['token'] = loginData.token
       return true
     }

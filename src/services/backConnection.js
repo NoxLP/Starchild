@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const api = axios.create({
-  baseURL: 'https://starback.herokuapp.com/api',
+  baseURL: 'http://localhost:3000/api',
   withCredentials: false
 })
 

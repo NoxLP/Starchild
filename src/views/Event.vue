@@ -31,9 +31,7 @@
                       ></v-img>
                     </v-row>
                     <v-row class="ma-0 pa-0" justify="center">
-                      <span
-                        >Categoría: {{ event.cat ? event.cat.text : '' }}</span
-                      >
+                      <span>{{ event.cat ? event.cat.text : '' }}</span>
                     </v-row>
                   </v-card>
                 </v-col>
@@ -127,6 +125,7 @@
               <v-row justify="center">
                 <v-col cols="1">
                   <v-btn
+                    v-if="!isFavourite"
                     fab
                     dark
                     color="secondary"
@@ -134,8 +133,9 @@
                     @click="addFavourite"
                     class="mb-10"
                   >
-                    <v-icon color="accent">mdi-star</v-icon>
+                    <v-icon color="accent">mdi-star-outline</v-icon>
                   </v-btn>
+                  <v-icon v-else color="accent">mdi-star</v-icon>
                 </v-col>
                 <v-col cols="1" offset="9">
                   <v-btn
@@ -364,7 +364,8 @@ export default {
       weather_icon: '',
       valid: false,
       commentText: '',
-      commentReply: -1
+      commentReply: -1,
+      isFavourite: false
     }
   },
   computed: {
@@ -430,7 +431,13 @@ export default {
     addFavourite() {
       userServices
         .putAddFavourite(this.event._id)
-        .then()
+        .then(() => {
+          let favs = JSON.parse(localStorage.getItem('favourites'))
+          console.log('FAVS: ', favs)
+          favs.push(this.event._id)
+          localStorage.setItem('favourites', JSON.stringify(favs))
+          this.isFavourite = true
+        })
         .catch(err => {
           console.log(err)
         })
@@ -442,6 +449,9 @@ export default {
       this.event = event
       this.event['cat'] = CATEGORIES.find(x => x.name === event.category)
       console.log('EVENT DOS: ', event)
+      this.isFavourite = JSON.parse(
+        localStorage.getItem('favourites')
+      ).includes(event._id)
     })
 
     console.log('MOUNTED: ', this.image)
@@ -480,7 +490,7 @@ html {
 }
 .cat-icon-card {
   background: rgba(0, 0, 0, 0.5) !important;
-  border-radius: 50px;
+  border-radius: 10px;
 }
 .bottom-sheet {
   background: rgba(50, 50, 50, 0.5) !important;
