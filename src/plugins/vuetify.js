@@ -3,6 +3,10 @@ import Vuetify from 'vuetify/lib/framework'
 
 Vue.use(Vuetify)
 
+const moment = require('moment')
+require('moment/locale/es')
+Vue.use(require('vue-moment'), { moment })
+
 const vuetify = new Vuetify({
   theme: {
     dark: true,

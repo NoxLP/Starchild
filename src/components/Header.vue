@@ -70,7 +70,12 @@
       {{ user }}
       <!--************* OJO **************
         AQUI ABAJO VA BOTON COMPONENTE-->
-      <Button v-if="!!user" class="ml-10" text="Logout" @click="logout" />
+      <Button
+        v-if="!!user"
+        class="ml-10"
+        text="Logout"
+        @click.native="logout"
+      />
       <!--************* OJO **************-->
     </v-app-bar>
   </div>
@@ -94,6 +99,7 @@ export default {
   },
   methods: {
     logout: function() {
+      console.log('********* LOGOUT')
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       localStorage.removeItem('email')

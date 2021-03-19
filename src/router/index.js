@@ -18,7 +18,8 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    props: true
   },
   {
     path: '/signup',
