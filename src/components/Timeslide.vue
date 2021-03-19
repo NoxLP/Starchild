@@ -40,7 +40,7 @@
           v-model="model"
           class="pa-0 slide carousel-shadow image-radius"
           :continuous="false"
-          :height="$vuetify.breakpoint.smAndDown ? '40vh' : 'auto'"
+          :height="$vuetify.breakpoint.smAndDown ? '40vh' : '57vh'"
           hide-delimiters
           @change="categoriesOnChange"
         >

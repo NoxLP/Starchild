@@ -32,7 +32,7 @@
               ></v-progress-circular>
               <v-img
                 v-show="item.img"
-                :src="item.img ? item.img.urls.url_hd : ''"
+                :src="imagesPlaceholders[idx]"
                 class="slide-img"
               >
                 <v-row align="center" justify="start" class="mt-4">
@@ -73,7 +73,13 @@ export default {
   data: () => ({
     model: null,
     events: [],
-    categories: CATEGORIES
+    categories: CATEGORIES,
+    imagesPlaceholders: [
+      require('@/../public/assets/images/carouselPlaceholders/1.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/2.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/3.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/4.jpg')
+    ]
   }),
   components: {
     Timeslide
