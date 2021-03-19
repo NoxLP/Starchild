@@ -200,9 +200,7 @@
                       }"
                       class="comments-anchor"
                       href=""
-                      >Comentarios({{
-                        comments ? comments.length : '0'
-                      }})</router-link
+                      >Comentarios()</router-link
                     >
                   </v-col>
                 </v-row>
@@ -257,9 +255,7 @@
                       >
                         <v-icon color="accent">mdi-thumb-up-outline</v-icon>
                       </v-btn>
-                      <span class="ml-0 mr-6"
-                        >Likes: {{ comment.likes.length }}</span
-                      >
+                      <span class="ml-0 mr-6">{{ comment.likes.length }}</span>
                       <v-btn
                         fab
                         dark
@@ -313,9 +309,7 @@
                       >
                         <v-icon color="accent">mdi-thumb-up-outline</v-icon>
                       </v-btn>
-                      <span class="ml-0 mr-6"
-                        >Likes: {{ comment.likes.length }}</span
-                      >
+                      <span class="ml-0 mr-6">{{ comment.likes.length }}</span>
                     </v-col>
                   </v-row>
                 </template>
@@ -423,7 +417,9 @@ export default {
             .postCommentInEvent(this.commentText, this.event._id)
             .then(comment => {
               this.expand = false
-              this.event.comments.push(comment)
+              let arr = this.event.comments
+              arr.push(comment)
+              this.event.comments = arr
             })
             .catch(err => {
               console.log('Error posting comment to event: ', err)

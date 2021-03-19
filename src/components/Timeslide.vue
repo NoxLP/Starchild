@@ -34,15 +34,13 @@
       </v-col>
     </v-row>
     <!--categories carousel-->
-    <v-row
-      align="start"
-      class="justify-center justify-sm-center categories-row"
-    >
-      <v-col cols="10" align="center">
+    <v-row align="start" class="justify-center ma-0 pa-0">
+      <v-col cols="12" md="10" align="center">
         <v-carousel
           v-model="model"
           class="pa-0 slide carousel-shadow image-radius"
           :continuous="false"
+          :height="$vuetify.breakpoint.smAndDown ? '40vh' : 'auto'"
           hide-delimiters
           @change="categoriesOnChange"
         >
@@ -54,15 +52,6 @@
             transition="fade-transition"
           >
             <v-container fill-height>
-              <!--<v-row align="center" justify="center" class="mt-10 mb-0">
-                <v-img
-                  :src="item.icon"
-                  class="slide-icon"
-                  max-height="100%"
-                  color="accent"
-                  contain
-                />
-              </v-row>-->
               <v-row align="center" justify="center" class="mb-16 mt-0">
                 <h1 class="white--text mt-5 text-sm-h1 title-text">
                   {{ item.text }}
@@ -342,10 +331,11 @@ export default {
   background: #e7c296;
 }
 .slide {
-  max-width: 50vw !important;
+  width: 85vw !important;
   border-radius: 50px !important;
 }
 .slide-img {
+  max-height: 40vh;
   max-width: 80vw;
 }
 .slide-icon {
@@ -370,6 +360,9 @@ export default {
 }
 
 @media (min-width: 959px) {
+  .slide {
+    max-width: 50vw !important;
+  }
   .slide-img {
     max-width: 60vw;
   }
