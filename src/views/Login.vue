@@ -132,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
 .login-card {
   margin: 6vw 12vw 2vw 12vw !important;
   /* height: 36vh !important; */

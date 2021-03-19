@@ -10,6 +10,19 @@
       <v-row class="mt-0 mt-sm-2 mx-sm-10">
         <v-col>
           <v-img max-height="20vh" :src="image" class="card pa-0">
+            <template v-slot:placeholder class="mr-16">
+              <v-row
+                class="fill-height ma-0 mr-16"
+                align="center"
+                justify="end"
+              >
+                <v-progress-circular
+                  class="mr-16"
+                  indeterminate
+                  color="accent"
+                ></v-progress-circular>
+              </v-row>
+            </template>
             <v-container fill-height class="ma-0 pa-0" fluid>
               <v-row align="center" justify="center" class="ma-0 pa-0">
                 <!--CATEGORY ICON-->
@@ -62,54 +75,113 @@
           <Card>
             <!--BARRA ICONOS-->
             <template v-slot:title>
-              <v-row class="flex-nowrap ml-12" height="6vh" align="center">
-                <v-col cols="5" offset="4" class="d-flex flex-row">
+              <v-row class="flex-nowrap ma-0 pa-0" height="6vh" align="center">
+                <v-col cols="12" class="d-flex flex-row ma-0 pa-0">
                   <v-container>
-                    <v-row align="center" justify="center">
-                      <v-col
-                        cols="1"
-                        class="d-flex flex-row"
-                        v-for="(moonValue, idx) in moonphasesValues"
-                        :key="idx"
-                      >
-                        <v-tooltip top>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-img
-                              color="accent"
-                              :class="
-                                moonphasesKeys[idx] === moonphase
-                                  ? ''
-                                  : 'moonphase'
+                    <v-row align="center" justify="center" class="ma-0 pa-0">
+                      <!--MOON PHASES-->
+                      <v-col cols="6" class="ma-0 pa-0" align="center">
+                        <v-container fluid class="ma-0 pa-0">
+                          <v-row
+                            class="ma-0 pa-0"
+                            justify="center"
+                            align="center"
+                          >
+                            <v-col
+                              :cols="moonphasesKeys[idx] === moonphase ? 2 : 1"
+                              class="d-flex flex-row"
+                              v-for="(moonValue, idx) in moonphasesValues"
+                              :key="idx"
+                            >
+                              <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-img
+                                    color="accent"
+                                    :class="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? ''
+                                        : 'moonphase'
+                                    "
+                                    :src="moonValue.icon"
+                                    :max-height="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :height="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :width="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    contain
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-img>
+                                </template>
+                                <span>{{ moonValue.translated }}</span>
+                              </v-tooltip>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-col>
+                      <v-spacer></v-spacer>
+                      <!--WEATHER-->
+                      <v-col cols="6" class="ma-0 pa-0" align="center">
+                        <v-container fluid class="ma-0 pa-0">
+                          <v-row
+                            class="ma-0 pa-0"
+                            justify="center"
+                            align="center"
+                          >
+                            <v-col
+                              :cols="
+                                weatherKeys[weatherIdx] === weather ? 2 : 1
                               "
-                              :src="moonValue.icon"
-                              :max-height="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              :height="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              :width="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              contain
-                              v-bind="attrs"
-                              v-on="on"
-                            ></v-img>
-                          </template>
-                          <span>{{ moonValue.translated }}</span>
-                        </v-tooltip>
-                        <v-img
-                          color="accent"
-                          :src="weather_icon"
-                          max-height="5vh"
-                          height="5vh"
-                        ></v-img>
+                              class="d-flex flex-row"
+                              v-for="(weatherValue,
+                              weatherIdx) in weatherValues"
+                              :key="weatherIdx"
+                            >
+                              <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-img
+                                    color="accent"
+                                    :class="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? ''
+                                        : 'moonphase'
+                                    "
+                                    :src="weatherValue.icon"
+                                    :max-height="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :height="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :width="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    contain
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-img>
+                                </template>
+                                <span>{{ weatherValue.translated }}</span>
+                              </v-tooltip>
+                            </v-col>
+                          </v-row>
+                        </v-container>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -117,7 +189,10 @@
               </v-row>
             </template>
             <!--TEXTO-->
-            <div class="description text-body-1 text-sm-h5" color="white--text">
+            <div
+              class="description text-body-1 text-sm-h5 font-hind"
+              color="white--text"
+            >
               {{ event.description }}
             </div>
             <!--FOOTER FAV Y PENCIL-->
@@ -135,7 +210,18 @@
                   >
                     <v-icon color="accent">mdi-star-outline</v-icon>
                   </v-btn>
-                  <v-icon v-else color="accent">mdi-star</v-icon>
+                  <v-tooltip top v-else>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-avatar
+                        class="mt-2 fav-icon-avatar"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-icon color="accent">mdi-star</v-icon>
+                      </v-avatar>
+                    </template>
+                    <span>Favorito</span>
+                  </v-tooltip>
                 </v-col>
                 <v-col cols="1" offset="9">
                   <v-btn
@@ -176,9 +262,7 @@
                       }"
                       class="comments-anchor"
                       href=""
-                      >Comentarios({{
-                        comments ? comments.length : '0'
-                      }})</router-link
+                      >Comentarios()</router-link
                     >
                   </v-col>
                 </v-row>
@@ -211,9 +295,11 @@
                   </h5>
                 </template>
                 <!--TEXTO-->
-                <span style="white-space: pre-line" class="text-left">{{
-                  comment.text
-                }}</span>
+                <span
+                  style="white-space: pre-line"
+                  class="text-left font-hind-comments"
+                  >{{ comment.text }}</span
+                >
                 <!--BOTONES-->
                 <template v-slot:actions>
                   <v-row justify="center" align="center">
@@ -233,9 +319,7 @@
                       >
                         <v-icon color="accent">mdi-thumb-up-outline</v-icon>
                       </v-btn>
-                      <span class="ml-0 mr-6"
-                        >Likes: {{ comment.likes.length }}</span
-                      >
+                      <span class="ml-0 mr-6">{{ comment.likes.length }}</span>
                       <v-btn
                         fab
                         dark
@@ -272,9 +356,11 @@
                   </h5>
                 </template>
                 <!--TEXTO-->
-                <span style="white-space: pre-line" class="text-left">{{
-                  reply.text
-                }}</span>
+                <span
+                  style="white-space: pre-line"
+                  class="text-left font-hind-comments"
+                  >{{ reply.text }}</span
+                >
                 <!--BOTONES-->
                 <template v-slot:actions>
                   <v-row justify="end" align="center">
@@ -289,9 +375,7 @@
                       >
                         <v-icon color="accent">mdi-thumb-up-outline</v-icon>
                       </v-btn>
-                      <span class="ml-0 mr-6"
-                        >Likes: {{ comment.likes.length }}</span
-                      >
+                      <span class="ml-0 mr-6">{{ comment.likes.length }}</span>
                     </v-col>
                   </v-row>
                 </template>
@@ -346,7 +430,7 @@
 import eventServices from '../services/eventServices.js'
 import commentsServices from '../services/commentsService.js'
 import Card from '../components/Card.vue'
-import { CATEGORIES, MOONPHASES } from '../helpers/constObjects'
+import { CATEGORIES, MOONPHASES, WEATHER } from '../helpers/constObjects'
 import { getEventFromBuffer } from '../helpers/itemsBuffers'
 import userServices from '../services/userServices.js'
 
@@ -361,6 +445,9 @@ export default {
       moonphase: '',
       moonphasesValues: Object.values(MOONPHASES),
       moonphasesKeys: Object.keys(MOONPHASES),
+      weatherValues: Object.values(WEATHER),
+      weatherKeys: Object.keys(WEATHER),
+      weather: '',
       weather_icon: '',
       valid: false,
       commentText: '',
@@ -399,7 +486,9 @@ export default {
             .postCommentInEvent(this.commentText, this.event._id)
             .then(comment => {
               this.expand = false
-              this.event.comments.push(comment)
+              let arr = this.event.comments
+              arr.push(comment)
+              this.event.comments = arr
             })
             .catch(err => {
               console.log('Error posting comment to event: ', err)
@@ -454,6 +543,11 @@ export default {
       ).includes(event._id)
     })
 
+    this.weather =
+      this.eventId === '605080605fe26f08e6c0b2f0'
+        ? 'Cloudy'
+        : this.weatherKeys[Math.floor(Math.random() * 4)]
+
     console.log('MOUNTED: ', this.image)
     let eventBuffer = getEventFromBuffer(this.eventId)
 
@@ -473,6 +567,13 @@ export default {
 </script>
 
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
+.font-hind-comments {
+  font-family: Hind;
+  font-size: 18px;
+}
 html {
   height: 100%;
   /*background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);*/
@@ -491,6 +592,9 @@ html {
 .cat-icon-card {
   background: rgba(0, 0, 0, 0.5) !important;
   border-radius: 10px;
+}
+.fav-icon-avatar {
+  /*background: rgba(255, 255, 255, 0.025) !important;*/
 }
 .bottom-sheet {
   background: rgba(50, 50, 50, 0.5) !important;

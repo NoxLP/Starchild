@@ -34,15 +34,13 @@
       </v-col>
     </v-row>
     <!--categories carousel-->
-    <v-row
-      align="start"
-      class="justify-center justify-sm-center categories-row"
-    >
-      <v-col cols="10" align="center">
+    <v-row align="start" class="justify-center ma-0 pa-0">
+      <v-col cols="12" md="10" align="center">
         <v-carousel
           v-model="model"
           class="pa-0 slide carousel-shadow image-radius"
           :continuous="false"
+          :height="$vuetify.breakpoint.smAndDown ? '40vh' : '57vh'"
           hide-delimiters
           @change="categoriesOnChange"
         >
@@ -54,15 +52,6 @@
             transition="fade-transition"
           >
             <v-container fill-height>
-              <!--<v-row align="center" justify="center" class="mt-10 mb-0">
-                <v-img
-                  :src="item.icon"
-                  class="slide-icon"
-                  max-height="100%"
-                  color="accent"
-                  contain
-                />
-              </v-row>-->
               <v-row align="center" justify="center" class="mb-16 mt-0">
                 <h1 class="white--text mt-5 text-sm-h1 title-text">
                   {{ item.text }}
@@ -81,7 +70,7 @@
           :key="idx"
           dark
           color="hsl(255, 63%, 8%)"
-          class="ml-0 pl-0"
+          class="ml-0 pl-0 font-hind text-capitalize"
         >
           <template v-slot:icon>
             <v-avatar>
@@ -271,13 +260,13 @@ export default {
     },
     categoriesOnChange: async function() {
       console.log('categoriesOnChange ', this.model, this.timeLineItems)
-      const limit = 5
+      const limit = 10
       const categoryNumber = this.model
       const currentCategory = CATEGORIES[this.model].name
 
       if (
         !this.timelineBuffer[currentCategory] ||
-        this.timelineBuffer[currentCategory].length < 5
+        this.timelineBuffer[currentCategory].length < limit
       ) {
         console.log('*********** no session: ', this.timelineBuffer)
 
@@ -337,15 +326,18 @@ export default {
 </script>
 
 <style scoped>
-/*timeline divider color*/
+.font-hind {
+  font-family: Hind;
+}
 .theme--dark.v-timeline:before {
   background: #e7c296;
 }
 .slide {
-  max-width: 50vw !important;
+  width: 85vw !important;
   border-radius: 50px !important;
 }
 .slide-img {
+  max-height: 40vh;
   max-width: 80vw;
 }
 .slide-icon {
@@ -370,6 +362,9 @@ export default {
 }
 
 @media (min-width: 959px) {
+  .slide {
+    max-width: 50vw !important;
+  }
   .slide-img {
     max-width: 60vw;
   }

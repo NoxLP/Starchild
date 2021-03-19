@@ -24,7 +24,11 @@
             :key="idx"
             @click="onClickOnCarouselItem(idx)"
           >
-            <v-row class="fill-height" align="center" justify="center">
+            <v-row
+              class="fill-height font-hind"
+              align="center"
+              justify="center"
+            >
               <v-progress-circular
                 v-show="!item.img"
                 indeterminate
@@ -32,20 +36,20 @@
               ></v-progress-circular>
               <v-img
                 v-show="item.img"
-                :src="item.img ? item.img.urls.url_hd : ''"
+                :src="imagesPlaceholders[idx]"
                 class="slide-img"
               >
                 <v-row align="center" justify="start" class="mt-4">
-                  <h1 class="white--text mt-5 ml-10 title-text">
+                  <h1 class="white--text mt-5 ml-10 title-text text-capitalize">
                     {{ $moment(new Date(item.date)).fromNow() }}
                   </h1>
-                  <h1 class="white--text mt-5 ml-10 title-text">
+                  <h1 class="white--text mt-5 ml-10 title-text text-capitalize">
                     {{ item.title }}
                   </h1>
                 </v-row>
                 <v-row align="center" justify="start" height="20">
                   <h3
-                    class="white--text mt-5 ml-10 d-block text-truncate"
+                    class="white--text mt-5 ml-10 d-block text-truncate text-capitalize"
                     style="max-width: 40vw;"
                   >
                     {{ item.description }}
@@ -73,7 +77,13 @@ export default {
   data: () => ({
     model: null,
     events: [],
-    categories: CATEGORIES
+    categories: CATEGORIES,
+    imagesPlaceholders: [
+      require('@/../public/assets/images/carouselPlaceholders/1.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/2.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/3.jpg'),
+      require('@/../public/assets/images/carouselPlaceholders/4.jpg')
+    ]
   }),
   components: {
     Timeslide
@@ -119,6 +129,9 @@ export default {
 </script>
 
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
 .Glass {
   /*background: rgba(255, 255, 255, 0.25);*/
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
@@ -347,7 +360,7 @@ export default {
 #stars:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 1px;
   height: 1px;
   background: transparent;
@@ -589,7 +602,7 @@ export default {
 #stars2:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 2px;
   height: 2px;
   background: transparent;
@@ -680,7 +693,7 @@ export default {
 #stars3:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 3px;
   height: 3px;
   background: transparent;
