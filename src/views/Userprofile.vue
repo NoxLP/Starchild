@@ -26,17 +26,21 @@
                   </h1>
                 </v-col>
                 <v-col cols="3">
-                  <h3>
-                    <v-row>
+                  <v-row>
+                    <h3>
                       {{ user.email }}
-                    </v-row>
-                    <v-row>
+                    </h3>
+                  </v-row>
+                  <v-row>
+                    <h3>
                       {{ user.job }}
-                    </v-row>
-                    <v-row>
+                    </h3>
+                  </v-row>
+                  <v-row>
+                    <h3>
                       {{ user.location }}
-                    </v-row>
-                  </h3>
+                    </h3>
+                  </v-row>
                 </v-col>
               </v-row>
             </template>
@@ -225,6 +229,9 @@ export default {
 }
 </script>
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
 .starchild-text {
   font-family: Julius Sans One;
   font-style: normal;

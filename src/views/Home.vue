@@ -24,7 +24,11 @@
             :key="idx"
             @click="onClickOnCarouselItem(idx)"
           >
-            <v-row class="fill-height" align="center" justify="center">
+            <v-row
+              class="fill-height font-hind"
+              align="center"
+              justify="center"
+            >
               <v-progress-circular
                 v-show="!item.img"
                 indeterminate
@@ -36,16 +40,16 @@
                 class="slide-img"
               >
                 <v-row align="center" justify="start" class="mt-4">
-                  <h1 class="white--text mt-5 ml-10 title-text">
+                  <h1 class="white--text mt-5 ml-10 title-text text-capitalize">
                     {{ $moment(new Date(item.date)).fromNow() }}
                   </h1>
-                  <h1 class="white--text mt-5 ml-10 title-text">
+                  <h1 class="white--text mt-5 ml-10 title-text text-capitalize">
                     {{ item.title }}
                   </h1>
                 </v-row>
                 <v-row align="center" justify="start" height="20">
                   <h3
-                    class="white--text mt-5 ml-10 d-block text-truncate"
+                    class="white--text mt-5 ml-10 d-block text-truncate text-capitalize"
                     style="max-width: 40vw;"
                   >
                     {{ item.description }}
@@ -125,6 +129,9 @@ export default {
 </script>
 
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
 .Glass {
   /*background: rgba(255, 255, 255, 0.25);*/
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;

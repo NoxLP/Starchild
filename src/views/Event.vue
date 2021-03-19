@@ -130,7 +130,10 @@
               </v-row>
             </template>
             <!--TEXTO-->
-            <div class="description text-body-1 text-sm-h5" color="white--text">
+            <div
+              class="description text-body-1 text-sm-h5 font-hind"
+              color="white--text"
+            >
               {{ event.description }}
             </div>
             <!--FOOTER FAV Y PENCIL-->
@@ -233,9 +236,11 @@
                   </h5>
                 </template>
                 <!--TEXTO-->
-                <span style="white-space: pre-line" class="text-left">{{
-                  comment.text
-                }}</span>
+                <span
+                  style="white-space: pre-line"
+                  class="text-left font-hind-comments"
+                  >{{ comment.text }}</span
+                >
                 <!--BOTONES-->
                 <template v-slot:actions>
                   <v-row justify="center" align="center">
@@ -292,9 +297,11 @@
                   </h5>
                 </template>
                 <!--TEXTO-->
-                <span style="white-space: pre-line" class="text-left">{{
-                  reply.text
-                }}</span>
+                <span
+                  style="white-space: pre-line"
+                  class="text-left font-hind-comments"
+                  >{{ reply.text }}</span
+                >
                 <!--BOTONES-->
                 <template v-slot:actions>
                   <v-row justify="end" align="center">
@@ -493,6 +500,13 @@ export default {
 </script>
 
 <style scoped>
+.font-hind {
+  font-family: Hind;
+}
+.font-hind-comments {
+  font-family: Hind;
+  font-size: 18px;
+}
 html {
   height: 100%;
   /*background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);*/

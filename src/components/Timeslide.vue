@@ -70,7 +70,7 @@
           :key="idx"
           dark
           color="hsl(255, 63%, 8%)"
-          class="ml-0 pl-0"
+          class="ml-0 pl-0 font-hind text-capitalize"
         >
           <template v-slot:icon>
             <v-avatar>
@@ -260,13 +260,13 @@ export default {
     },
     categoriesOnChange: async function() {
       console.log('categoriesOnChange ', this.model, this.timeLineItems)
-      const limit = 5
+      const limit = 10
       const categoryNumber = this.model
       const currentCategory = CATEGORIES[this.model].name
 
       if (
         !this.timelineBuffer[currentCategory] ||
-        this.timelineBuffer[currentCategory].length < 5
+        this.timelineBuffer[currentCategory].length < limit
       ) {
         console.log('*********** no session: ', this.timelineBuffer)
 
@@ -326,7 +326,9 @@ export default {
 </script>
 
 <style scoped>
-/*timeline divider color*/
+.font-hind {
+  font-family: Hind;
+}
 .theme--dark.v-timeline:before {
   background: #e7c296;
 }
