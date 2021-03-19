@@ -78,4 +78,27 @@ const MOONPHASES = {
   }
 }
 
-export { CATEGORIES, MOONPHASES }
+const WEATHER = {
+  Sun: {
+    icon: require('../../public/assets/images/weatherIcons/weather1.svg'),
+    translated: 'Soleado'
+  },
+  Cloudy: {
+    icon: require('../../public/assets/images/weatherIcons/weather2.svg'),
+    translated: 'Parcialmente nublado'
+  },
+  Clouds: {
+    icon: require('../../public/assets/images/weatherIcons/weather3.svg'),
+    translated: 'Nublado'
+  },
+  Rain: {
+    icon: require('../../public/assets/images/weatherIcons/weather4.svg'),
+    translated: 'Lluvia'
+  },
+  Storm: {
+    icon: require('../../public/assets/images/weatherIcons/weather5.svg'),
+    translated: 'Tormenta'
+  }
+}
+
+export { CATEGORIES, MOONPHASES, WEATHER }

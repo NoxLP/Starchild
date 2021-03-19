@@ -360,7 +360,7 @@ export default {
 #stars:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 1px;
   height: 1px;
   background: transparent;
@@ -602,7 +602,7 @@ export default {
 #stars2:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 2px;
   height: 2px;
   background: transparent;
@@ -693,7 +693,7 @@ export default {
 #stars3:after {
   content: ' ';
   position: absolute;
-  top: 2000px;
+  top: 2500px;
   width: 3px;
   height: 3px;
   background: transparent;

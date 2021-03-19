@@ -75,54 +75,113 @@
           <Card>
             <!--BARRA ICONOS-->
             <template v-slot:title>
-              <v-row class="flex-nowrap ml-12" height="6vh" align="center">
-                <v-col cols="5" offset="4" class="d-flex flex-row">
+              <v-row class="flex-nowrap ma-0 pa-0" height="6vh" align="center">
+                <v-col cols="12" class="d-flex flex-row ma-0 pa-0">
                   <v-container>
-                    <v-row align="center" justify="center">
-                      <v-col
-                        cols="1"
-                        class="d-flex flex-row"
-                        v-for="(moonValue, idx) in moonphasesValues"
-                        :key="idx"
-                      >
-                        <v-tooltip top>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-img
-                              color="accent"
-                              :class="
-                                moonphasesKeys[idx] === moonphase
-                                  ? ''
-                                  : 'moonphase'
+                    <v-row align="center" justify="center" class="ma-0 pa-0">
+                      <!--MOON PHASES-->
+                      <v-col cols="6" class="ma-0 pa-0" align="center">
+                        <v-container fluid class="ma-0 pa-0">
+                          <v-row
+                            class="ma-0 pa-0"
+                            justify="center"
+                            align="center"
+                          >
+                            <v-col
+                              :cols="moonphasesKeys[idx] === moonphase ? 2 : 1"
+                              class="d-flex flex-row"
+                              v-for="(moonValue, idx) in moonphasesValues"
+                              :key="idx"
+                            >
+                              <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-img
+                                    color="accent"
+                                    :class="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? ''
+                                        : 'moonphase'
+                                    "
+                                    :src="moonValue.icon"
+                                    :max-height="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :height="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :width="
+                                      moonphasesKeys[idx] === moonphase
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    contain
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-img>
+                                </template>
+                                <span>{{ moonValue.translated }}</span>
+                              </v-tooltip>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-col>
+                      <v-spacer></v-spacer>
+                      <!--WEATHER-->
+                      <v-col cols="6" class="ma-0 pa-0" align="center">
+                        <v-container fluid class="ma-0 pa-0">
+                          <v-row
+                            class="ma-0 pa-0"
+                            justify="center"
+                            align="center"
+                          >
+                            <v-col
+                              :cols="
+                                weatherKeys[weatherIdx] === weather ? 2 : 1
                               "
-                              :src="moonValue.icon"
-                              :max-height="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              :height="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              :width="
-                                moonphasesKeys[idx] === moonphase
-                                  ? '3.5vh'
-                                  : '2.5vh'
-                              "
-                              contain
-                              v-bind="attrs"
-                              v-on="on"
-                            ></v-img>
-                          </template>
-                          <span>{{ moonValue.translated }}</span>
-                        </v-tooltip>
-                        <v-img
-                          color="accent"
-                          :src="weather_icon"
-                          max-height="5vh"
-                          height="5vh"
-                        ></v-img>
+                              class="d-flex flex-row"
+                              v-for="(weatherValue,
+                              weatherIdx) in weatherValues"
+                              :key="weatherIdx"
+                            >
+                              <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-img
+                                    color="accent"
+                                    :class="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? ''
+                                        : 'moonphase'
+                                    "
+                                    :src="weatherValue.icon"
+                                    :max-height="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :height="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    :width="
+                                      weatherKeys[weatherIdx] === weather
+                                        ? '4vh'
+                                        : '2.5vh'
+                                    "
+                                    contain
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-img>
+                                </template>
+                                <span>{{ weatherValue.translated }}</span>
+                              </v-tooltip>
+                            </v-col>
+                          </v-row>
+                        </v-container>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -371,7 +430,7 @@
 import eventServices from '../services/eventServices.js'
 import commentsServices from '../services/commentsService.js'
 import Card from '../components/Card.vue'
-import { CATEGORIES, MOONPHASES } from '../helpers/constObjects'
+import { CATEGORIES, MOONPHASES, WEATHER } from '../helpers/constObjects'
 import { getEventFromBuffer } from '../helpers/itemsBuffers'
 import userServices from '../services/userServices.js'
 
@@ -386,6 +445,9 @@ export default {
       moonphase: '',
       moonphasesValues: Object.values(MOONPHASES),
       moonphasesKeys: Object.keys(MOONPHASES),
+      weatherValues: Object.values(WEATHER),
+      weatherKeys: Object.keys(WEATHER),
+      weather: '',
       weather_icon: '',
       valid: false,
       commentText: '',
@@ -481,6 +543,11 @@ export default {
       ).includes(event._id)
     })
 
+    this.weather =
+      this.eventId === '605080605fe26f08e6c0b2f0'
+        ? 'Cloudy'
+        : this.weatherKeys[Math.floor(Math.random() * 4)]
+
     console.log('MOUNTED: ', this.image)
     let eventBuffer = getEventFromBuffer(this.eventId)
 
@@ -527,7 +594,7 @@ html {
   border-radius: 10px;
 }
 .fav-icon-avatar {
-  background: rgba(0, 0, 0, 0.5) !important;
+  /*background: rgba(255, 255, 255, 0.025) !important;*/
 }
 .bottom-sheet {
   background: rgba(50, 50, 50, 0.5) !important;
