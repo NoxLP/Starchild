@@ -18,6 +18,8 @@ The developing team consists on three students from [Reboot Academy](https://www
 
 Please, remember that, as of today (2021/02/26), the app is still a work in progress. Specifications below are subject to change.
 
+You can test it [here](https://blissful-chandrasekhar-0406e7.netlify.app/).
+
 ## Installation
 Simple enough, fork the project and run npm install in your console.
 
